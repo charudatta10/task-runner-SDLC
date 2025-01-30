@@ -12,7 +12,9 @@ import license
 import readme
 import manger
 import maintain
+from pathlib import Path
 
+PROJECT_PATH = Path.home() / "Home" / "Github" / "task-runner-SDLC"
 
 # Define modules
 modules = {
@@ -74,7 +76,7 @@ def default(ctx):
     selected_task_cmd = selected_task.replace("_", "-")
     selected_module_cmd = selected_ns.name.replace("_", "-")
     print(f"Help for {selected_module_cmd}.{selected_task_cmd}:")
-    command = f"invoke {selected_module_cmd}.{selected_task_cmd}"
+    command = f"invoke --search-root {PROJECT_PATH} {selected_module_cmd}.{selected_task_cmd}"
     ctx.run(f"{command} --help")
 
     args = input(
