@@ -105,7 +105,7 @@ ns = Collection(
     deploy,
     default=deploy,
 )
-ns.name = "deploy_checks"
+ns.name = "deploy"
 
 if __name__ == "__main__":
     default(Context())

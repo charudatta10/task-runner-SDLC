@@ -97,7 +97,7 @@ def generate_readme(ctx, ppt_gen=False):
 
 
 ns = Collection(generate_readme)
-ns.name = "readme_gen"
+ns.name = "readme"
 
 if __name__ == "__main__":
     default(context())

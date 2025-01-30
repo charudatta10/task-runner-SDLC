@@ -54,7 +54,7 @@ ns = Collection(
     serve_mkdocs,
     package,
 )
-ns.name = "initialize_project"
+ns.name = "maintain"
 
 if __name__ == "__main__":
     default(context())

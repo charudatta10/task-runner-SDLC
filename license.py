@@ -152,6 +152,6 @@ ns = Collection(
     remove_license_headers,
     default=add_license_headers,
 )
-ns.name = "add_license"
+ns.name = "license"
 if __name__ == "__main__":
     default(Context())

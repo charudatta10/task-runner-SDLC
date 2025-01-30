@@ -156,7 +156,7 @@ ns = Collection(
     initialize_project,
     default=initialize_project,
 )
-ns.name = "initialize_project"
+ns.name = "initialize"
 
 if __name__ == "__main__":
     default(context())

@@ -99,7 +99,7 @@ def default(ctx):
 # Create a namespace and add tasks from the imported modules
 ns = Collection(*modules.values())
 ns.add_task(default)
-ns.name = "task_runner"
+ns.name = "task"
 
 if __name__ == "__main__":
     default(context())
