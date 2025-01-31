@@ -14,7 +14,7 @@ import manger
 import maintain
 from pathlib import Path
 
-PROJECT_PATH = Path.home() / "Home" / "Github" / "task-runner-SDLC"
+PROJECT_PATH = Path.home() / "Home" / "Github" / "task-runner-SDLC" / "src"
 
 # Define modules
 modules = {
