@@ -35,14 +35,14 @@ def package(ctx):
 
 
 @task
-def build_mkdocs(ctx, env_name):
+def build_mkdocs(ctx):
     """build MkDocs using specified Conda environment."""
     with ctx.run(f"conda activate s", shell=True):
         ctx.run(f"python -m mkdocs build")
 
 
 @task
-def serve_mkdocs(ctx, env_name):
+def serve_mkdocs(ctx):
     """build MkDocs using specified Conda environment."""
     with ctx.run(f"conda activate s", shell=True):
         ctx.run(f"python -m mkdocs serve")

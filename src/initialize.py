@@ -32,13 +32,9 @@ def create_files(ctx):
     files = [
         ".env",
         ".gitattribute",
-        "run.py",
         "requirements.txt",
         "tasks.py",
-        "LICENSE",
-        "README.md",
-        "logging.conf",
-        "mkdocs.yml",
+        "__main__.py",
     ]
     for file_name in files:
         Path(file_name).touch()
@@ -47,7 +43,7 @@ def create_files(ctx):
 @task
 def create_directories(ctx):
     """Create specified directories."""
-    directories = ["docs", "src", "tests", "data", "logs", "archives"]
+    directories = ["docs", "src", "tests"]
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
 
@@ -116,11 +112,11 @@ def setup_logging(ctx, log_file="app.log"):
 @task
 def create_archive(ctx):
     """Create an archive using 7z."""
-    ctx.run("7z a archives.7z .gitignore")
+    ctx.run("zip archive.zip __main__.py")
 
 
 @task
-def initialize_mkdocs(ctx, env_name):
+def initialize_mkdocs(ctx):
     """Initialize MkDocs using specified Conda environment."""
     with ctx.run(f"conda activate s", shell=True):
         ctx.run(f"python -m mkdocs new .")
