@@ -12,7 +12,7 @@
 ![project](https://flat.badgen.net///static/project/task-runner-SDLC)
 
 <!-- Badges: Tools used -->
-`Python` 
+`Python`
 
 ## Documentation
 
