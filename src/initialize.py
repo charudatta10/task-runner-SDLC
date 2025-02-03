@@ -23,8 +23,6 @@ logging.basicConfig(
 @task
 def initialize_git(ctx):
     """Initialize Git repository."""
-    ctx.run("git clone https://github.com/charudatta10/template-project .")
-    ctx.run("Remove-Item -r -force .git")
     ctx.run("git init")
 
 
