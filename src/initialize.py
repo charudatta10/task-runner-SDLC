@@ -23,6 +23,8 @@ logging.basicConfig(
 @task
 def initialize_git(ctx):
     """Initialize Git repository."""
+    ctx.run("git clone https://github.com/charudatta10/template-project .")
+    ctx.run("Remove-Item -r -force .git")
     ctx.run("git init")
 
 
@@ -31,7 +33,7 @@ def create_files(ctx):
     """Create specified files."""
     files = [
         ".env",
-        ".gitattribute",
+        ".gitattributes",
         "requirements.txt",
         "tasks.py",
         "__main__.py",
