@@ -13,8 +13,17 @@ import readme
 import manger
 import maintain
 from pathlib import Path
+import platform
 
-PROJECT_PATH = Path.home() / "Home" / "Github" / "task-runner-SDLC" / "src"
+if platform.system() == "Windows":
+    USER_ROOT_PATH = Path.home()
+else:
+    # Running under WSL
+    USER_ROOT_PATH = Path("/mnt/c/Users/korde") # Update this to your Windows username
+
+PROJECT_PATH = USER_ROOT_PATH  / "Home" / "Github" / "task-runner-SDLC" / "src"
+
+
 
 # Define modules
 modules = {
