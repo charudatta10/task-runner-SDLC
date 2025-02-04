@@ -118,8 +118,7 @@ def create_archive(ctx):
 @task
 def initialize_mkdocs(ctx):
     """Initialize MkDocs using specified Conda environment."""
-    with ctx.prefix("pwsh -command 'conda activate s'"):
-        ctx.run("mkdocs new docs")
+    ctx.run("mkdocs new docs") # Activate the Conda environment before running this command
 
 
 @task(
