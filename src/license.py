@@ -22,6 +22,7 @@ def fetch_license_text(ctx):
     try:
         with urllib.request.urlopen(LICENSE_URL) as response:
             if response.status == 200:
+                ctx.license_text = response.read().decode("utf-8")
                 return response.read().decode("utf-8")
             else:
                 print(
@@ -34,8 +35,8 @@ def fetch_license_text(ctx):
         return None
 
 
-@task
-def create_license_file(ctx, license_text, license_path="LICENSE"):
+@task(pre=[fetch_license_text])
+def create_license_file(ctx, license_path="LICENSE"):
     """Create a LICENSE file with the specified license text.
     Args:
         license_text (str): The license text to write to the LICENSE file.
@@ -45,6 +46,7 @@ def create_license_file(ctx, license_text, license_path="LICENSE"):
     Example:
         $ invoke create_license_file --license_text=... --license_path=LICENSE
     """
+    license_text = ctx.license_text
     with open(license_path, "w") as license_file:
         license_file.write(license_text)
     print("LICENSE file created.")
