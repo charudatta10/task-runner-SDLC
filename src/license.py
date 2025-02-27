@@ -4,7 +4,6 @@
 
 import os
 import urllib.request
-from invoke import task, Collection, Context
 
 # Define the license information
 LICENSE_TYPE = "Apache-2.0"
@@ -17,12 +16,11 @@ CODE_DIR = "."
 file_types = {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*", ".sh": "#"}
 
 
-@task
-def fetch_license_text(ctx):
+def fetch_license_text():
     try:
         with urllib.request.urlopen(LICENSE_URL) as response:
             if response.status == 200:
-                ctx.license_text = response.read().decode("utf-8")
+                license_text = response.read().decode("utf-8")
                 return response.read().decode("utf-8")
             else:
                 print(
@@ -35,25 +33,22 @@ def fetch_license_text(ctx):
         return None
 
 
-@task(pre=[fetch_license_text])
-def create_license_file(ctx, license_path="LICENSE"):
+def create_license_file(license_path="LICENSE"):
     """Create a LICENSE file with the specified license text.
     Args:
-        license_text (str): The license text to write to the LICENSE file.
         license_path (str): The path to the LICENSE file. Default is "LICENSE".
     Returns:
         None
     Example:
         $ invoke create_license_file --license_text=... --license_path=LICENSE
     """
-    license_text = ctx.license_text
+    license_text = fetch_license_text()
     with open(license_path, "w") as license_file:
         license_file.write(license_text)
     print("LICENSE file created.")
 
 
-@task(pre=[fetch_license_text])
-def add_license_header_to_file(ctx, file_path, header_text, comment_symbol):
+def add_license_header_to_file(file_path, header_text, comment_symbol):
     with open(file_path, "r+") as file:
         content = file.read()
         if header_text in content:
@@ -67,8 +62,7 @@ def add_license_header_to_file(ctx, file_path, header_text, comment_symbol):
     print(f"Added license header to {file_path}")
 
 
-@task(pre=[fetch_license_text])
-def remove_license_header_from_file(ctx, file_path, header_text, comment_symbol):
+def remove_license_header_from_file(file_path, header_text, comment_symbol):
     with open(file_path, "r+") as file:
         content = file.read()
         header = f"{comment_symbol} {header_text} \n{comment_symbol}\n{comment_symbol} {LICENSE_URL}\n\n"
@@ -82,18 +76,17 @@ def remove_license_header_from_file(ctx, file_path, header_text, comment_symbol)
             print(f"No license header found in {file_path}.")
 
 
-@task(pre=[fetch_license_text])
-def add_license_headers(ctx):
+def add_license_headers():
     """Add license headers to all specified file types in the directory.
     Args:
-        ctx (Context): The context instance (passed automatically).
+        None
     Returns:
         None
     Example:
         $ invoke add_license_headers
     """
     # Fetch the license text
-    result = fetch_license_text(ctx)
+    result = fetch_license_text()
     if not result:
         return
 
@@ -104,7 +97,7 @@ def add_license_headers(ctx):
     license_text = f"{result} \n\n{header_text}  \n"
 
     # Create the LICENSE file
-    create_license_file(ctx, license_text)
+    create_license_file(license_text)
 
     # Add the license header to all specified file types in the directory
     for root, _, files in os.walk(CODE_DIR):
@@ -113,21 +106,20 @@ def add_license_headers(ctx):
             if file_ext in file_types:
                 comment_symbol = file_types[file_ext]
                 file_path = os.path.join(root, file)
-                add_license_header_to_file(ctx, file_path, header_text, comment_symbol)
+                add_license_header_to_file(file_path, header_text, comment_symbol)
 
 
-@task(pre=[fetch_license_text])
-def remove_license_headers(ctx):
+def remove_license_headers():
     """Remove license headers from all specified file types in the directory.
     Args:
-        ctx (Context): The context instance (passed automatically).
+        None
     Returns:
         None
     Example:
         $ invoke remove_license_headers
     """
     # Fetch the license text
-    result = fetch_license_text(ctx)
+    result = fetch_license_text()
     if not result:
         return
 
@@ -143,17 +135,8 @@ def remove_license_headers(ctx):
             if file_ext in file_types:
                 comment_symbol = file_types[file_ext]
                 file_path = os.path.join(root, file)
-                remove_license_header_from_file(
-                    ctx, file_path, header_text, comment_symbol
-                )
+                remove_license_header_from_file(file_path, header_text, comment_symbol)
 
 
-ns = Collection(
-    create_license_file,
-    add_license_headers,
-    remove_license_headers,
-    default=add_license_headers,
-)
-ns.name = "license"
 if __name__ == "__main__":
-    default(Context())
+    ...

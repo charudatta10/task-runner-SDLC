@@ -1,116 +1,65 @@
-# Copyright 2076 CHARUDATTA KORDE LLC - Apache-2.0 License
-#
-# https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/apache-2.0.txt
-####################################################
-# create generalized gitignore
-#####################################################
-from invoke import task, Collection
-
-import initialize
-import deploy
-import license
-import readme
-import manger
-import maintain
-from pathlib import Path
-import platform
-
-if platform.system() == "Windows":
-    USER_ROOT_PATH = Path.home()
-else:
-    # Running under WSL
-    USER_ROOT_PATH = Path("/mnt/c/Users/korde") # Update this to your Windows username
-
-PROJECT_PATH = USER_ROOT_PATH  / "Home" / "Github" / "task-runner-SDLC" / "src"
+from invoke import Collection
+from invoke.tasks import task
+import inspect
 
 
-
-# Define modules
-modules = {
-    1: initialize,
-    2: deploy,
-    3: license,
-    4: readme,
-    5: manger,
-    6: maintain,
-}
+# Example function with no arguments
+def create_license_file():
+    print("Creating license file...")
 
 
-@task
-def exit_task(ctx):
-    """Gracefully quit the script."""
-    print("Thank you for using this script!")
-    print("Copyright 2076 CHARUDATTA KORDE LLC - Apache-2.0 License")
+# Create a function that creates a properly configured task wrapper
+def make_wrapper(func, help_text):
+    """Create a wrapper function for a given task."""
+    print(f"Creating wrapper for function: {func.__name__}")  # Debug print
+
+    def wrapped_task(ctx, *args, **kwargs):
+        print(
+            f"Wrapper called for {func.__name__} with ctx: {ctx}, args: {args}, kwargs: {kwargs}"
+        )  # Debug print
+        sig = inspect.signature(func)
+        params = list(sig.parameters.values())
+
+        # If the function has no parameters, call it without any arguments
+        if not params:
+            print(f"{func.__name__} has no parameters, calling without arguments")
+            return func()
+
+        # Check if the function expects a ctx parameter
+        if params and params[0].name == "ctx":
+            print(
+                f"{func.__name__} expects ctx parameter, calling with ctx, args, kwargs"
+            )
+            return func(ctx, *args, **kwargs)
+        else:
+            print(
+                f"{func.__name__} does not expect ctx parameter, calling with args, kwargs"
+            )
+            return func(*args, **kwargs)
+
+    # Set the docstring for help
+    wrapped_task.__doc__ = help_text
+    return wrapped_task
 
 
-@task
-def list_modules(ctx):
-    """List all available modules."""
-    for index, module in modules.items():
-        print(f"{index}: {module.__name__.replace('_', ' ').title()}")
+# Create namespace collection
+ns = Collection()
+
+# List of functions to convert into tasks
+FUNCTIONS_TO_TASKS = [
+    (create_license_file, "create-license", "Create a license file."),
+]
+
+# Create task wrappers and add them to the collection
+for func, task_name, task_help in FUNCTIONS_TO_TASKS:
+    # Create the wrapper function
+    wrapped_task = make_wrapper(func, task_help)
+    # Decorate it with @task
+    task_obj = task(name=task_name)(wrapped_task)
+    # Add it to the collection
+    ns.add_task(task_obj)
+    print(f"Task '{task_name}' added to namespace")  # Debug print
 
 
-@task(default=True)
-def default(ctx):
-    """Default task to list modules and pick tasks within a module.
-    Args:
-        ctx (invoke.Context): The context object for invoking tasks.
-    Returns:
-        None
-    Example:
-        $ invoke task_runner"""
-    print("Available modules:")
-    print("0: Exit Task Runner")
-    list_modules(ctx)
-    module_choice = int(input("Select a module by number: "))
-
-    if module_choice == 0:
-        exit_task(ctx)
-        return
-
-    selected_module = modules.get(module_choice)
-    if not selected_module:
-        print("Invalid choice!")
-        return
-
-    selected_ns = selected_module.ns
-    tasks = sorted(selected_ns.tasks.keys())
-    print(f"Available tasks in {selected_ns.name}:")
-    for i, task_name in enumerate(tasks, 1):
-        print(f"{i}: {task_name}")
-
-    task_choice = int(input("Enter the number of your choice: "))
-    selected_task = tasks[task_choice - 1]
-    print(f"Running task: {selected_ns.name}.{selected_task}")
-    selected_task_cmd = selected_task.replace("_", "-")
-    selected_module_cmd = selected_ns.name.replace("_", "-")
-    print(f"Help for {selected_module_cmd}.{selected_task_cmd}:")
-    command = f"invoke --search-root {PROJECT_PATH} {selected_module_cmd}.{selected_task_cmd}"
-    ctx.run(f"{command} --help")
-
-    args = input(
-        "Enter arguments (format: arg1=value1,arg2=value2, or leave blank for none): "
-    )
-    kwargs = (
-        " ".join(
-            [
-                f"--{k.strip()}={v.strip()}"
-                for k, v in (arg.split("=") for arg in args.split(","))
-            ]
-        )
-        if args.strip()
-        else ""
-    )
-
-    command = f"{command} {kwargs}".strip()
-    print(f"Running command: {command}")
-    ctx.run(command)
-
-
-# Create a namespace and add tasks from the imported modules
-ns = Collection(*modules.values())
-ns.add_task(default)
-ns.name = "task"
-
-if __name__ == "__main__":
-    default(context())
+# Make the collection available to invoke
+namespace = ns

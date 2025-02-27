@@ -24,9 +24,34 @@
 
 ## Getting Started
 
-Run `invoke` cmd in command prompt.
+1. Clone the repository:
 
+```bash
+   git clone https://github.com/charudatta10/{title}.git
+```
+
+1. Navigate to the project directory:
+
+```bash
+cd {title}
+```
+
+1. Run the project:
+
+```bash
+invoke
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests.  
 [Report a bug or Request a feature](https://github.com/charudatta10/{title}/issues)
+
+## License
+
+This project is licensed under the GPL-3.0 License. See the [LICENSE](https://github.com/charudatta10/{title}/blob/main/LICENSE) file for details.
+
+---
 
 Copyright 2076 CHARUDATTA KORDE LLC.
 

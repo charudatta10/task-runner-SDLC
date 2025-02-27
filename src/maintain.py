@@ -7,15 +7,12 @@
 #####################################################
 # tasks.py
 
-from invoke import task, Collection
-
-from invoke import task
 import zipfile
 from pathlib import Path
+import subprocess
 
 
-@task
-def package(ctx):
+def package():
     project_dir = Path("src/")
     output_filename = project_dir / "ypp.zip"
 
@@ -34,27 +31,15 @@ def package(ctx):
     print(f"Packaged project into {output_filename}")
 
 
-@task
-def build_mkdocs(ctx):
+def build_mkdocs():
     """build MkDocs using specified Conda environment."""
-    with ctx.run(f"conda activate s", shell=True):
-        ctx.run(f"python -m mkdocs build")
+    subprocess.run(["python", "-m", "mkdocs", "build"], check=True)
 
 
-@task
-def serve_mkdocs(ctx):
+def serve_mkdocs():
     """build MkDocs using specified Conda environment."""
-    with ctx.run(f"conda activate s", shell=True):
-        ctx.run(f"python -m mkdocs serve")
+    subprocess.run(["python", "-m", "mkdocs", "serve"], check=True)
 
-
-# Create a collection of tasks
-ns = Collection(
-    build_mkdocs,
-    serve_mkdocs,
-    package,
-)
-ns.name = "maintain"
 
 if __name__ == "__main__":
-    default(context())
+    ...

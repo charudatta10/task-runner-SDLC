@@ -1,111 +1,66 @@
-# Copyright 2076 CHARUDATTA KORDE LLC - Apache-2.0 License
-#
-# https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/apache-2.0.txt
-
 # tasks.py
 
-from invoke import task, Collection
 import logging
-from pathlib import Path
+import subprocess
 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+# Define commands in a dictionary
+commands = {
+    0: ("pull latest changes", "git pull origin main --force"),
+    1: ("unit tests", "python -m unittest discover -s tests"),
+    2: ("security checks", "bandit -r ."),
+    3: ("pylint", "pylint ."),
+    4: ("flake8", "flake8 ."),
+    5: ("black", "black ."),
+    6: ("add changes", "git add ."),
+    7: ("commit changes", 'git commit -m "Deployment Commit"'),
+    8: ("push changes", "git push -u origin main"),
+}
 
-@task
-def pull_latest_changes(ctx):
-    """Pull the latest changes from the main branch."""
-    ctx.run("git pull origin main --force")
-
-
-@task
-def run_unit_tests(ctx):
-    """Run unit tests."""
-    ctx.run("python -m unittest discover -s tests")
-
-
-@task
-def run_security_checks(ctx):
-    """Run security checks with Bandit."""
-    ctx.run("bandit -r .")
+# Default command index
+DEFAULT_COMMAND_INDEX = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 
-@task
-def run_pylint(ctx):
-    """Run Pylint."""
-    ctx.run("pylint .")
+def run_command(command):
+    """Run a given command."""
+    logging.info(f"Running {command}...")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Error running command '{command}': {e}")
 
 
-@task
-def run_flake8(ctx):
-    """Run Flake8."""
-    ctx.run("flake8 .")
+def display_commands():
+    """Display available commands."""
+    print("Available commands:")
+    for index, (name, _) in commands.items():
+        print(f"{index}: {name}")
 
-
-@task
-def run_black(ctx):
-    """Run Black."""
-    ctx.run("black .")
-
-
-@task
-def add_changes(ctx):
-    """Add changes to Git."""
-    ctx.run("git add .")
-
-
-@task
-def commit_changes(ctx, message="Deployment Commit"):
-    """Commit changes to Git."""
-    ctx.run(f'git commit -m "{message}"')
-
-
-@task
-def push_changes(ctx):
-    """Push changes to the main branch."""
-    ctx.run("git push -u origin main")
-
-
-@task(
-    pre=[
-        pull_latest_changes,
-        run_unit_tests,
-        run_security_checks,
-        run_pylint,
-        run_flake8,
-        run_black,
-        add_changes,
-        commit_changes,
-        push_changes,
-    ]
-)
-def deploy(ctx, message="Deployment Commit"):
-    """
-    Perform deployment checks and commit changes.
-
-    Args:
-        message (str): The commit message for the deployment.
-    """
-    logging.info("Deployment checks completed.")
-
-
-# Create a collection of tasks
-ns = Collection(
-    pull_latest_changes,
-    run_unit_tests,
-    run_security_checks,
-    run_pylint,
-    run_flake8,
-    run_black,
-    add_changes,
-    commit_changes,
-    push_changes,
-    deploy,
-    default=deploy,
-)
-ns.name = "deploy"
 
 if __name__ == "__main__":
-    default(Context())
+    display_commands()
+
+    user_input = input(
+        "Enter the command indices to run (comma-separated, default: 0): "
+    )
+
+    try:
+        command_indices = (
+            list(map(int, user_input.split(",")))
+            if user_input.strip()
+            else DEFAULT_COMMAND_INDEX
+        )
+    except ValueError:
+        print("Invalid input. Using default command.")
+        command_indices = DEFAULT_COMMAND_INDEX
+
+    for index in command_indices:
+        if index in commands:
+            description, command = commands[index]
+            run_command(command)
+        else:
+            print(f"Invalid command index: {index}")

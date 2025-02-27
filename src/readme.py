@@ -5,7 +5,6 @@
 # make simplified version for private directories with notes, tasks, title, description
 #####################################################
 
-from invoke import task, Collection
 from pathlib import Path
 
 
@@ -90,14 +89,10 @@ theme: gaia
             f.write(file_content)
 
 
-@task
-def generate_readme(ctx, ppt_gen=False):
+def generate_readme(ppt_gen=False):
     readme = ReadmeGen()
     readme.main(ppt_gen=ppt_gen)
 
 
-ns = Collection(generate_readme)
-ns.name = "readme"
-
 if __name__ == "__main__":
-    default(context())
+    generate_readme(ppt_gen=False)
