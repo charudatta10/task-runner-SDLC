@@ -14,14 +14,17 @@ logging.basicConfig(
 # Define commands in a dictionary
 commands = {
     "initialize_git": "git init",
-    "create_files": [
+    "create_directories": ["mkdir -p docs", "mkdir -p src", "mkdir -p tests"],
+     "create_files": [
         "touch .env",
         "touch .gitattributes",
         "touch requirements.txt",
         "touch tasks.py",
-        "touch __main__.py",
+        "touch src/__main__.py",
+        "touch src/__init__.py",
+        "touch tests/__init__.py",
+        "touch tests/test_main.py",
     ],
-    "create_directories": ["mkdir -p docs", "mkdir -p src", "mkdir -p tests"],
     "create_gitignore": "curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore",
     "setup_logging": 'echo \'import logging\nlogging.basicConfig(filename="app.log", level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")\' >> src/*.py',
     "create_archive": "zip archive.zip __main__.py",
