@@ -45,7 +45,7 @@ def main():
     display_commands()
 
     user_input = input(
-        "Enter the command indices to run (comma-separated, default: 0): "
+        "Enter the command indices to run (comma-separated, default: all): "
     )
 
     try:
