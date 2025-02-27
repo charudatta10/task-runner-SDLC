@@ -19,11 +19,13 @@ commands = [
     ("manage", manage),
 ]
 
+
 def display_commands():
     """Display available commands."""
     print("Available commands:")
     for index, (name, _) in enumerate(commands):
         print(f"{index}: {name}")
+
 
 def main():
     display_commands()
@@ -39,6 +41,7 @@ def main():
             print(f"Invalid command index: {command_index}")
     except ValueError:
         print("Invalid input. Please enter a valid command index.")
+
 
 if __name__ == "__main__":
     main()
