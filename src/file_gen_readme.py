@@ -89,10 +89,10 @@ theme: gaia
             f.write(file_content)
 
 
-def generate_readme(ppt_gen=False):
+def main(ppt_gen=False):
     readme = ReadmeGen()
     readme.main(ppt_gen=ppt_gen)
 
 
 if __name__ == "__main__":
-    generate_readme(ppt_gen=False)
+    main(ppt_gen=False)
