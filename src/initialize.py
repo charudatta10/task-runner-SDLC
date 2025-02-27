@@ -14,20 +14,10 @@ logging.basicConfig(
 # Define commands in a dictionary
 commands = {
     "initialize_git": "git init",
-    "create_directories": ["mkdir -p docs", "mkdir -p src", "mkdir -p tests"],
-     "create_files": [
-        "touch .env",
-        "touch .gitattributes",
-        "touch requirements.txt",
-        "touch tasks.py",
-        "touch src/__main__.py",
-        "touch src/__init__.py",
-        "touch tests/__init__.py",
-        "touch tests/test_main.py",
-    ],
+    "create_directories": "md src docs tests",
+    "create_files": "touch .env .gitattributes .gitignore .pre-commit-config.yaml Dockerfile README.md requirements.txt tasks.py src/__main__.py src/__init__.py tests/__init__.py tests/test_main.py",
     "create_gitignore": "curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore",
-    "setup_logging": 'echo \'import logging\nlogging.basicConfig(filename="app.log", level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")\' >> src/*.py',
-    "create_archive": "zip archive.zip __main__.py",
+    "create_archive": "zip archive.zip src/*",
     "initialize_mkdocs": "mkdocs new docs",
 }
 
@@ -35,13 +25,16 @@ commands = {
 # Run a given command or a list of commands
 def run_command(command):
     """Run a given command or a list of commands."""
-    if isinstance(command, list):
-        for cmd in command:
-            logging.info(f"Running {cmd}...")
-            subprocess.run(cmd, shell=True, check=True)
-    else:
-        logging.info(f"Running {command}...")
-        subprocess.run(command, shell=True, check=True)
+    try:
+        if isinstance(command, list):
+            for cmd in command:
+                logging.info(f"Running {cmd}...")
+                subprocess.run(cmd, shell=True, check=True)
+        else:
+            logging.info(f"Running {command}...")
+            subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Error running command '{command}': {e}")
 
 
 # Display available commands

@@ -1,142 +1,168 @@
-# Copyright 2076 CHARUDATTA KORDE LLC - Apache-2.0 License
-#
-# https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/apache-2.0.txt
-
 import os
 import urllib.request
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Define the license information
-LICENSE_TYPE = "Apache-2.0"
-COPYRIGHT_HOLDER = "CHARUDATTA KORDE LLC"
-COPYRIGHT_YEAR = "2076"
-LICENSE_URL = f"https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/{LICENSE_TYPE.lower()}.txt"
-CODE_DIR = "."
+from dataclasses import dataclass, field
 
-# Define file types and comment symbols
-file_types = {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*", ".sh": "#"}
+@dataclass
+class LicenseConfig:
+    LICENSE_TYPE: str = "Apache-2.0"
+    COPYRIGHT_HOLDER: str = "CHARUDATTA KORDE LLC"
+    COPYRIGHT_YEAR: int = 2076
+    LICENSE_URL: str = field(init=False)
+    HEADER_TEXT: str = field(init=False)
+    CODE_DIR: str = "."
+    FILE_TYPES: dict = field(default_factory=lambda: {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*", ".sh": "#"})
+    
+    # Logging configuration
+    LOGGING_CONFIG: dict = field(default_factory=lambda: {
+        "log_filename": "app.log",
+        "log_level": "DEBUG",
+        "log_format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    })
 
+    def __post_init__(self):
+        self.LICENSE_URL = f"https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/{self.LICENSE_TYPE.lower()}.txt"
+        self.HEADER_TEXT = f"Copyright {self.COPYRIGHT_YEAR} {self.COPYRIGHT_HOLDER} - {self.LICENSE_TYPE} License"
+
+config = LicenseConfig()
 
 def fetch_license_text():
     try:
-        with urllib.request.urlopen(LICENSE_URL) as response:
+        with urllib.request.urlopen(config.LICENSE_URL) as response:
             if response.status == 200:
-                license_text = response.read().decode("utf-8")
                 return response.read().decode("utf-8")
             else:
-                print(
-                    "Failed to fetch the license text. HTTP Status Code:",
-                    response.status,
-                )
-                return None
+                logging.error(f"Failed to fetch the license text. HTTP Status Code: {response.status}")
     except urllib.error.URLError as e:
-        print(f"Failed to fetch the license text. Error: {e}")
-        return None
+        logging.error(f"Failed to fetch the license text. Error: {e}")
 
-
-def create_license_file(license_path="LICENSE"):
-    """Create a LICENSE file with the specified license text.
-    Args:
-        license_path (str): The path to the LICENSE file. Default is "LICENSE".
-    Returns:
-        None
-    Example:
-        $ invoke create_license_file --license_text=... --license_path=LICENSE
-    """
+def create_license_file():
     license_text = fetch_license_text()
-    with open(license_path, "w") as license_file:
-        license_file.write(license_text)
-    print("LICENSE file created.")
+    if license_text:
+        with open("LICENSE", "w") as license_file:
+            license_file.write(license_text)
+        logging.info("LICENSE file created.")
 
+def get_license_header(comment_symbol):
+    """Generate license header with appropriate comment symbol"""
+    return f"{comment_symbol} {config.HEADER_TEXT} \n{comment_symbol}\n{comment_symbol} {config.LICENSE_URL}\n\n"
 
-def add_license_header_to_file(file_path, header_text, comment_symbol):
+def get_logging_header():
+    """Generate Python logging configuration header"""
+    log_config = config.LOGGING_CONFIG
+    return f"""import logging
+logging.basicConfig(filename="{log_config['log_filename']}", level=logging.{log_config['log_level']}, format="{log_config['log_format']}")
+
+"""
+
+def modify_file_header(file_path, header_type, action="add"):
+    """Add or remove headers (license or logging) to/from a file"""
+    file_ext = os.path.splitext(file_path)[1]
+    comment_symbol = config.FILE_TYPES.get(file_ext, "#")
+    
+    # Only process Python files for logging headers
+    if header_type == "logging" and file_ext != ".py":
+        return
+    
     with open(file_path, "r+") as file:
         content = file.read()
-        if header_text in content:
-            print(f"License header already exists in {file_path}.")
-            return
-        file.seek(0, 0)
-        file.write(
-            f"{comment_symbol} {header_text} \n{comment_symbol}\n{comment_symbol} {LICENSE_URL}\n\n{content}"
-        )
+        license_header = get_license_header(comment_symbol) if header_type in ["license", "both"] else ""
+        logging_header = get_logging_header() if header_type in ["logging", "both"] and file_ext == ".py" else ""
+        
+        if action == "add":
+            # Add headers as needed
+            modified = False
+            if license_header and config.HEADER_TEXT not in content:
+                content = license_header + content
+                modified = True
+                
+            if logging_header and "import logging\nlogging.basicConfig" not in content:
+                content = content.replace(license_header, license_header + logging_header) if license_header in content else logging_header + content
+                modified = True
+                
+            if modified:
+                file.seek(0, 0)
+                file.truncate()
+                file.write(content)
+                logging.info(f"Added {header_type} header(s) to {file_path}")
+            else:
+                logging.warning(f"{header_type.capitalize()} header(s) already exist in {file_path}")
+                
+        elif action == "remove":
+            modified = False
+            
+            # Remove license header if present
+            if license_header and header_type in ["license", "both"] and config.HEADER_TEXT in content:
+                content = content.replace(license_header, "")
+                modified = True
+                
+            # Remove logging header if present
+            if header_type in ["logging", "both"] and file_ext == ".py":
+                logging_import = "import logging\nlogging.basicConfig"
+                if logging_import in content:
+                    lines = content.split("\n")
+                    new_lines = []
+                    skip = False
+                    for i, line in enumerate(lines):
+                        if logging_import in line:
+                            skip = True
+                        elif skip and (i+1 < len(lines) and not lines[i+1].strip()) or not line.strip():
+                            skip = False
+                        elif not skip:
+                            new_lines.append(line)
+                    content = "\n".join(new_lines)
+                    modified = True
+            
+            if modified:
+                file.seek(0, 0)
+                file.truncate()
+                file.write(content)
+                logging.info(f"Removed {header_type} header(s) from {file_path}")
+            else:
+                logging.warning(f"No {header_type} header(s) found in {file_path}")
 
-    print(f"Added license header to {file_path}")
-
-
-def remove_license_header_from_file(file_path, header_text, comment_symbol):
-    with open(file_path, "r+") as file:
-        content = file.read()
-        header = f"{comment_symbol} {header_text} \n{comment_symbol}\n{comment_symbol} {LICENSE_URL}\n\n"
-        if header in content:
-            content = content.replace(header, "")
-            file.seek(0)
-            file.truncate()
-            file.write(content)
-            print(f"Removed license header from {file_path}.")
-        else:
-            print(f"No license header found in {file_path}.")
-
-
-def add_license_headers():
-    """Add license headers to all specified file types in the directory.
-    Args:
-        None
-    Returns:
-        None
-    Example:
-        $ invoke add_license_headers
-    """
-    # Fetch the license text
-    result = fetch_license_text()
-    if not result:
-        return
-
-    # Add the copyright notice to the license text
-    header_text = (
-        f"Copyright {COPYRIGHT_YEAR} {COPYRIGHT_HOLDER} - {LICENSE_TYPE} License"
-    )
-    license_text = f"{result} \n\n{header_text}  \n"
-
-    # Create the LICENSE file
-    create_license_file(license_text)
-
-    # Add the license header to all specified file types in the directory
-    for root, _, files in os.walk(CODE_DIR):
+def process_file_headers(header_type, action):
+    """Process all files in the directory based on header type and action"""
+    if action == "add" and header_type in ["license", "both"]:
+        create_license_file()
+        
+    for root, _, files in os.walk(config.CODE_DIR):
         for file in files:
             file_ext = os.path.splitext(file)[1]
-            if file_ext in file_types:
-                comment_symbol = file_types[file_ext]
+            if file_ext in config.FILE_TYPES:
                 file_path = os.path.join(root, file)
-                add_license_header_to_file(file_path, header_text, comment_symbol)
+                modify_file_header(file_path, header_type, action)
 
-
-def remove_license_headers():
-    """Remove license headers from all specified file types in the directory.
-    Args:
-        None
-    Returns:
-        None
-    Example:
-        $ invoke remove_license_headers
-    """
-    # Fetch the license text
-    result = fetch_license_text()
-    if not result:
-        return
-
-    # Define the license header text
-    header_text = (
-        f"Copyright {COPYRIGHT_YEAR} {COPYRIGHT_HOLDER} - {LICENSE_TYPE} License"
-    )
-
-    # Remove the license header from all specified file types in the directory
-    for root, _, files in os.walk(CODE_DIR):
-        for file in files:
-            file_ext = os.path.splitext(file)[1]
-            if file_ext in file_types:
-                comment_symbol = file_types[file_ext]
-                file_path = os.path.join(root, file)
-                remove_license_header_from_file(file_path, header_text, comment_symbol)
-
+def main():
+    print("\nHeader Management Utility")
+    print("========================")
+    print("1. Add/remove license headers")
+    print("2. Add/remove logging configuration")
+    print("3. Add/remove both license and logging headers")
+    
+    try:
+        header_choice = int(input("\nChoose header type (1-3): ").strip())
+        if header_choice not in [1, 2, 3]:
+            raise ValueError("Invalid choice")
+            
+        header_types = {1: "license", 2: "logging", 3: "both"}
+        header_type = header_types[header_choice]
+        
+        action = input("Enter 'add' to add headers or 'remove' to remove them: ").strip().lower()
+        if action not in ["add", "remove"]:
+            raise ValueError("Invalid action")
+            
+        process_file_headers(header_type, action)
+        
+    except ValueError as e:
+        logging.error(f"Invalid input: {e}")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-    ...
+    main()

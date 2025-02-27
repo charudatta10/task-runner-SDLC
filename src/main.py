@@ -2,22 +2,20 @@
 
 from deploy import main as deploy
 from file_gen_readme import main as generate_readme
-from file_gen_license import create_license_file, add_license_headers, remove_license_headers
+from file_gen_license import main as process_file_headers
 from initialize import main as init
 from maintain import package, build_mkdocs, serve_mkdocs
 from manger import main as manage
 
 # Define available commands and their corresponding functions
 commands = [
-    ("deploy", deploy),
-    ("generate_readme", generate_readme),
-    ("create_license_file", create_license_file),
-    ("add_license_headers", add_license_headers),
-    ("remove_license_headers", remove_license_headers),
     ("init", init),
+    ("generate readme", generate_readme),
+    ("process file headers", process_file_headers),
+    ("deploy", deploy),
     ("package", package),
-    ("build_mkdocs", build_mkdocs),
-    ("serve_mkdocs", serve_mkdocs),
+    ("build mkdocs", build_mkdocs),
+    ("serve mkdocs", serve_mkdocs),
     ("manage", manage),
 ]
 
