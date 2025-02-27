@@ -41,7 +41,7 @@ def display_commands():
         print(f"{index}: {name}")
 
 
-if __name__ == "__main__":
+def main():
     display_commands()
 
     user_input = input(
@@ -64,3 +64,7 @@ if __name__ == "__main__":
             run_command(command)
         else:
             print(f"Invalid command index: {index}")
+
+
+if __name__ == "__main__":
+    main()
