@@ -9,8 +9,8 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
-from invoke import tasks
+from invoke import task
 
-@tasks
-def (ctx):
+@task(default=True)
+def main(ctx):
     ctx.run("python src")
