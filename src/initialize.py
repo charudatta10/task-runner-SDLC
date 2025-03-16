@@ -30,6 +30,7 @@ commands = {
     "create_gitignore": "curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore",
     "create_archive": "zip -r -j archive.zip src/*",
     "initialize_mkdocs": "mkdocs new docs",
+    "initialize_docsify": "docsify init docs",
 }
 
 
