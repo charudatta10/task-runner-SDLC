@@ -33,6 +33,8 @@ commands = {
     "initialize_docsify": "docsify init docs",
 }
 
+#curl "${REPO_DOCS}/{_coverpage.md,_sidebar.md,.nojekyll,index.html,README.md}" -O
+#curl "${REPO_DOCS}/{_coverpage.md,_sidebar.md,.nojekyll,index.html,README.md}" -o docs/#1
 
 # Run a given command or a list of commands
 def run_command(command):
