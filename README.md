@@ -31,8 +31,12 @@
 
 Run `invoke` cmd in command prompt.
 
-[Report a bug or Request a feature](https://github.com/charudatta10/task-runner-SDLC/issues)
+## Contributing
 
-Copyright 2076 CHARUDATTA KORDE LLC.
+Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests. [Report a bug or Request a feature](https://github.com/charudatta10/{title}/issues)
+
+## COPYRIGHT NOTICE
+
+© 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike.
 
 <!-- Acknowledgment, References, Misc -->
