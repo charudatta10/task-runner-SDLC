@@ -11,6 +11,11 @@
 [![work](https://flat.badgen.net//static/portfolio/%F0%9F%96%BF)](https://charudatta10.github.io/myblog/)
 ![project](https://flat.badgen.net///static/project/{title})
 
+![build](https://flat.badgen.net/github/checks/charudatta10/{title}) 
+![test](https://flat.badgen.net/codecov/c/github/charudatta10/{title}) 
+![deploy](https://img.shields.io/badge/Deploy-Passing-brightgreen.svg)
+![documentation](https://flat.badgen.net/badge/docs/online/blue)
+
 <!-- Badges: Tools used -->
 {list_badges}
 
@@ -44,15 +49,10 @@ invoke
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests.  
-[Report a bug or Request a feature](https://github.com/charudatta10/{title}/issues)
+Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests. [Report a bug or Request a feature](https://github.com/charudatta10/{title}/issues)
 
-## License
+## COPYRIGHT NOTICE
 
-This project is licensed under the GPL-3.0 License. See the [LICENSE](https://github.com/charudatta10/{title}/blob/main/LICENSE) file for details.
-
----
-
-Copyright 2076 CHARUDATTA KORDE LLC.
+Some Rights Reserved © 2025 Charudatta Korde. This work and its derivatives may only be used with full attribution to the original author. Any unauthorized commercial use is strictly prohibited. For complete details, refer to the accompanying License Agreement.
 
 <!-- Acknowledgment, References, Misc -->

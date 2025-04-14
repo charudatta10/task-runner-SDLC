@@ -22,15 +22,16 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+REPO_DOCS= "https://github.com/charudatta10/task-runner-SDLC/tree/main/src/template"
 # Define commands in a dictionary
 commands = {
     "initialize_git": "git init",
     "create_directories": "md src docs tests",
+    "add_license": f"curl -o LICENSE \"{REPO_DOCS}/LICENSE\"",
     "create_files": "touch .env .gitattributes .gitignore .pre-commit-config.yaml Dockerfile README.md requirements.txt tasks.py src/__main__.py src/__init__.py tests/__init__.py tests/test_main.py",
     "create_gitignore": "curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore",
     "create_archive": "zip -r -j archive.zip src/*",
-    "initialize_mkdocs": "mkdocs new docs",
-    "initialize_docsify": "docsify init docs",
+    "initialize_docsify": f"curl \"{REPO_DOCS}/{{_coverpage.md,_homepage.md,_navbar.md,_sidebar.md,.nojekyll,index.html,README.md}}\" -o docs/#1",
 }
 
 #curl "${REPO_DOCS}/{_coverpage.md,_sidebar.md,.nojekyll,index.html,README.md}" -O

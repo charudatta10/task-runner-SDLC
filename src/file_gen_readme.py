@@ -52,7 +52,7 @@ class ConfigGen:
 class ReadmeGen:
 
     def __init__(self):
-        self.template_path = Path(__file__).parent / "template.md"
+        self.template_path = Path(__file__).parent / "template" / "template.md"
         self.file_name = "README.md"
         self.data = {}
 
