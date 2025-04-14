@@ -53,6 +53,6 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## COPYRIGHT NOTICE
 
-Some Rights Reserved © 2025 Charudatta Korde. This work and its derivatives may only be used with full attribution to the original author. Any unauthorized commercial use is strictly prohibited. For complete details, refer to the accompanying License Agreement.
+© 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike. For complete details, refer to the accompanying License Agreement.
 
 <!-- Acknowledgment, References, Misc -->
