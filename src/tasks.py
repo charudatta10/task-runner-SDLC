@@ -194,3 +194,7 @@ def list_tasks(ctx):
     for task in tasks:
         print(f"{task['id']}: {task['title']} - {task['status']}")
 
+@task(default=True)
+def main(ctx):
+    """List all tasks"""
+    run_command(ctx, "inv --list","To select command type invoke again and cmd", "fail")
