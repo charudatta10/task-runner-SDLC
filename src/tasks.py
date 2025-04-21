@@ -10,7 +10,7 @@ import zipfile
 # ========== Configuration ==========
 class Config:
     """Central configuration for all tasks"""
-    REPO_DOCS = "https://github.com/charudatta10/task-runner-SDLC/tree/main/src/template"
+    REPO_DOCS = "https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates"
     LICENSE_HEADER = "© 2025 Charudatta Korde. Some Rights Reserved."
     LICENSE_URL = f"{REPO_DOCS}/LICENSE"
     CODE_DIR = "src"
@@ -24,7 +24,7 @@ class Config:
     ]
     DOCS_FILES = [
         "_coverpage.md", "_homepage.md", "_navbar.md",
-        "_sidebar.md", ".nojekyll", "index.html", "README.md"
+        ".nojekyll", "index.html", "README.md"
     ]
 
 # Initialize logging
