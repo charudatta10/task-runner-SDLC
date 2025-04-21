@@ -198,3 +198,44 @@ def list_tasks(ctx):
 def main(ctx):
     """List all tasks"""
     run_command(ctx, "inv --list","To select command type invoke again and cmd", "fail")
+
+#============ README Generation ==========
+@task
+def generate_readme(ctx):
+    """Generate a README file based on user input and a template."""
+    download_file(Config.REPO_DOCS + "/template.md", "README.md")
+    logging.info("README file downloaded successfully.")
+    with open("README.md", "r", encoding="utf-8") as file:
+        template_content = file.read()
+    logging.info("README file opened successfully.")
+    # Step 2: Helper functions to collect user input
+    def collect_items(prompt, formatter):
+        items = []
+        print(f"{prompt} (Type 'done' to finish):")
+        while True:
+            item = input("- ")
+            if item.lower() == "done":
+                break
+            formatted_item = f"- {item}" if formatter == "list_features" else f"`{item}`"
+            items.append(formatted_item)
+        return "\n".join(items) if formatter == "list_features" else " ".join(items)
+    # Step 3: Collect data
+    data = {
+        "title": input("Enter title of project -> "),
+        "description": input("Enter project description -> "),
+        "features": collect_items("Enter project features -> ", "list_features"),
+        "list_badges": collect_items("Enter softwares used in the project -> ", "list_badges"),
+    }
+    logging.info("README file input parsed successfully.")
+    # Step 4: Format and write the README file
+    readme_content = template_content.format(
+        title=data.get("title", "Untitled Project"),
+        description=data.get("description", "No description provided."),
+        features=data.get("features", ""),
+        list_badges=data.get("list_badges", "")
+    )
+    logging.info("README file text generated successfully.")
+    with open("README.md", "w", encoding="utf-8") as file:
+        file.write(readme_content)
+    
+    logging.info("README file generated successfully.")
