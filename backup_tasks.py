@@ -11,7 +11,7 @@ import zipfile
 class Config:
     """Central configuration for all tasks"""
     REPO_DOCS = "https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates"
-    LICENSE_HEADER = "© 2025 Charudatta Korde. Some Rights Reserved."
+    LICENSE_HEADER = "© 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike."
     LICENSE_URL = f"{REPO_DOCS}/LICENSE"
     CODE_DIR = "src"
     TASKS_FILE = "tasks.json"
@@ -25,6 +25,11 @@ class Config:
     DOCS_FILES = [
         "_coverpage.md", "_homepage.md", "_navbar.md",
         ".nojekyll", "index.html", "README.md"
+    ]
+    COMMUNITY_FILES = [
+        "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "LICENSE", "CHANGELOG.md",
+        "SECURITY.md", "bug_report.md", "feature_request.md",
+        "issue_template.md", "pull_request_template.md"     
     ]
 
 # Initialize logging
@@ -140,10 +145,52 @@ def setup_docs(ctx):
         if download_file(f"{Config.REPO_DOCS}/{file}", f"docs/{file}"):
             logging.info(f"Downloaded docs file: {file}")
 
-@task(pre=[git_init, create_dirs, create_files, setup_docs])
+@task
+def get_community_files(ctx):
+    """Download community files"""
+    for file in Config.COMMUNITY_FILES:
+        if download_file(f"{Config.REPO_DOCS}/{file}", file):
+            logging.info(f"Downloaded community file: {file}")
+
+
+
+@task
+def add_license_header(ctx, action="add"):
+    """Add or remove license header to/from files.
+    
+    Use `--action=add` to add headers and `--action=remove` to remove them.
+    """
+    for root, _, files in os.walk(Config.CODE_DIR):
+        for file in files:
+            file_ext = os.path.splitext(file)[1]
+            if file_ext in Config.FILE_TYPES.keys():
+                license_text = f"{Config.FILE_TYPES[file_ext]} {Config.LICENSE_HEADER}\n{Config.FILE_TYPES[file_ext]} {Config.LICENSE_URL}"
+                file_path = os.path.join(root, file)
+                print(f"LICENSE_HEADER: {Config.LICENSE_HEADER}")
+                print(f"Action: {action}")
+
+                with open(file_path, "r+", encoding="utf-8", errors="ignore") as f:
+                    content = f.read()
+                    print(f"Content: {content}")
+                    
+                    if action == "add" and Config.LICENSE_HEADER not in content:
+                        f.seek(0)
+                        f.write(license_text + "\n" + content)
+                        logging.info(f"Added license header to {file}")
+                    
+                    elif action == "remove" and Config.LICENSE_HEADER in content:
+                        updated_content = content.replace(license_text + "\n", "")
+                        f.seek(0)
+                        f.truncate()
+                        f.write(updated_content)
+                        logging.info(f"Removed license header from {file}")
+
+
+@task(pre=[git_init, create_dirs, create_files, setup_docs, get_community_files])
 def setup_project(ctx):
     """Initialize new project"""
     logging.info("Project setup complete")
+
 
 # ========== Deployment Tasks ==========
 @task(pre=[git_pull, run_tests, run_security, run_lint, run_flake8, run_format, git_add, git_commit, git_push])
@@ -239,3 +286,29 @@ def generate_readme(ctx):
         file.write(readme_content)
     
     logging.info("README file generated successfully.")
+
+@task
+def ppt_gen(ctx):
+    """Generate a presentation file based on README content."""
+    # Read the content of the README file
+    if not os.path.exists("README.md"):
+        logging.error("README.md file not found. Please generate it first.")
+        return
+
+    with open("README.md", "r", encoding="utf-8") as readme_file:
+        readme_content = readme_file.read()
+
+    # Prepare the presentation content
+    file_content = f"""---
+marp: true
+headingDivider: 6
+theme: gaia
+---
+
+{readme_content}"""
+
+    # Write the content to a new presentation file
+    with open("readmex.md", "w+", encoding="utf-8") as presentation_file:
+        presentation_file.write(file_content)
+
+    logging.info("Presentation file 'readmex.md' generated successfully.")

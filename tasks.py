@@ -1,16 +1,9 @@
-# Copyright 2076 CHARUDATTA KORDE LLC - Apache-2.0 License
-#
-# https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/apache-2.0.txt
-import logging
+from invoke import Program
+from src import ns
 
-logging.basicConfig(
-    filename="app.log",
-    level=logging.DEBUG,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+# Configure CLI
+program = Program(
+    namespace=ns,
+    version="1.0.0",
+    name="Task Runner"
 )
-
-from invoke import task
-
-@task(default=True)
-def main(ctx):
-    ctx.run("python src")

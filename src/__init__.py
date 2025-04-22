@@ -1,10 +1,12 @@
-import logging
+from invoke import Collection
+from . import git, quality, setup, docs, license
 
-logging.basicConfig(
-    filename="app.log",
-    level=logging.DEBUG,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-)
-# Copyright 2076 CHARUDATTA KORDE LLC - Apache-2.0 License
-#
-# https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/apache-2.0.txt
+# Root namespace
+ns = Collection()
+
+# Add sub-collections
+ns.add_collection(git.ns, name="git")
+ns.add_collection(quality.ns, name="quality")
+ns.add_collection(setup.ns, name="setup")
+ns.add_collection(docs.ns, name="docs")
+ns.add_collection(license.ns, name="license")
