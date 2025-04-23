@@ -4,4 +4,4 @@
 - [FAQ](faq)
 - [Contributors](../CONTRIBUTING.md)
 - [Changelog](changelog)
-- [License](../license.md)
+- [License](../LICENSE.md)
