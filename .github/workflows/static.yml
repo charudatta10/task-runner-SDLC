@@ -42,7 +42,7 @@ jobs:
           mkdir site
           cp -r docs site/
           cp LICENSE.md site/
-          cp CONTRIBUTING.md
+          cp CONTRIBUTING.md site/
 
       - name: Upload Docsify Site
         uses: actions/upload-pages-artifact@v3
