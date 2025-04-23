@@ -27,7 +27,7 @@ class Config:
         ".nojekyll", "index.html"
     ]
     COMMUNITY_FILES = [
-        "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "LICENSE", "CHANGELOG.md",
+        "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "LICENSE.md", "CHANGELOG.md",
         "SECURITY.md", "bug_report.md", "feature_request.md",
         "issue_template.md", "pull_request_template.md"     
     ]
