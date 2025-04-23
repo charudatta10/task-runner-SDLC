@@ -24,7 +24,7 @@ class Config:
     ]
     DOCS_FILES = [
         "_coverpage.md", "_homepage.md", "_navbar.md",
-        ".nojekyll", "index.html", "README.md"
+        ".nojekyll", "index.html"
     ]
     COMMUNITY_FILES = [
         "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "LICENSE", "CHANGELOG.md",

@@ -1,7 +1,7 @@
 # © 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike.
 # https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates/LICENSE
 from invoke import Collection
-from . import git, quality, setup, docs, license
+from . import git, quality, setup, docs, license, readme, manager
 
 # Root namespace
 ns = Collection()
@@ -12,3 +12,5 @@ ns.add_collection(quality.ns, name="quality")
 ns.add_collection(setup.ns, name="setup")
 ns.add_collection(docs.ns, name="docs")
 ns.add_collection(license.ns, name="license")
+ns.add_collection(readme.ns, name="readme")
+ns.add_collection(manager.ns, name="manager")
