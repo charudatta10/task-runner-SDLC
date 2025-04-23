@@ -1,11 +1,12 @@
+# © 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike.
+# https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates/LICENSE
 from invoke import task, Collection
 import os
 import logging
 from pathlib import Path
+from .config import Config
+from .utility import download_file
 
-class Config:
-    LICENSE_HEADER = "© 2025 Charudatta Korde. Some Rights Reserved."
-    FILE_TYPES = {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*"}
 
 @task
 def add_header(ctx, action="add"):
@@ -16,7 +17,7 @@ def add_header(ctx, action="add"):
             if ext in Config.FILE_TYPES:
                 file_path = Path(root) / file
                 comment = Config.FILE_TYPES[ext]
-                license_text = f"{comment} {Config.LICENSE_HEADER}\n"
+                license_text = f"{comment} {Config.LICENSE_HEADER}\n{comment} {Config.LICENSE_URL}\n"
 
                 with open(file_path, "r+", encoding="utf-8") as f:
                     content = f.read()
