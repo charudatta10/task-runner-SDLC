@@ -37,18 +37,11 @@ jobs:
         uses: actions/configure-pages@v5
 
       # Step 3: Upload the Docsify site files (docs directory)
-      - name: Prepare Files
-        run: |
-          mkdir site
-          cp -r docs site/
-          cp LICENSE.md site/
-          cp CONTRIBUTING.md site/
-
       - name: Upload Docsify Site
         uses: actions/upload-pages-artifact@v3
         with:
           # Only include the `docs/` directory
-          path: site/
+          path: .
 
 
       # Step 4: Deploy to GitHub Pages
