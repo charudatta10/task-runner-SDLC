@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Only include the `docs/` directory
-          path: docs
+          path: docs, LICENSE.md
 
 
       # Step 4: Deploy to GitHub Pages
