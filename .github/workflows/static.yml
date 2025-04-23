@@ -42,7 +42,7 @@ jobs:
         with:
           # Only include the `docs/` directory
           path: |
-            docs/
+            docs
 
 
       # Step 4: Deploy to GitHub Pages
