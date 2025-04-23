@@ -42,7 +42,7 @@ jobs:
         with:
           # Only include the `docs/` directory
           path: |
-            docs
+            docs/
             LICENSE.md
             README.md
             CONTRIBUTING.md
