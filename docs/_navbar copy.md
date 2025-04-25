@@ -2,6 +2,6 @@
 - [Features](features)
 - [Getting Started](getting-started.md)
 - [FAQ](faq)
-- [Contributors](CONTRIBUTING.md)
+- [Contributors](../CONTRIBUTING.md)
 - [Changelog](changelog)
-- [License](LICENSE.md)
+- [License](../LICENSE.md)

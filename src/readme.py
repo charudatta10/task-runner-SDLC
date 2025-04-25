@@ -4,17 +4,12 @@ from invoke import task, Collection
 import os
 import logging
 from .config import Config
-from .utility import download_file
+from .utility import download_file, generate_file
 
 @task
 def generate_readme(ctx):
     """Generate a README file based on user input and a template."""
-    download_file(Config.REPO_DOCS + "/template.md", "README.md")
-    logging.info("README file downloaded successfully.")
-    with open("README.md", "r", encoding="utf-8") as file:
-        template_content = file.read()
-    logging.info("README file opened successfully.")
-    # Step 2: Helper functions to collect user input
+    # Step 1: Helper functions to collect user input
     def collect_items(prompt, formatter):
         items = []
         print(f"{prompt} (Type 'done' to finish):")
@@ -25,7 +20,7 @@ def generate_readme(ctx):
             formatted_item = f"- {item}" if formatter == "list_features" else f"`{item}`"
             items.append(formatted_item)
         return "\n".join(items) if formatter == "list_features" else " ".join(items)
-    # Step 3: Collect data
+    # Step 2: Collect data
     data = {
         "title": input("Enter title of project -> "),
         "description": input("Enter project description -> "),
@@ -33,17 +28,11 @@ def generate_readme(ctx):
         "list_badges": collect_items("Enter softwares used in the project -> ", "list_badges"),
     }
     logging.info("README file input parsed successfully.")
+    # Step 3: Download template file
+    download_file(Config.REPO_DOCS + "/template.md", "README.md")
+    logging.info("README file downloaded successfully.")
     # Step 4: Format and write the README file
-    readme_content = template_content.format(
-        title=data.get("title", "Untitled Project"),
-        description=data.get("description", "No description provided."),
-        features=data.get("features", ""),
-        list_badges=data.get("list_badges", "")
-    )
-    logging.info("README file text generated successfully.")
-    with open("README.md", "w", encoding="utf-8") as file:
-        file.write(readme_content)
-    
+    generate_file(template_path="README.md",config=data, output_path="README.md")
     logging.info("README file generated successfully.")
 
 @task

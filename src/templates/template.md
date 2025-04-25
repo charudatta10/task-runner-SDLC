@@ -1,7 +1,7 @@
 # {title}
 
 <!-- Badges: Project Status GitHub -->
-![license](https://flat.badgen.net/static/license/GPL-3.0/blue)
+![license](https://flat.badgen.net/static/license/EULA/blue)
 ![release](https://flat.badgen.net/github/release/charudatta10/{title})
 ![commits](https://flat.badgen.net/github/commits/charudatta10/{title})
 ![last-commit](https://flat.badgen.net/github/last-commit/charudatta10/{title})

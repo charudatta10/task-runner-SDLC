@@ -39,3 +39,12 @@ def save_json_file(file_path, data):
     """Save data to JSON file"""
     with open(file_path, "w") as f:
         json.dump(data, f, indent=4)
+
+def generate_file(template_path, config, output_path):
+    """Generate a file from a template"""
+    with open(template_path, "r") as f:
+        content = f.read()
+        content = content.format(**config)
+        with open(output_path, "w") as f:
+            f.write(content)
+    logging.info(f"Generated {output_path} from {template_path}")
