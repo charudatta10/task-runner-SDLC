@@ -1,6 +1,6 @@
-# {project-title}
+# {title}
 
-{project-description}
+{description}
 
 ## Features
 
