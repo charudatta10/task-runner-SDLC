@@ -44,7 +44,9 @@ def generate_file(template_path, config, output_path):
     """Generate a file from a template"""
     with open(template_path, "r") as f:
         content = f.read()
-        content = content.format(**config)
+        for key, value in config.items():
+            placeholder = "{" + key + "}"
+            content = content.replace(placeholder, value)
         with open(output_path, "w") as f:
             f.write(content)
     logging.info(f"Generated {output_path} from {template_path}")
