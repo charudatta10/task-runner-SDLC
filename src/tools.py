@@ -21,7 +21,8 @@ def select_github_repo(ctx, base_path="C:/Users/korde/Home/Github"):
     selected_folder = folders[choice - 1]
     # Run 'invoke default' command
     ctx.run(f"invoke -r {Path(base_path) / selected_folder.name} --list")
-    ctx.run(f"invoke -r {Path(base_path) / selected_folder.name} {input('Enter the command to run: ')}")
+    task = input('Enter the command to run: ')
+    ctx.run(f"invoke -r {Path(base_path) / selected_folder.name} {task}")
 
 @task
 def clone_github_repos(ctx, source_user="charudatta10"):
