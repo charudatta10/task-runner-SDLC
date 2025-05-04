@@ -92,12 +92,12 @@ def generate_system_reports(ctx, destination_folder=Path("C:/Users/korde/Home/Gi
     os.chdir(destination_folder)
     ctx.run("scoop export > scoop.json")
     ctx.run("winget export -o winget.json")
-    ctx.run(" pipx list --json > pipx.json")
+    ctx.run("pipx list --json > pipx.json")
     ctx.run("choco list > choco.txt")
     ctx.run("conda env export --json > conda_base.json")
     ctx.run("conda env export --name s --json > conda_s.json")
-    ctx.run(" pip list --format=json > pip.json")
-    ctx.run(" npm -g list --json > npm.json") 
+    ctx.run("pip list --format=json > pip.json")
+    ctx.run("npm -g list --json > npm.json") 
     profile_path = Path.home() / "OneDrive" / "Documents" / "PowerShell" / "Microsoft.PowerShell_profile.ps1"
     shutil.copy(profile_path, destination_folder)
 
