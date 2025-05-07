@@ -41,12 +41,5 @@ def collect_project_data():
     }
 
 
-   
-
-
-
-
-
-
-
+ 
 ns = Collection(setup_docs)
