@@ -7,10 +7,11 @@ from pathlib import Path
 from .config import Config
 from .utility import download_file
 
+print("Licenser module loaded successfully.")
 
 @task
 def add_header(ctx, action="add"):
-    """Add/remove license headers. Usage: `inv license.add-header --action=remove`"""
+    """Add/remove license headers. Usage: `inv license.(add-header --action=remove`"""
     for file_path in _get_files_with_supported_extensions("src"):
         license_text = _generate_license_text(file_path.suffix)
         
@@ -22,7 +23,7 @@ def add_header(ctx, action="add"):
                 f.write(license_text + content)
                 logging.info(f"✅ Added header to {file_path}")
             
-            elif action == "remove" and Config.LICENSE_HEADER in content:
+            if action == "remove" and Config.LICENSE_HEADER in content:
                 updated = content.replace(license_text, "")
                 f.seek(0)
                 f.truncate()
@@ -35,7 +36,7 @@ def _get_files_with_supported_extensions(directory):
     for root, _, files in os.walk(directory):
         for file in files:
             ext = Path(file).suffix
-            if ext in Config.FILE_TYPES:
+            if ext in Config.FILE_TYPES.keys():
                 yield Path(root) / file
 
 
