@@ -32,4 +32,20 @@ def get_community_files(ctx):
         if download_file(f"{Config.REPO_DOCS}/{file}", file):
             logging.info(f"Downloaded community file: {file}")
 
-ns = Collection(create_files, create_dirs, get_community_files)
+@task
+def init_uv(ctx):
+    """Initialize the project uv environment"""
+    ctx.run("uv init")
+
+@task(
+    create_dirs,
+    create_files,
+    get_community_files,
+    init_uv,
+)
+def init_new(ctx):
+    """Initialize the project new environment"""
+    logging.info("Project initialized successfully.")
+
+    
+ns = Collection(create_files, create_dirs, get_community_files, init_uv, init_new)

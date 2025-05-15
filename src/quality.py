@@ -26,9 +26,20 @@ def flake8(ctx):
     run_command(ctx, "flake8 .", "Flake8 passed", "Flake8 failed")
 
 @task
-def format(ctx):
+def lint_exec(ctx):
     """Format code with black"""
     run_command(ctx, "black .", "Code formatted", "Formatting failed")
 
+@task(
+    lint,
+    flake8,
+    lint_exec,
+    tests,
+    security,
+)
+def quality_checks(ctx):
+    """Run all quality checks"""
+    logging.info("All quality checks completed.")
+
 # Create quality namespace
-ns = Collection(lint, flake8, format, tests, security)
+ns = Collection(lint, flake8, lint_exec, tests, security, quality_checks)
