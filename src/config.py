@@ -7,7 +7,14 @@ class Config:
     CODE_DIR = "src"
     TASKS_FILE = "tasks.json"
     FILE_TYPES = {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*", ".sh": "#"}
-    PROJECT_DIRS = ["src", "docs", "tests"]
+    PROJECT_DIRS = [
+        "src",
+        "docs",
+        "tests",
+        ".github",
+        ".github/workflows",
+        ".github/ISSUE_TEMPLATE",
+    ]
     PROJECT_FILES = [
         ".env",
         ".gitattributes",
@@ -34,8 +41,7 @@ class Config:
     COMMUNITY_FILES = [
         "CONTRIBUTING.md",
         "CODE_OF_CONDUCT.md",
-        "LICENSE.md",
-        "CHANGELOG.md",
+        "LICENSE.md",,
         "SECURITY.md",
         ".github/ISSUE_TEMPLATE/bug_report.md",
         ".github/ISSUE_TEMPLATE/feature_request.md",

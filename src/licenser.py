@@ -7,9 +7,6 @@ from pathlib import Path
 from .config import Config
 
 
-print("Licenser module loaded successfully.")
-
-
 @task
 def add_header(ctx, action="add"):
     """Add/remove license headers. Usage: `inv license.(add-header --action=remove`"""

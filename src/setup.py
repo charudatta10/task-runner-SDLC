@@ -29,7 +29,7 @@ def create_files(ctx):
 def get_community_files(ctx):
     """Download community files"""
     for file in Config.COMMUNITY_FILES:
-        if download_file(f"{Config.REPO_DOCS}/{file}", file):
+        if download_file(f"{Config.REPO_DOCS}/{Path(file).name}", file):
             logging.info(f"Downloaded community file: {file}")
 
 
