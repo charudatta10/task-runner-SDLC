@@ -4,6 +4,7 @@ from invoke import task, Collection
 import logging
 from .config import Config
 from .utility import download_file, generate_file
+from pathlib import Path
 
 
 def collect_items(prompt, formatter):
@@ -43,4 +44,12 @@ def collect_project_data():
     }
 
 
-ns = Collection(setup_docs)
+@task
+def generate_docs(ctx):
+    """Generate documentation"""
+    ctx.run(
+        f"python {Path.home() / "Home" / "Github" / "ai-doc-gen" / "src" / "main.py"} ."
+    )
+
+
+ns = Collection(setup_docs, generate_docs)

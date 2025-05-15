@@ -41,7 +41,7 @@ class Config:
     COMMUNITY_FILES = [
         "CONTRIBUTING.md",
         "CODE_OF_CONDUCT.md",
-        "LICENSE.md",,
+        "LICENSE.md",
         "SECURITY.md",
         ".github/ISSUE_TEMPLATE/bug_report.md",
         ".github/ISSUE_TEMPLATE/feature_request.md",
