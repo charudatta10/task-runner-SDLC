@@ -2,10 +2,9 @@
 # https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates/LICENSE
 from invoke import task, Collection
 import logging
-from pathlib import Path
-import os 
 from .config import Config
 from .utility import download_file, generate_file
+
 
 def collect_items(prompt, formatter):
     items = []
@@ -27,7 +26,9 @@ def setup_docs(ctx):
     for file in Config.DOCS_FILES:
         if download_file(f"{Config.REPO_DOCS}/{file}", f"docs/{file}"):
             logging.info(f"Downloaded docs file: {file}")
-            generate_file(template_path=f"docs/{file}", config=data, output_path=f"docs/{file}")
+            generate_file(
+                template_path=f"docs/{file}", config=data, output_path=f"docs/{file}"
+            )
 
 
 def collect_project_data():
@@ -36,10 +37,10 @@ def collect_project_data():
         "title": input("Enter title of project -> "),
         "description": input("Enter project description -> "),
         "features": collect_items("Enter project features -> ", "list_features"),
-        "list_badges": collect_items("Enter softwares used in the project -> ", "list_badges"),
-
+        "list_badges": collect_items(
+            "Enter softwares used in the project -> ", "list_badges"
+        ),
     }
 
 
- 
 ns = Collection(setup_docs)

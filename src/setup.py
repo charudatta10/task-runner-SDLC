@@ -3,8 +3,7 @@
 from invoke import task, Collection
 import logging
 from pathlib import Path
-import os 
-import urllib
+import os
 from .config import Config
 from .utility import download_file
 
@@ -16,6 +15,7 @@ def create_dirs(ctx):
         if not os.path.exists(directory):
             os.makedirs(directory)
             logging.info(f"Created directory: {directory}")
+
 
 @task
 def create_files(ctx):
@@ -32,10 +32,12 @@ def get_community_files(ctx):
         if download_file(f"{Config.REPO_DOCS}/{file}", file):
             logging.info(f"Downloaded community file: {file}")
 
+
 @task
 def init_uv(ctx):
     """Initialize the project uv environment"""
     ctx.run("uv init")
+
 
 @task(
     create_dirs,
@@ -47,5 +49,5 @@ def init_new(ctx):
     """Initialize the project new environment"""
     logging.info("Project initialized successfully.")
 
-    
+
 ns = Collection(create_files, create_dirs, get_community_files, init_uv, init_new)
