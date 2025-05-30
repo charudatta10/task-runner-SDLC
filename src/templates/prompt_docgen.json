@@ -1,0 +1,8 @@
+{
+    "getting-started.md": "Generate a comprehensive 'Getting Started' guide for this project...",
+    "faq.md": "Create a Frequently Asked Questions document for this project...",
+    "contributing.md": "Generate a contribution guide for this project...",
+    "reference.md": "Create a technical reference document for this project...",
+    "algorithm.md": "Generate documentation about the algorithms used in this project...",
+    "features.md": "Create a features overview document for this project..."
+}
