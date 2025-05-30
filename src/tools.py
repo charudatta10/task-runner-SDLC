@@ -47,6 +47,11 @@ def clone_github_repos(ctx, source_user="charudatta10"):
 
 @task
 def move_files(ctx, directory=None):
+    """
+    Move files from the Downloads directory to categorized directories based on file types.
+    Args:
+        directory (str): The directory to scan for files. If None, uses the Downloads folder.
+    """
     # Get the home folder path dynamically
     def move_files_to_directory(directory_path, file_patterns, destination):
         for file_pattern in file_patterns:

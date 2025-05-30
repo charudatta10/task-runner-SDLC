@@ -1,9 +1,10 @@
 import json
 from pathlib import Path
-import ollama
 from .config import Config
 from .utility import load_json_file, download_file
 from invoke import task, Collection
+import urllib.request
+
 
 class DocumentationGenerator:
     def __init__(self, repo_path: str, template_file: str, output_dir: str = "docs"):
@@ -14,11 +15,22 @@ class DocumentationGenerator:
         self.template_file = Path(template_file)
         self.doc_templates = load_json_file(self.template_file)
 
-
     def generate_with_ollama(self, prompt: str, context: str = "", model: str = "llama3:8b") -> str:
-        """Generate documentation using Ollama with a specified model."""
+        """Generate documentation using Ollama API instead of Python package."""
         full_prompt = f"Generate detailed documentation:\n{prompt}\nContext:\n{context}"
-        result = ollama.generate(model=model, prompt=full_prompt, stream=False)
+        api_url = "http://localhost:11434/api/generate"  # Replace with the actual API endpoint
+
+        request_data = json.dumps({
+            "model": model,
+            "prompt": full_prompt,
+            "stream": False
+        }).encode('utf-8')
+
+        req = urllib.request.Request(api_url, data=request_data, headers={'Content-Type': 'application/json'})
+        
+        with urllib.request.urlopen(req) as response:
+            result = json.load(response)
+
         return result.get("response", "")
 
     def generate_all_docs(self):
