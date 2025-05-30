@@ -13,6 +13,7 @@ class DocumentationGenerator:
         self.output_dir = Path(output_dir).absolute()
         self.output_dir.mkdir(exist_ok=True)
         self.template_file = Path(template_file)
+        download_file(f"{Config.REPO_DOCS}/{self.template_file}", Path("C:\\Users\\korde\\Downloads"))
         self.doc_templates = load_json_file(self.template_file)
 
     def generate_with_ollama(self, prompt: str, context: str = "", model: str = "llama3:8b") -> str:
@@ -44,10 +45,9 @@ class DocumentationGenerator:
 
 
 @task
-def ai_doc_gen(ctx, repo_path, template_file="templates.json", output_dir="docs"):
+def ai_doc_gen(ctx, repo_path=".", template_file="prompt_docgen.json", output_dir="docs"):
     """Invoke Task to Generate Documentation"""
-    download_file(Config.REPO_DOCS + "/prompt_docgen.json", ".")
-    generator = DocumentationGenerator(repo_path = ".", template_file="prompt_docgen.json", output_dir=".")
+    generator = DocumentationGenerator(repo_path = repo_path, template_file=template_file, output_dir=output_dir)
     generator.generate_all_docs()
 
 ns = Collection(ai_doc_gen)
