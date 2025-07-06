@@ -3,6 +3,7 @@ from invoke import task, Collection
 import json
 import shutil
 import os
+from .config import Config
 
 
 @task
@@ -46,13 +47,18 @@ def clone_github_repos(ctx, source_user="charudatta10"):
 
 
 @task
-def move_files(ctx, directory=None, patterns_file=r"C:/Users/korde/Home/Github/task-runner-SDLC/src/file_patterns.json"):
+def move_files(
+    ctx,
+    directory=None,
+    patterns_file=Config.PATTERN_FILE,
+):
     """
     Move files from the Downloads directory to categorized directories based on file types.
     Args:
         directory (str): The directory to scan for files. If None, uses the Downloads folder.
         patterns_file (str): Path to the JSON file containing file patterns.
     """
+
     def move_files_to_directory(directory_path, file_patterns, destination):
         for file_pattern in file_patterns:
             for file in directory_path.glob(file_pattern):
@@ -78,9 +84,7 @@ def move_files(ctx, directory=None, patterns_file=r"C:/Users/korde/Home/Github/t
 
 
 @task
-def generate_system_reports(
-    ctx, destination_folder=Path("C:/Users/korde/Home/Github/backup-list/list")
-):
+def generate_system_reports(ctx, destination_folder=Config.BACKUP_DIR):
     """
     Generate system reports and copy PowerShell scripts from source to destination.
 
@@ -97,14 +101,7 @@ def generate_system_reports(
     ctx.run("conda env export --name s --json > conda_s.json")
     ctx.run("pip list --format=json > pip.json")
     ctx.run("npm -g list --json > npm.json")
-    profile_path = (
-        Path.home()
-        / "OneDrive"
-        / "Documents"
-        / "PowerShell"
-        / "Microsoft.PowerShell_profile.ps1"
-    )
-    shutil.copy(profile_path, destination_folder)
+    shutil.copy(Config.PROFILE_PATH, destination_folder)
 
 
 ns = Collection(

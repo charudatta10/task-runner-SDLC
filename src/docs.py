@@ -48,7 +48,7 @@ def collect_project_data():
 def generate_docs(ctx):
     """Generate documentation"""
     ctx.run(
-        f"python {Path.home() / "Home" / "Github" / "ai-doc-gen" / "src" / "main.py"} ."
+        f"python {Config.DOC_GEN_FILE} ."
     )
 
 

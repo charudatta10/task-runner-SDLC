@@ -1,9 +1,22 @@
+from pathlib import Path
+
+
 class Config:
     """Central configuration for all tasks"""
 
     REPO_DOCS = "https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates"
     LICENSE_HEADER = "© 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike."
     LICENSE_URL = f"{REPO_DOCS}/LICENSE"
+    PROFILE_PATH = (
+        Path.home()
+        / "OneDrive"
+        / "Documents"
+        / "PowerShell"
+        / "Microsoft.PowerShell_profile.ps1"
+    )
+    BACKUP_DIR = Path.home() / "Github" / "backup-list" / "list"
+    PATTERN_FILE = Path(__file__).parent / "file_patterns.json"
+    DOC_GEN_FILE = Path.home() / "Github" / "ai-doc-gen" / "src" / "main.py"
     CODE_DIR = "src"
     TASKS_FILE = "tasks.json"
     FILE_TYPES = {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*", ".sh": "#"}
