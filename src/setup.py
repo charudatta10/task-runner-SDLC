@@ -7,47 +7,27 @@ import os
 from .config import Config
 from .utility import download_file
 
-
 @task
-def create_dirs(ctx):
-    """Create project directories"""
+def init_project(ctx):
+    """Initialize the project: create dirs, files, download community files, and init uv env."""
+    # Create directories
     for directory in Config.PROJECT_DIRS:
         if not os.path.exists(directory):
             os.makedirs(directory)
             logging.info(f"Created directory: {directory}")
 
-
-@task
-def create_files(ctx):
-    """Create project files"""
+    # Create files
     for file in Config.PROJECT_FILES:
         Path(file).touch()
         logging.info(f"Created file: {file}")
 
-
-@task
-def get_community_files(ctx):
-    """Download community files"""
+    # Download community files
     for file in Config.COMMUNITY_FILES:
         if download_file(f"{Config.REPO_DOCS}/{Path(file).name}", file):
             logging.info(f"Downloaded community file: {file}")
 
-
-@task
-def init_uv(ctx):
-    """Initialize the project uv environment"""
+    # Initialize uv environment
     ctx.run("uv init")
-
-
-@task(
-    create_dirs,
-    create_files,
-    get_community_files,
-    init_uv,
-)
-def init_new(ctx):
-    """Initialize the project new environment"""
     logging.info("Project initialized successfully.")
 
-
-ns = Collection(create_files, create_dirs, get_community_files, init_uv, init_new)
+ns = Collection(init_project)

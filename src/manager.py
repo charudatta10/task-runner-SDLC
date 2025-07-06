@@ -1,33 +1,9 @@
 from invoke import task, Collection
-import os
 import logging
 from .config import Config
 from .utility import load_json_file, save_json_file, run_command
-from pathlib import Path
-import zipfile
 
 
-@task
-def package(ctx):
-    """Package the project"""
-    project_dir = Path(Config.CODE_DIR)
-    output_file = project_dir / "ypp.zip"
-
-    # Ensure main script exists
-    main_script = project_dir / "__main__.py"
-    if not main_script.exists():
-        main_script.write_text("print('hello world')\n")
-
-    # Create zip archive
-    with zipfile.ZipFile(output_file, "w") as zipf:
-        for file_path in project_dir.rglob("*"):
-            if file_path.is_file() and not file_path.name.endswith(".zip"):
-                zipf.write(file_path, file_path.relative_to(project_dir))
-
-    logging.info(f"Package created: {output_file}")
-
-
-# ========== Task Management ==========
 @task
 def add_task(ctx):
     """Add a new task"""
@@ -61,4 +37,4 @@ def main(ctx):
 
 
 # Create manager namespace
-ns = Collection(package, add_task, list_tasks, main)
+ns = Collection(add_task, list_tasks, main)
