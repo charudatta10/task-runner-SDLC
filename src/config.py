@@ -4,7 +4,7 @@ from pathlib import Path
 class Config:
     """Central configuration for all tasks"""
 
-    REPO_DOCS = "https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates"
+    REPO_DOCS = Path(__file__).parent / "templates"
     LICENSE_HEADER = "© 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike."
     LICENSE_URL = f"{REPO_DOCS}/LICENSE"
     PROFILE_PATH = (

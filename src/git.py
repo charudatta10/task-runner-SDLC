@@ -9,6 +9,7 @@ def init_repo(ctx):
 @task
 def commit_changes(ctx, message="Deployment Commit"):
     """Stage, commit, and push changes"""
+    run_command(ctx, "git pull origin main", "Pulled latest changes", "Pull failed")
     run_command(ctx, "git add .", "Changes staged", "Failed to stage changes")
     run_command(ctx, f'git commit -m "{message}"', "Changes committed", "Commit failed")
     run_command(ctx, "git push -u origin main", "Changes pushed", "Push failed")
