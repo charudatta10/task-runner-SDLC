@@ -2,57 +2,28 @@ from pathlib import Path
 from invoke import task
 import json
 import shutil
-import logging
-from datetime import datetime
-from ..config import Config
+from ..utils.logger import setup_logging
 
 @task
-def move_files(
-    ctx,
-    directory=None,
-    patterns_file=Config.PATTERN_FILE,
+def organize_files(
+    c,
+    source_directory,
+    destination_directory,
+    patterns_file,
+    log_directory=None,
 ):
     """
-    Move files from the Downloads directory to categorized directories based on file types.
+    Organize files from a source directory to categorized directories based on file patterns.
     Handles duplicates by renaming with version numbers and logs all operations.
     
     Args:
-        directory (str): The directory to scan for files. If None, uses the Downloads folder.
+        source_directory (str): The directory to scan and clean files from.
+        destination_directory (str): The root directory where categorized folders will be created.
         patterns_file (str): Path to the JSON file containing file patterns.
+        log_directory (str, optional): Directory to store log files. If None, uses destination_directory/logs.
     """
 
-    def setup_logging():
-        """Setup logging to both file and console"""
-        log_dir = Path.home() / "Downloads" / "logs"
-        log_dir.mkdir(exist_ok=True)
-        
-        log_file = log_dir / f"file_move_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-        
-        # Create logger
-        logger = logging.getLogger('file_mover')
-        logger.setLevel(logging.INFO)
-        
-        # Clear any existing handlers
-        logger.handlers.clear()
-        
-        # Create formatters
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        
-        # File handler
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setLevel(logging.INFO)
-        file_handler.setFormatter(formatter)
-        
-        # Console handler
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.INFO)
-        console_handler.setFormatter(formatter)
-        
-        # Add handlers to logger
-        logger.addHandler(file_handler)
-        logger.addHandler(console_handler)
-        
-        return logger
+
 
     def get_unique_filename(destination_path, filename):
         """
@@ -90,13 +61,17 @@ def move_files(
             
             version += 1
 
-    def move_files_to_directory(directory_path, file_patterns, destination, logger):
+    def move_files_to_directory(source_path, file_patterns, destination, logger):
         """Move files with duplicate handling and logging"""
         moved_count = 0
         skipped_count = 0
         
         for file_pattern in file_patterns:
-            for file in directory_path.glob(file_pattern):
+            for file in source_path.glob(file_pattern):
+                # Skip if it's a directory
+                if file.is_dir():
+                    continue
+                    
                 try:
                     # Get unique filename to handle duplicates
                     unique_filename = get_unique_filename(destination, file.name)
@@ -124,57 +99,87 @@ def move_files(
 
     def ensure_directories_exist(*dirs):
         """Create directories if they don't exist"""
-        for dir in dirs:
-            dir.mkdir(parents=True, exist_ok=True)
+        for dir_path in dirs:
+            dir_path.mkdir(parents=True, exist_ok=True)
+
+    def validate_paths(source, destination, patterns):
+        """Validate that all required paths exist and are accessible"""
+        source_path = Path(source).resolve()  # Convert to absolute path
+        destination_path = Path(destination).resolve()  # Convert to absolute path
+        patterns_path = Path(patterns).resolve()  # Convert to absolute path
+        
+        if not source_path.exists():
+            raise FileNotFoundError(f"Source directory does not exist: {source}")
+        
+        if not source_path.is_dir():
+            raise ValueError(f"Source path is not a directory: {source}")
+            
+        if not patterns_path.exists():
+            raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+        
+        # Create destination directory if it doesn't exist
+        destination_path.mkdir(parents=True, exist_ok=True)
+        
+        return source_path, destination_path, patterns_path
+
+    # Validate input paths
+    try:
+        source_path, dest_path, patterns_path = validate_paths(
+            source_directory, destination_directory, patterns_file
+        )
+    except (FileNotFoundError, ValueError) as e:
+        print(f"❌ Path validation error: {str(e)}")
+        return
 
     # Setup logging
-    logger = setup_logging()
+    log_dir = Path(log_directory) if log_directory else dest_path / "logs"
+    logger = setup_logging(log_dir)
     
-    # Initialize paths
-    home_folder = Path.home()
-    downloads_folder = home_folder / "Downloads"
-    categories = ["Pictures", "Documents", "Archives", "Code", "Music", "Videos"]
-    directories = {cat: downloads_folder / cat for cat in categories}
-    
-    # Ensure all directories exist
-    ensure_directories_exist(*directories.values())
-    
-    # Determine source directory
-    root_directory = downloads_folder if directory is None else Path(directory)
-    
-    logger.info(f"Starting file organization from: {root_directory}")
-    print(f"🚀 Starting file organization from: {root_directory}")
+    logger.info(f"Starting file organization from: {source_path} to: {dest_path}")
+    print(f"🚀 Starting file organization")
+    print(f"📂 Source: {source_path}")
+    print(f"📁 Destination: {dest_path}")
     
     try:
         # Load file patterns from JSON
-        with open(patterns_file, "r", encoding="utf-8") as f:
+        with open(patterns_path, "r", encoding="utf-8") as f:
             file_patterns = json.load(f)
         
-        logger.info(f"Loaded file patterns from: {patterns_file}")
-        print(f"📋 Loaded file patterns from: {patterns_file}")
+        logger.info(f"Loaded file patterns from: {patterns_path}")
+        print(f"📋 Loaded file patterns from: {patterns_path}")
+        
+        # Create category directories based on patterns
+        category_dirs = {}
+        for category in file_patterns.keys():
+            category_path = dest_path / category
+            category_dirs[category] = category_path
+        
+        # Ensure all directories exist
+        ensure_directories_exist(*category_dirs.values())
+        logger.info(f"Created/verified {len(category_dirs)} category directories")
+        print(f"📁 Created/verified {len(category_dirs)} category directories")
         
         total_moved = 0
         total_skipped = 0
         
         # Process each category
         for category, patterns in file_patterns.items():
-            if category in directories:
-                logger.info(f"Processing category: {category}")
-                print(f"\n📁 Processing {category}...")
-                
-                moved, skipped = move_files_to_directory(
-                    root_directory, 
-                    patterns, 
-                    directories[category],
-                    logger
-                )
-                
-                total_moved += moved
-                total_skipped += skipped
-                
-                if moved > 0 or skipped > 0:
-                    logger.info(f"Category {category}: {moved} moved, {skipped} failed")
-                    print(f"   {moved} files moved, {skipped} failed")
+            logger.info(f"Processing category: {category}")
+            print(f"\n📁 Processing {category}...")
+            
+            moved, skipped = move_files_to_directory(
+                source_path, 
+                patterns, 
+                category_dirs[category],
+                logger
+            )
+            
+            total_moved += moved
+            total_skipped += skipped
+            
+            if moved > 0 or skipped > 0:
+                logger.info(f"Category {category}: {moved} moved, {skipped} failed")
+                print(f"   {moved} files moved, {skipped} failed")
         
         # Summary
         logger.info(f"File organization completed. Total: {total_moved} moved, {total_skipped} failed")
@@ -182,10 +187,10 @@ def move_files(
         print(f"📊 Summary: {total_moved} files moved, {total_skipped} failed")
         
         if total_skipped > 0:
-            print(f"⚠️  Check the log file for details on failed operations")
+            print(f"⚠️  Check the log file in {log_dir} for details on failed operations")
     
-    except FileNotFoundError:
-        error_msg = f"Patterns file not found: {patterns_file}"
+    except FileNotFoundError as e:
+        error_msg = f"File not found: {str(e)}"
         logger.error(error_msg)
         print(f"❌ {error_msg}")
         
@@ -194,7 +199,56 @@ def move_files(
         logger.error(error_msg)
         print(f"❌ {error_msg}")
         
+    except PermissionError as e:
+        error_msg = f"Permission denied: {str(e)}"
+        logger.error(error_msg)
+        print(f"❌ {error_msg}")
+        
     except Exception as e:
         error_msg = f"Unexpected error: {str(e)}"
         logger.error(error_msg)
         print(f"❌ {error_msg}")
+
+
+@task
+def create_patterns_sample(c, output_file="file_patterns.json"):
+    """
+    Create a sample patterns JSON file.
+    
+    Args:
+        output_file (str): Path where to create the sample file
+    """
+    sample_patterns = {
+        "Images": ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp", "*.svg", "*.webp"],
+        "Documents": ["*.pdf", "*.doc", "*.docx", "*.txt", "*.rtf", "*.odt"],
+        "Spreadsheets": ["*.xls", "*.xlsx", "*.csv", "*.ods"],
+        "Presentations": ["*.ppt", "*.pptx", "*.odp"],
+        "Archives": ["*.zip", "*.rar", "*.7z", "*.tar", "*.gz", "*.bz2"],
+        "Code": ["*.py", "*.js", "*.html", "*.css", "*.cpp", "*.java", "*.php"],
+        "Audio": ["*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg", "*.m4a"],
+        "Video": ["*.mp4", "*.avi", "*.mkv", "*.mov", "*.wmv", "*.flv", "*.webm"],
+        "Executables": ["*.exe", "*.msi", "*.deb", "*.rpm", "*.dmg", "*.pkg"]
+    }
+    
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(sample_patterns, f, indent=2)
+    
+    print(f"✅ Sample patterns file created at: {output_file}")
+
+
+# Alternative task with cleaner interface
+@task
+def clean_folder(c, folder=".", patterns="file_patterns.json", destination=None):
+    """
+    Clean a folder by organizing files into categories.
+    Simplified interface for common use case.
+    
+    Args:
+        folder (str): Folder to clean (default: current directory)
+        patterns (str): Patterns file (default: file_patterns.json)
+        destination (str): Where to create organized folders (default: same as folder)
+    """
+    if destination is None:
+        destination = folder
+    
+    organize_files(c, folder, destination, patterns)

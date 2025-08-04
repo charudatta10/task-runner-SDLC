@@ -13,7 +13,7 @@ class Config:
         / "PowerShell"
         / "Microsoft.PowerShell_profile.ps1"
     )
-    BACKUP_DIR = Path.home() / "Github" / "backup-list" / "list"
+    BACKUP_DIR = Path.home() / "Home" / "Github" / "backup-list" / "list"
     PATTERN_FILE = Path(__file__).parent / "file_patterns.json"
     DOC_GEN_FILE = Path.home() / "Github" / "ai-doc-gen" / "src" / "main.py"
     CODE_DIR = "src"
