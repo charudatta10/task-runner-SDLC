@@ -12,18 +12,18 @@ def lint(ctx):
     run_command(ctx, "black .", "Code formatted", "Formatting failed")
 
 @task
-def test(ctx):
-    """Run unit tests"""
-    run_command(ctx, "python -m unittest discover -s tests", "Tests passed", "Tests failed")
+def run_tests(ctx):
+    """Run unit tests and measure coverage"""
+    run_command(ctx, "pytest --cov=src --cov-report=term-missing", "Tests passed", "Tests failed")
 
 @task
 def security(ctx):
     """Run security checks"""
     run_command(ctx, "bandit -r .", "Security checks passed", "Security checks failed")
 
-@task(lint, test, security)
+@task(lint, run_tests, security)
 def quality_checks(ctx):
     """Run all quality checks"""
     logging.info("All quality checks completed.")
 
-ns = Collection(lint, test, security, quality_checks)
+ns = Collection(lint, run_tests, security, quality_checks)

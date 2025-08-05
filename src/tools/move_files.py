@@ -4,6 +4,589 @@ import json
 import shutil
 from ..utils.logger import setup_logging
 
+def get_unique_filename(destination_path, filename):
+    """
+    Generate a unique filename by appending version numbers if duplicates exist.
+    
+    Args:
+        destination_path (Path): The destination directory
+        filename (str): The original filename
+        
+    Returns:
+        str: A unique filename
+    """
+    file_path = destination_path / filename
+    
+    if not file_path.exists():
+        return filename
+    
+    # Extract name and extension
+    name_parts = filename.rsplit('.', 1)
+    if len(name_parts) == 2:
+        base_name, extension = name_parts
+    else:
+        base_name, extension = filename, ''
+    
+    version = 1
+    while True:
+        if extension:
+            new_filename = f"{base_name}_v{version}.{extension}"
+        else:
+            new_filename = f"{base_name}_v{version}"
+        
+        new_file_path = destination_path / new_filename
+        if not new_file_path.exists():
+            return new_filename
+        
+        version += 1
+
+def move_files_to_directory(source_path, file_patterns, destination, logger):
+    """Move files with duplicate handling and logging"""
+    moved_count = 0
+    skipped_count = 0
+    
+    for file_pattern in file_patterns:
+        for file in source_path.glob(file_pattern):
+            # Skip if it's a directory
+            if file.is_dir():
+                continue
+                
+            try:
+                # Get unique filename to handle duplicates
+                unique_filename = get_unique_filename(destination, file.name)
+                destination_file = destination / unique_filename
+                
+                # Move the file
+                shutil.move(str(file), str(destination_file))
+                
+                # Log the operation
+                if unique_filename != file.name:
+                    logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
+                    print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
+                else:
+                    logger.info(f"MOVED: {file.name} -> {destination_file}")
+                    print(f"✓ Moved: {file.name} -> {destination.name}/")
+                
+                moved_count += 1
+                
+            except Exception as e:
+                logger.error(f"FAILED to move {file.name}: {str(e)}")
+                print(f"✗ Failed to move {file.name}: {str(e)}")
+                skipped_count += 1
+    
+    return moved_count, skipped_count
+
+def ensure_directories_exist(*dirs):
+    """Create directories if they don't exist"""
+    for dir_path in dirs:
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+def validate_paths(source, destination, patterns):
+    """Validate that all required paths exist and are accessible"""
+    source_path = Path(source).resolve()  # Convert to absolute path
+    destination_path = Path(destination).resolve()  # Convert to absolute path
+    patterns_path = Path(patterns).resolve()  # Convert to absolute path
+    
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source directory does not exist: {source}")
+    
+    if not source_path.is_dir():
+        raise ValueError(f"Source path is not a directory: {source}")
+            
+    if not patterns_path.exists():
+        raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+    
+    # Create destination directory if it doesn't exist
+    destination_path.mkdir(parents=True, exist_ok=True)
+    
+    return source_path, destination_path, patterns_path
+
+def get_unique_filename(destination_path, filename):
+    """
+    Generate a unique filename by appending version numbers if duplicates exist.
+    
+    Args:
+        destination_path (Path): The destination directory
+        filename (str): The original filename
+        
+    Returns:
+        str: A unique filename
+    """
+    file_path = destination_path / filename
+    
+    if not file_path.exists():
+        return filename
+    
+    # Extract name and extension
+    name_parts = filename.rsplit('.', 1)
+    if len(name_parts) == 2:
+        base_name, extension = name_parts
+    else:
+        base_name, extension = filename, ''
+    
+    version = 1
+    while True:
+        if extension:
+            new_filename = f"{base_name}_v{version}.{extension}"
+        else:
+            new_filename = f"{base_name}_v{version}"
+        
+        new_file_path = destination_path / new_filename
+        if not new_file_path.exists():
+            return new_filename
+        
+        version += 1
+
+def move_files_to_directory(source_path, file_patterns, destination, logger):
+    """Move files with duplicate handling and logging"""
+    moved_count = 0
+    skipped_count = 0
+    
+    for file_pattern in file_patterns:
+        for file in source_path.glob(file_pattern):
+            # Skip if it's a directory
+            if file.is_dir():
+                continue
+                
+            try:
+                # Get unique filename to handle duplicates
+                unique_filename = get_unique_filename(destination, file.name)
+                destination_file = destination / unique_filename
+                
+                # Move the file
+                shutil.move(str(file), str(destination_file))
+                
+                # Log the operation
+                if unique_filename != file.name:
+                    logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
+                    print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
+                else:
+                    logger.info(f"MOVED: {file.name} -> {destination_file}")
+                    print(f"✓ Moved: {file.name} -> {destination.name}/")
+                
+                moved_count += 1
+                
+            except Exception as e:
+                logger.error(f"FAILED to move {file.name}: {str(e)}")
+                print(f"✗ Failed to move {file.name}: {str(e)}")
+                skipped_count += 1
+    
+    return moved_count, skipped_count
+
+def ensure_directories_exist(*dirs):
+    """Create directories if they don't exist"""
+    for dir_path in dirs:
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+def validate_paths(source, destination, patterns):
+    """Validate that all required paths exist and are accessible"""
+    source_path = Path(source).resolve()  # Convert to absolute path
+    destination_path = Path(destination).resolve()  # Convert to absolute path
+    patterns_path = Path(patterns).resolve()  # Convert to absolute path
+    
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source directory does not exist: {source}")
+    
+    if not source_path.is_dir():
+        raise ValueError(f"Source path is not a directory: {source}")
+            
+    if not patterns_path.exists():
+        raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+    
+    # Create destination directory if it doesn't exist
+    destination_path.mkdir(parents=True, exist_ok=True)
+    
+    return source_path, destination_path, patterns_path
+
+def get_unique_filename(destination_path, filename):
+    """
+    Generate a unique filename by appending version numbers if duplicates exist.
+    
+    Args:
+        destination_path (Path): The destination directory
+        filename (str): The original filename
+        
+    Returns:
+        str: A unique filename
+    """
+    file_path = destination_path / filename
+    
+    if not file_path.exists():
+        return filename
+    
+    # Extract name and extension
+    name_parts = filename.rsplit('.', 1)
+    if len(name_parts) == 2:
+        base_name, extension = name_parts
+    else:
+        base_name, extension = filename, ''
+    
+    version = 1
+    while True:
+        if extension:
+            new_filename = f"{base_name}_v{version}.{extension}"
+        else:
+            new_filename = f"{base_name}_v{version}"
+        
+        new_file_path = destination_path / new_filename
+        if not new_file_path.exists():
+            return new_filename
+        
+        version += 1
+
+def move_files_to_directory(source_path, file_patterns, destination, logger):
+    """Move files with duplicate handling and logging"""
+    moved_count = 0
+    skipped_count = 0
+    
+    for file_pattern in file_patterns:
+        for file in source_path.glob(file_pattern):
+            # Skip if it's a directory
+            if file.is_dir():
+                continue
+                
+            try:
+                # Get unique filename to handle duplicates
+                unique_filename = get_unique_filename(destination, file.name)
+                destination_file = destination / unique_filename
+                
+                # Move the file
+                shutil.move(str(file), str(destination_file))
+                
+                # Log the operation
+                if unique_filename != file.name:
+                    logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
+                    print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
+                else:
+                    logger.info(f"MOVED: {file.name} -> {destination_file}")
+                    print(f"✓ Moved: {file.name} -> {destination.name}/")
+                
+                moved_count += 1
+                
+            except Exception as e:
+                logger.error(f"FAILED to move {file.name}: {str(e)}")
+                print(f"✗ Failed to move {file.name}: {str(e)}")
+                skipped_count += 1
+    
+    return moved_count, skipped_count
+
+def ensure_directories_exist(*dirs):
+    """Create directories if they don't exist"""
+    for dir_path in dirs:
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+def validate_paths(source, destination, patterns):
+    """Validate that all required paths exist and are accessible"""
+    source_path = Path(source).resolve()  # Convert to absolute path
+    destination_path = Path(destination).resolve()  # Convert to absolute path
+    patterns_path = Path(patterns).resolve()  # Convert to absolute path
+    
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source directory does not exist: {source}")
+    
+    if not source_path.is_dir():
+        raise ValueError(f"Source path is not a directory: {source}")
+            
+    if not patterns_path.exists():
+        raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+    
+    # Create destination directory if it doesn't exist
+    destination_path.mkdir(parents=True, exist_ok=True)
+    
+    return source_path, destination_path, patterns_path
+
+def get_unique_filename(destination_path, filename):
+    """
+    Generate a unique filename by appending version numbers if duplicates exist.
+    
+    Args:
+        destination_path (Path): The destination directory
+        filename (str): The original filename
+        
+    Returns:
+        str: A unique filename
+    """
+    file_path = destination_path / filename
+    
+    if not file_path.exists():
+        return filename
+    
+    # Extract name and extension
+    name_parts = filename.rsplit('.', 1)
+    if len(name_parts) == 2:
+        base_name, extension = name_parts
+    else:
+        base_name, extension = filename, ''
+    
+    version = 1
+    while True:
+        if extension:
+            new_filename = f"{base_name}_v{version}.{extension}"
+        else:
+            new_filename = f"{base_name}_v{version}"
+        
+        new_file_path = destination_path / new_filename
+        if not new_file_path.exists():
+            return new_filename
+        
+        version += 1
+
+def move_files_to_directory(source_path, file_patterns, destination, logger):
+    """Move files with duplicate handling and logging"""
+    moved_count = 0
+    skipped_count = 0
+    
+    for file_pattern in file_patterns:
+        for file in source_path.glob(file_pattern):
+            # Skip if it's a directory
+            if file.is_dir():
+                continue
+                
+            try:
+                # Get unique filename to handle duplicates
+                unique_filename = get_unique_filename(destination, file.name)
+                destination_file = destination / unique_filename
+                
+                # Move the file
+                shutil.move(str(file), str(destination_file))
+                
+                # Log the operation
+                if unique_filename != file.name:
+                    logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
+                    print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
+                else:
+                    logger.info(f"MOVED: {file.name} -> {destination_file}")
+                    print(f"✓ Moved: {file.name} -> {destination.name}/")
+                
+                moved_count += 1
+                
+            except Exception as e:
+                logger.error(f"FAILED to move {file.name}: {str(e)}")
+                print(f"✗ Failed to move {file.name}: {str(e)}")
+                skipped_count += 1
+    
+    return moved_count, skipped_count
+
+def ensure_directories_exist(*dirs):
+    """Create directories if they don't exist"""
+    for dir_path in dirs:
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+def validate_paths(source, destination, patterns):
+    """Validate that all required paths exist and are accessible"""
+    source_path = Path(source).resolve()  # Convert to absolute path
+    destination_path = Path(destination).resolve()  # Convert to absolute path
+    patterns_path = Path(patterns).resolve()  # Convert to absolute path
+    
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source directory does not exist: {source}")
+    
+    if not source_path.is_dir():
+        raise ValueError(f"Source path is not a directory: {source}")
+            
+    if not patterns_path.exists():
+        raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+    
+    # Create destination directory if it doesn't exist
+    destination_path.mkdir(parents=True, exist_ok=True)
+    
+    return source_path, destination_path, patterns_path
+
+def get_unique_filename(destination_path, filename):
+    """
+    Generate a unique filename by appending version numbers if duplicates exist.
+    
+    Args:
+        destination_path (Path): The destination directory
+        filename (str): The original filename
+        
+    Returns:
+        str: A unique filename
+    """
+    file_path = destination_path / filename
+    
+    if not file_path.exists():
+        return filename
+    
+    # Extract name and extension
+    name_parts = filename.rsplit('.', 1)
+    if len(name_parts) == 2:
+        base_name, extension = name_parts
+    else:
+        base_name, extension = filename, ''
+    
+    version = 1
+    while True:
+        if extension:
+            new_filename = f"{base_name}_v{version}.{extension}"
+        else:
+            new_filename = f"{base_name}_v{version}"
+        
+        new_file_path = destination_path / new_filename
+        if not new_file_path.exists():
+            return new_filename
+        
+        version += 1
+
+def move_files_to_directory(source_path, file_patterns, destination, logger):
+    """Move files with duplicate handling and logging"""
+    moved_count = 0
+    skipped_count = 0
+    
+    for file_pattern in file_patterns:
+        for file in source_path.glob(file_pattern):
+            # Skip if it's a directory
+            if file.is_dir():
+                continue
+                
+            try:
+                # Get unique filename to handle duplicates
+                unique_filename = get_unique_filename(destination, file.name)
+                destination_file = destination / unique_filename
+                
+                # Move the file
+                shutil.move(str(file), str(destination_file))
+                
+                # Log the operation
+                if unique_filename != file.name:
+                    logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
+                    print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
+                else:
+                    logger.info(f"MOVED: {file.name} -> {destination_file}")
+                    print(f"✓ Moved: {file.name} -> {destination.name}/")
+                
+                moved_count += 1
+                
+            except Exception as e:
+                logger.error(f"FAILED to move {file.name}: {str(e)}")
+                print(f"✗ Failed to move {file.name}: {str(e)}")
+                skipped_count += 1
+    
+    return moved_count, skipped_count
+
+def ensure_directories_exist(*dirs):
+    """Create directories if they don't exist"""
+    for dir_path in dirs:
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+def validate_paths(source, destination, patterns):
+    """Validate that all required paths exist and are accessible"""
+    source_path = Path(source).resolve()  # Convert to absolute path
+    destination_path = Path(destination).resolve()  # Convert to absolute path
+    patterns_path = Path(patterns).resolve()  # Convert to absolute path
+    
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source directory does not exist: {source}")
+    
+    if not source_path.is_dir():
+        raise ValueError(f"Source path is not a directory: {source}")
+            
+    if not patterns_path.exists():
+        raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+    
+    # Create destination directory if it doesn't exist
+    destination_path.mkdir(parents=True, exist_ok=True)
+    
+    return source_path, destination_path, patterns_path
+
+
+def get_unique_filename(destination_path, filename):
+    """
+    Generate a unique filename by appending version numbers if duplicates exist.
+    
+    Args:
+        destination_path (Path): The destination directory
+        filename (str): The original filename
+        
+    Returns:
+        str: A unique filename
+    """
+    file_path = destination_path / filename
+    
+    if not file_path.exists():
+        return filename
+    
+    # Extract name and extension
+    name_parts = filename.rsplit('.', 1)
+    if len(name_parts) == 2:
+        base_name, extension = name_parts
+    else:
+        base_name, extension = filename, ''
+    
+    version = 1
+    while True:
+        if extension:
+            new_filename = f"{base_name}_v{version}.{extension}"
+        else:
+            new_filename = f"{base_name}_v{version}"
+        
+        new_file_path = destination_path / new_filename
+        if not new_file_path.exists():
+            return new_filename
+        
+        version += 1
+
+def move_files_to_directory(source_path, file_patterns, destination, logger):
+    """Move files with duplicate handling and logging"""
+    moved_count = 0
+    skipped_count = 0
+    
+    for file_pattern in file_patterns:
+        for file in source_path.glob(file_pattern):
+            # Skip if it's a directory
+            if file.is_dir():
+                continue
+                
+            try:
+                # Get unique filename to handle duplicates
+                unique_filename = get_unique_filename(destination, file.name)
+                destination_file = destination / unique_filename
+                
+                # Move the file
+                shutil.move(str(file), str(destination_file))
+                
+                # Log the operation
+                if unique_filename != file.name:
+                    logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
+                    print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
+                else:
+                    logger.info(f"MOVED: {file.name} -> {destination_file}")
+                    print(f"✓ Moved: {file.name} -> {destination.name}/")
+                
+                moved_count += 1
+                
+            except Exception as e:
+                logger.error(f"FAILED to move {file.name}: {str(e)}")
+                print(f"✗ Failed to move {file.name}: {str(e)}")
+                skipped_count += 1
+    
+    return moved_count, skipped_count
+
+def ensure_directories_exist(*dirs):
+    """Create directories if they don't exist"""
+    for dir_path in dirs:
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+def validate_paths(source, destination, patterns):
+    """Validate that all required paths exist and are accessible"""
+    source_path = Path(source).resolve()  # Convert to absolute path
+    destination_path = Path(destination).resolve()  # Convert to absolute path
+    patterns_path = Path(patterns).resolve()  # Convert to absolute path
+    
+    if not source_path.exists():
+        raise FileNotFoundError(f"Source directory does not exist: {source}")
+    
+    if not source_path.is_dir():
+        raise ValueError(f"Source path is not a directory: {source}")
+            
+    if not patterns_path.exists():
+        raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
+    
+    # Create destination directory if it doesn't exist
+    destination_path.mkdir(parents=True, exist_ok=True)
+    
+    return source_path, destination_path, patterns_path
+
 @task
 def organize_files(
     c,
@@ -22,106 +605,6 @@ def organize_files(
         patterns_file (str): Path to the JSON file containing file patterns.
         log_directory (str, optional): Directory to store log files. If None, uses destination_directory/logs.
     """
-
-
-
-    def get_unique_filename(destination_path, filename):
-        """
-        Generate a unique filename by appending version numbers if duplicates exist.
-        
-        Args:
-            destination_path (Path): The destination directory
-            filename (str): The original filename
-            
-        Returns:
-            str: A unique filename
-        """
-        file_path = destination_path / filename
-        
-        if not file_path.exists():
-            return filename
-        
-        # Extract name and extension
-        name_parts = filename.rsplit('.', 1)
-        if len(name_parts) == 2:
-            base_name, extension = name_parts
-        else:
-            base_name, extension = filename, ''
-        
-        version = 1
-        while True:
-            if extension:
-                new_filename = f"{base_name}_v{version}.{extension}"
-            else:
-                new_filename = f"{base_name}_v{version}"
-            
-            new_file_path = destination_path / new_filename
-            if not new_file_path.exists():
-                return new_filename
-            
-            version += 1
-
-    def move_files_to_directory(source_path, file_patterns, destination, logger):
-        """Move files with duplicate handling and logging"""
-        moved_count = 0
-        skipped_count = 0
-        
-        for file_pattern in file_patterns:
-            for file in source_path.glob(file_pattern):
-                # Skip if it's a directory
-                if file.is_dir():
-                    continue
-                    
-                try:
-                    # Get unique filename to handle duplicates
-                    unique_filename = get_unique_filename(destination, file.name)
-                    destination_file = destination / unique_filename
-                    
-                    # Move the file
-                    shutil.move(str(file), str(destination_file))
-                    
-                    # Log the operation
-                    if unique_filename != file.name:
-                        logger.info(f"MOVED (renamed): {file.name} -> {destination_file} (renamed due to duplicate)")
-                        print(f"✓ Moved and renamed: {file.name} -> {unique_filename}")
-                    else:
-                        logger.info(f"MOVED: {file.name} -> {destination_file}")
-                        print(f"✓ Moved: {file.name} -> {destination.name}/")
-                    
-                    moved_count += 1
-                    
-                except Exception as e:
-                    logger.error(f"FAILED to move {file.name}: {str(e)}")
-                    print(f"✗ Failed to move {file.name}: {str(e)}")
-                    skipped_count += 1
-        
-        return moved_count, skipped_count
-
-    def ensure_directories_exist(*dirs):
-        """Create directories if they don't exist"""
-        for dir_path in dirs:
-            dir_path.mkdir(parents=True, exist_ok=True)
-
-    def validate_paths(source, destination, patterns):
-        """Validate that all required paths exist and are accessible"""
-        source_path = Path(source).resolve()  # Convert to absolute path
-        destination_path = Path(destination).resolve()  # Convert to absolute path
-        patterns_path = Path(patterns).resolve()  # Convert to absolute path
-        
-        if not source_path.exists():
-            raise FileNotFoundError(f"Source directory does not exist: {source}")
-        
-        if not source_path.is_dir():
-            raise ValueError(f"Source path is not a directory: {source}")
-            
-        if not patterns_path.exists():
-            raise FileNotFoundError(f"Patterns file does not exist: {patterns}")
-        
-        # Create destination directory if it doesn't exist
-        destination_path.mkdir(parents=True, exist_ok=True)
-        
-        return source_path, destination_path, patterns_path
-
     # Validate input paths
     try:
         source_path, dest_path, patterns_path = validate_paths(

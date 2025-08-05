@@ -6,6 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "invoke>=2.2.0",
+    "pytest>=8.2.2",
+    "pytest-cov>=5.0.0",
 ]
 
 
