@@ -31,13 +31,6 @@ generate-report = { script = "src.tools.generate_system_reports:generate_report"
 move-files = { script = "src.tools.move_files:move_files" }
 select-repo = { script = "src.tools.select_github_repo:select_repo" }
 
-# Quality tasks
-run-pylint = { script = "src.quality:run_pylint" }
-run-black = { script = "src.quality:run_black" }
-run-isort = { script = "src.quality:run_isort" }
-run-mypy = { script = "src.quality:run_mypy" }
-format-code = { script = "src.quality:format_code" }
-
 [tool.poe.tasks.commit-changes]
 args = ["message"]
 sequence = [
@@ -46,3 +39,16 @@ sequence = [
   { cmd = "git commit -m \"${message}\"" },
   { cmd = "git push -u origin main" }
 ]
+
+[tool.poe.tasks.lint]
+args = ["target"]
+sequence = [
+  { cmd = "ruff check ${target}" },
+  { cmd = "ruff format ${target}" }
+]
+
+[tool.poe.tasks.run-tests]
+cmd = "pytest --cov=src --cov-report=term-missing"
+
+[tool.poe.tasks.security]
+cmd = "bandit -r ."

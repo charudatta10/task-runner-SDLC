@@ -1,14 +1,14 @@
 # © 2025 Charudatta Korde · Licensed under CC BY-NC-SA 4.0 · View License @ https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 
-from invoke import task, Collection
 import logging
 from pathlib import Path
 import os
 from .config import Config
 from .utility import download_file
+import subprocess
 
-@task
-def init_project(ctx):
+
+def init_project():
     """Initialize the project: create dirs, files, download community files, and init uv env."""
     # Create directories
     for directory in Config.PROJECT_DIRS:
@@ -27,7 +27,11 @@ def init_project(ctx):
             logging.info(f"Downloaded community file: {file}")
 
     # Initialize uv environment
-    ctx.run("uv init")
+    try:
+        subprocess.run(["uv", "init"], check=True)
+        logging.info("Initialized uv environment.")
+    except subprocess.CalledProcessError as e:
+        logging.error(f"uv init failed: {e}")
     logging.info("Project initialized successfully.")
 
-ns = Collection(init_project)
+

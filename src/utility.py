@@ -6,17 +6,6 @@ import urllib.request
 import json
 
 
-def run_command(ctx, command, success_msg, error_msg):
-    """DRY helper to run commands with consistent logging"""
-    try:
-        ctx.run(command)
-        logging.info(success_msg)
-        return True
-    except Exception as e:
-        logging.error(f"{error_msg}: {e}")
-        return False
-
-
 def download_file(url, destination):
     """Download a file from URL to destination"""
     try:

@@ -1,6 +1,6 @@
 # © 2025 Charudatta Korde · Licensed under CC BY-NC-SA 4.0 · View License @ https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 
-from invoke import task, Collection
+
 from pathlib import Path
 from .config import Config
 
@@ -14,8 +14,8 @@ def license_text(ext):
     text = f"{comment} {Config.LICENSE_HEADER}\n"
     return f"{text} -->\n" if comment == "<!--" else text
 
-@task
-def add_header(ctx, action="add"):
+
+def add_header(action="add"):
     """Add or remove license headers. Usage: inv license.add-header --action=remove"""
     for file_path in get_files("src"):
         text = license_text(file_path.suffix)
@@ -25,4 +25,4 @@ def add_header(ctx, action="add"):
         elif action == "remove" and Config.LICENSE_HEADER in content:
             file_path.write_text(content.replace(text, ""), encoding="utf-8")
 
-ns = Collection(add_header)
+
