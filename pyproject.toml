@@ -3,11 +3,46 @@ name = "task-runner-sdlc"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 dependencies = [
-    "invoke>=2.2.0",
+    "poethepoet>=0.20.0",
     "pytest>=8.2.2",
     "pytest-cov>=5.0.0",
 ]
 
+[tool.poe.tasks]
+# PKM tasks
+generate_tags = { script = "src.tools.pkm_tools:generate_tags" }
+generate_moc = { script = "src.tools.pkm_tools:generate_moc" }
+generate_links = { script = "src.tools.pkm_tools:generate_links" }
 
+# Git tasks
+init-repo = "git init"
+
+# Documentation tasks
+generate-tags = { script = "src.tools.pkm_tools:generate_tags" }
+generate-moc = { script = "src.tools.pkm_tools:generate_moc" }
+generate-links = { script = "src.tools.pkm_tools:generate_links" }
+ai-doc-gen = { script = "ai_docsGen:ai_doc_gen" }
+
+# File tasks 
+clone-repos = { script = "src.tools.clone_github_repos:clone_repos" }
+generate-report = { script = "src.tools.generate_system_reports:generate_report" }
+move-files = { script = "src.tools.move_files:move_files" }
+select-repo = { script = "src.tools.select_github_repo:select_repo" }
+
+# Quality tasks
+run-pylint = { script = "src.quality:run_pylint" }
+run-black = { script = "src.quality:run_black" }
+run-isort = { script = "src.quality:run_isort" }
+run-mypy = { script = "src.quality:run_mypy" }
+format-code = { script = "src.quality:format_code" }
+
+[tool.poe.tasks.commit-changes]
+args = ["message"]
+sequence = [
+  { cmd = "git pull origin main" },
+  { cmd = "git add ." },
+  { cmd = "git commit -m \"${message}\"" },
+  { cmd = "git push -u origin main" }
+]
