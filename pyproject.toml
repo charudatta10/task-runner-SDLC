@@ -28,7 +28,6 @@ ai-doc-gen = { script = "ai_docsGen:ai_doc_gen" }
 # File tasks 
 clone-repos = { script = "src.tools.clone_github_repos:clone_repos" }
 generate-report = { script = "src.tools.generate_system_reports:generate_report" }
-move-files = { script = "src.tools.move_files:move_files" }
 select-repo = { script = "src.tools.select_github_repo:select_repo" }
 
 [tool.poe.tasks.commit-changes]
@@ -52,3 +51,8 @@ cmd = "pytest --cov=src --cov-report=term-missing"
 
 [tool.poe.tasks.security]
 cmd = "bandit -r ."
+
+[tool.poe.tasks.move-files]
+script = "src.tools.move_files:clean_folder"
+args = ["folder", "patterns", "destination"]
+

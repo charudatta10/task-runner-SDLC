@@ -5,7 +5,6 @@ from .config import Config
 from .utility import load_json_file, save_json_file, run_command
 
 
-
 def add_task():
     """Add a new task"""
     tasks = load_json_file(Config.TASKS_FILE)
@@ -21,7 +20,6 @@ def add_task():
     logging.info(f"Task added: {task['title']}")
 
 
-
 def list_tasks():
     """List all tasks"""
     tasks = load_json_file(Config.TASKS_FILE)
@@ -29,6 +27,4 @@ def list_tasks():
         print(f"{task['id']}: {task['title']} - {task['status']}")
 
 
-
 # Create manager namespace
-

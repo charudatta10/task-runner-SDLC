@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 from src.config import Config
 
+
 class TestConfig(unittest.TestCase):
     def test_repo_docs(self):
         expected_path = Path(__file__).parent.parent / "src" / "templates"
@@ -15,7 +16,13 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(Config.TASKS_FILE, "tasks.json")
 
     def test_file_types(self):
-        expected_file_types = {".py": "#", ".js": "//", ".html": "<!--", ".css": "/*", ".sh": "#"}
+        expected_file_types = {
+            ".py": "#",
+            ".js": "//",
+            ".html": "<!--",
+            ".css": "/*",
+            ".sh": "#",
+        }
         self.assertEqual(Config.FILE_TYPES, expected_file_types)
 
     def test_project_dirs(self):
@@ -69,6 +76,7 @@ class TestConfig(unittest.TestCase):
             ".github/pull_request_template.md",
         ]
         self.assertEqual(Config.COMMUNITY_FILES, expected_community_files)
+
 
 if __name__ == "__main__":
     unittest.main()

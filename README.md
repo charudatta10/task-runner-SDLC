@@ -29,7 +29,7 @@
 
 ## Getting Started
 
-Run `invoke` cmd in command prompt.
+Run `poe` cmd in command prompt.
 
 ## Contributing
 

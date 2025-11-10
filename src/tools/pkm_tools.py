@@ -6,8 +6,10 @@ from collections import defaultdict
 TAG_PATTERN = re.compile(r"#(\w[\w-]*)")
 LINK_PATTERN = re.compile(r"\[\[(.*?)\]\]|\[(.*?)\]\((.*?)\)")
 
+
 def get_markdown_files(folder):
     return list(Path(folder).rglob("*.md"))
+
 
 @task
 def generate_tags(c, folder="."):
@@ -29,6 +31,7 @@ def generate_tags(c, folder="."):
     Path(folder, "tags.md").write_text("\n".join(lines), encoding="utf-8")
     print("✅ tags.md generated.")
 
+
 @task
 def generate_moc(c, folder="."):
     """Generate moc.md with wiki-style links to all notes."""
@@ -39,6 +42,7 @@ def generate_moc(c, folder="."):
         lines.append(f"- [[{title}]]")
     Path(folder, "moc.md").write_text("\n".join(lines), encoding="utf-8")
     print("✅ moc.md generated.")
+
 
 @task
 def generate_links(c, folder="."):
@@ -62,4 +66,3 @@ def generate_links(c, folder="."):
 
     Path(folder, "links.md").write_text("\n".join(lines), encoding="utf-8")
     print("✅ links.md generated.")
-

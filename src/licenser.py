@@ -4,10 +4,12 @@
 from pathlib import Path
 from .config import Config
 
+
 def get_files(directory):
     for path in Path(directory).rglob("*"):
         if path.suffix in Config.FILE_TYPES:
             yield path
+
 
 def license_text(ext):
     comment = Config.FILE_TYPES[ext]
@@ -24,5 +26,3 @@ def add_header(action="add"):
             file_path.write_text(text + content, encoding="utf-8")
         elif action == "remove" and Config.LICENSE_HEADER in content:
             file_path.write_text(content.replace(text, ""), encoding="utf-8")
-
-

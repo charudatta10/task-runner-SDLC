@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 class Config:
     """Central configuration for all tasks"""
 

@@ -33,5 +33,3 @@ def init_project():
     except subprocess.CalledProcessError as e:
         logging.error(f"uv init failed: {e}")
     logging.info("Project initialized successfully.")
-
-

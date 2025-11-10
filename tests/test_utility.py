@@ -10,6 +10,7 @@ from src.utility import (
     generate_file,
 )
 
+
 class TestUtility(unittest.TestCase):
     def test_run_command_success(self):
         ctx = MagicMock()
@@ -62,6 +63,7 @@ class TestUtility(unittest.TestCase):
         self.assertEqual(content, "Hello, World!")
         os.remove("template.txt")
         os.remove("output.txt")
+
 
 if __name__ == "__main__":
     unittest.main()

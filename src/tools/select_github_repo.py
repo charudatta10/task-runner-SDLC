@@ -1,6 +1,7 @@
 from pathlib import Path
 from invoke import task
 
+
 @task
 def select_github_repo(ctx, base_path="C:/Users/korde/Home/Github"):
     """
@@ -18,7 +19,7 @@ def select_github_repo(ctx, base_path="C:/Users/korde/Home/Github"):
         print(f"{idx}. {folder.name}")
     choice = int(input("Enter the number of the folder you want to select: "))
     selected_folder = folders[choice - 1]
-    # Run 'invoke default' command
-    ctx.run(f"invoke -r {Path(base_path) / selected_folder.name} --list")
+    # Run 'poe' to list tasks in the selected repository
+    ctx.run(f"poe -C {Path(base_path) / selected_folder.name} --list")
     task = input("Enter the command to run: ")
-    ctx.run(f"invoke -r {Path(base_path) / selected_folder.name} {task}")
+    ctx.run(f"poe -C {Path(base_path) / selected_folder.name} {task}")

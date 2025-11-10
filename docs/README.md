@@ -29,7 +29,7 @@
 
 ## Getting Started
 
-Run `invoke` cmd in command prompt.
+Run `poe` cmd in command prompt.
 
 [Report a bug or Request a feature](https://github.com/charudatta10/task-runner-SDLC/issues)
 

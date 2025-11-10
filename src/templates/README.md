@@ -44,7 +44,7 @@ cd {title}
 1. Run the project:
 
 ```bash
-invoke
+poe
 ```
 
 ## Contributing

@@ -48,9 +48,7 @@ def collect_project_data():
 @task
 def generate_docs(ctx):
     """Generate documentation"""
-    ctx.run(
-        f"python {Config.DOC_GEN_FILE} ."
-    )
+    ctx.run(f"python {Config.DOC_GEN_FILE} .")
 
 
 ns = Collection(setup_docs, generate_docs)

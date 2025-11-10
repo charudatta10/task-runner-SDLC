@@ -5,13 +5,21 @@ from pathlib import Path
 from src.setup import init_project
 from src.config import Config
 
+
 class TestSetup(unittest.TestCase):
-    @patch('os.path.exists', return_value=False)
-    @patch('os.makedirs')
-    @patch('pathlib.Path.touch')
-    @patch('src.setup.download_file', return_value=True)
-    @patch('logging.info')
-    def test_init_project(self, mock_logging_info, mock_download_file, mock_touch, mock_makedirs, mock_exists):
+    @patch("os.path.exists", return_value=False)
+    @patch("os.makedirs")
+    @patch("pathlib.Path.touch")
+    @patch("src.setup.download_file", return_value=True)
+    @patch("logging.info")
+    def test_init_project(
+        self,
+        mock_logging_info,
+        mock_download_file,
+        mock_touch,
+        mock_makedirs,
+        mock_exists,
+    ):
         ctx = MagicMock(spec=Context)
         ctx.run = MagicMock()
 
@@ -38,7 +46,10 @@ class TestSetup(unittest.TestCase):
         ctx.run.assert_called_once_with("uv init")
 
         # Test logging
-        self.assertIn(call("Project initialized successfully."), mock_logging_info.call_args_list)
+        self.assertIn(
+            call("Project initialized successfully."), mock_logging_info.call_args_list
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -11,7 +11,7 @@
 - 💡 Feature Three
 
 ```bash
-invoke --list
+poe --list
 ```
 
 © 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike.

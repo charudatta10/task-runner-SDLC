@@ -5,18 +5,15 @@ from .src.utility import load_json_file, download_file
 from invoke import task, Collection
 import urllib.request
 
+
 class DocumentationGenerator:
     def __init__(self, repo_path: str, template_file: str, output_dir: str = "docs"):
         self.repo_path = Path(repo_path).expanduser().absolute()
         self.output_dir = Path(output_dir).absolute()
         self.output_dir.mkdir(exist_ok=True)
         self.template_file = Path(template_file)
-        download_file(
-            f"{Config.REPO_DOCS}/{self.template_file}",
-            "prompt_docgen.json"
-        )
+        download_file(f"{Config.REPO_DOCS}/{self.template_file}", "prompt_docgen.json")
         self.doc_templates = load_json_file(self.template_file)
-
 
     def generate_with_ollama(
         self, prompt: str, context: str = "", model: str = "granite3.2:8b"
@@ -35,7 +32,9 @@ class DocumentationGenerator:
 
     def generate_all_docs(self):
         for filename, prompt in self.doc_templates.items():
-            print(f"[DEBUG] Generating documentation for: {filename} with prompt: {prompt}")
+            print(
+                f"[DEBUG] Generating documentation for: {filename} with prompt: {prompt}"
+            )
             content = self.generate_with_ollama(prompt)
             output_path = self.output_dir / filename
             with open(output_path, "w", encoding="utf-8") as f:

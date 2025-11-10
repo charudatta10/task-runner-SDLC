@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, call
 from invoke import Context
 from src.git import init_repo, commit_changes
 
+
 class TestGit(unittest.TestCase):
     def test_init_repo(self):
         ctx = MagicMock(spec=Context)
@@ -22,6 +23,7 @@ class TestGit(unittest.TestCase):
             call("git push -u origin main"),
         ]
         ctx.run.assert_has_calls(calls)
+
 
 if __name__ == "__main__":
     unittest.main()
