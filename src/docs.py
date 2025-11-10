@@ -1,7 +1,7 @@
 # © 2025 Charudatta Korde · Licensed under CC BY-NC-SA 4.0 · View License @ https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
 # © 2025 Charudatta Korde. Some Rights Reserved. Attribution Required. Non-Commercial Use & Share-Alike.
 # https://raw.githubusercontent.com/charudatta10/task-runner-SDLC/refs/heads/main/src/templates/LICENSE
-from invoke import task, Collection
+
 import logging
 from .config import Config
 from .utils.web import download_file
@@ -21,8 +21,8 @@ def collect_items(prompt, formatter):
     return "\n".join(items) if formatter == "list_features" else " ".join(items)
 
 
-@task
-def setup_docs(ctx):
+
+def setup_docs():
     """Setup documentation"""
     data = collect_project_data()
     logging.info("README file input parsed successfully.")
@@ -46,10 +46,10 @@ def collect_project_data():
     }
 
 
-@task
-def generate_docs(ctx):
+
+def generate_docs():
     """Generate documentation"""
     ctx.run(f"python {Config.DOC_GEN_FILE} .")
 
 
-ns = Collection(setup_docs, generate_docs)
+

@@ -1,8 +1,7 @@
 import json
 from pathlib import Path
-from .src.config import Config
-from .src.utility import load_json_file, download_file
-from invoke import task, Collection
+from ..config import Config
+from .. import load_json_file, download_file
 import urllib.request
 
 
@@ -42,9 +41,9 @@ class DocumentationGenerator:
             print(f"Saved: {output_path}")
 
 
-@task
+
 def ai_doc_gen(
-    ctx, repo_path=".", template_file="prompt_docgen.json", output_dir="docs"
+    repo_path=".", template_file="prompt_docgen.json", output_dir="docs"
 ):
     """Invoke Task to Generate Documentation"""
     generator = DocumentationGenerator(
@@ -53,4 +52,4 @@ def ai_doc_gen(
     generator.generate_all_docs()
 
 
-ns = Collection(ai_doc_gen)
+
