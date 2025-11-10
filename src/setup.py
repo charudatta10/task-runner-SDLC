@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 import os
 from .config import Config
-from .utility import download_file
+from .utils.web import download_file
 import subprocess
 
 

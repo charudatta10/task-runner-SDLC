@@ -4,7 +4,8 @@
 from invoke import task, Collection
 import logging
 from .config import Config
-from .utility import download_file, generate_file
+from .utils.web import download_file
+from .utils.file_system import generate_file
 from pathlib import Path
 
 

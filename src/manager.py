@@ -2,7 +2,8 @@
 
 import logging
 from .config import Config
-from .utility import load_json_file, save_json_file, run_command
+from .utils.file_system import load_json_file, save_json_file
+from .utils.shell import run_command
 
 
 def add_task():
