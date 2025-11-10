@@ -1,0 +1,4546 @@
+{
+  "project": "task-runner-SDLC",
+  "root": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC",
+  "modules": [
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\main.py",
+      "module": "main",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "main",
+            "docstring": null,
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 1,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": []
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\config.py",
+      "module": "config",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "Config",
+            "docstring": "Central configuration for all tasks",
+            "methods": [],
+            "attributes": [],
+            "decorators": [],
+            "bases": [],
+            "lineno": 4
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\docs.py",
+      "module": "docs",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "collect_items",
+            "docstring": null,
+            "args": [
+              {
+                "name": "prompt",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "formatter",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 12,
+            "is_async": false
+          },
+          {
+            "name": "setup_docs",
+            "docstring": "Setup documentation",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 25,
+            "is_async": false
+          },
+          {
+            "name": "collect_project_data",
+            "docstring": "Collect project data from user input.",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 37,
+            "is_async": false
+          },
+          {
+            "name": "generate_docs",
+            "docstring": "Generate documentation",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 50,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "utils.web",
+            "name": "download_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "utils.file_system",
+            "name": "generate_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\licenser.py",
+      "module": "licenser",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "get_files",
+            "docstring": null,
+            "args": [
+              {
+                "name": "directory",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 8,
+            "is_async": false
+          },
+          {
+            "name": "license_text",
+            "docstring": null,
+            "args": [
+              {
+                "name": "ext",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 14,
+            "is_async": false
+          },
+          {
+            "name": "add_header",
+            "docstring": "Add or remove license headers. Usage: inv license.add-header --action=remove",
+            "args": [
+              {
+                "name": "action",
+                "type": null,
+                "default": "'add'"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 20,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\manager.py",
+      "module": "manager",
+      "docstring": "Task management module for handling task operations.",
+      "api": {
+        "classes": [
+          {
+            "name": "TaskManager",
+            "docstring": "Manages task operations including creation, retrieval, and updates.",
+            "methods": [
+              {
+                "name": "__init__",
+                "docstring": "Initialize TaskManager with specified tasks file.\n\nArgs:\n    tasks_file: Path to tasks JSON file. Defaults to Config.TASKS_FILE.",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "tasks_file",
+                    "type": "str",
+                    "default": "None"
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 16,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "_load_tasks",
+                "docstring": "Load tasks from JSON file.",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": "List[Dict[(str, Any)]]",
+                "lineno": 25,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "_save_tasks",
+                "docstring": "Save tasks to JSON file.",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "tasks",
+                    "type": "List[Dict[(str, Any)]]",
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": "None",
+                "lineno": 29,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "_get_next_id",
+                "docstring": "Generate next available task ID.",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "tasks",
+                    "type": "List[Dict[(str, Any)]]",
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": "int",
+                "lineno": 33,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "add_task",
+                "docstring": "Add a new task.\n\nArgs:\n    title: Task title (required)\n    description: Task description\n    tags: List of task tags\n    status: Task status (default: 'todo')\n    \nReturns:\n    The newly created task dictionary",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "title",
+                    "type": "str",
+                    "default": null
+                  },
+                  {
+                    "name": "description",
+                    "type": "str",
+                    "default": "''"
+                  },
+                  {
+                    "name": "tags",
+                    "type": "List[str]",
+                    "default": "None"
+                  },
+                  {
+                    "name": "status",
+                    "type": "str",
+                    "default": "'todo'"
+                  }
+                ],
+                "decorators": [],
+                "returns": "Dict[(str, Any)]",
+                "lineno": 37,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "list_tasks",
+                "docstring": "List all tasks, optionally filtered by status.\n\nArgs:\n    status_filter: Optional status to filter tasks by\n    \nReturns:\n    List of task dictionaries",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "status_filter",
+                    "type": "str",
+                    "default": "None"
+                  }
+                ],
+                "decorators": [],
+                "returns": "List[Dict[(str, Any)]]",
+                "lineno": 64,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "get_task",
+                "docstring": "Get a specific task by ID.\n\nArgs:\n    task_id: The task ID to retrieve\n    \nReturns:\n    Task dictionary or None if not found",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "task_id",
+                    "type": "int",
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": "Dict[(str, Any)]",
+                "lineno": 78,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "update_task",
+                "docstring": "Update task fields.\n\nArgs:\n    task_id: The task ID to update\n    **updates: Field names and values to update\n    \nReturns:\n    True if task was updated, False if not found",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "task_id",
+                    "type": "int",
+                    "default": null
+                  },
+                  {
+                    "name": "**updates",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": "bool",
+                "lineno": 90,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "delete_task",
+                "docstring": "Delete a task by ID.\n\nArgs:\n    task_id: The task ID to delete\n    \nReturns:\n    True if task was deleted, False if not found",
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "task_id",
+                    "type": "int",
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": "bool",
+                "lineno": 109,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [],
+            "lineno": 13
+          }
+        ],
+        "functions": [
+          {
+            "name": "add_task",
+            "docstring": "Add a new task (legacy interactive function).",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 132,
+            "is_async": false
+          },
+          {
+            "name": "list_tasks",
+            "docstring": "List all tasks (legacy print function).",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 140,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "typing",
+            "name": "List",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "typing",
+            "name": "Dict",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "typing",
+            "name": "Any",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "utils.file_system",
+            "name": "load_json_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "utils.file_system",
+            "name": "save_json_file",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\setup.py",
+      "module": "setup",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "init_project",
+            "docstring": "Initialize the project: create dirs, files, download community files, and init uv env.",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 11,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "utils.web",
+            "name": "download_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "subprocess",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\__init__.py",
+      "module": "__init__",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [],
+        "variables": [],
+        "imports": []
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_clone_github_repos.py",
+      "module": "test_clone_github_repos",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestCloneGithubRepos",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_clone_github_repos",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_json_loads",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 10,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 7
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.clone_github_repos",
+            "name": "clone_github_repos",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_config.py",
+      "module": "test_config",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestConfig",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_repo_docs",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 7,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_license_header",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 11,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_tasks_file",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 15,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_file_types",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 18,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_project_dirs",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 28,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_project_files",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 39,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_docs_files",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 57,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_community_files",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 68,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 6
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_docs.py",
+      "module": "test_docs",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestDocs",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_collect_items_list_features",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_input",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 10,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_collect_items_list_badges",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_input",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 15,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_collect_project_data",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_input",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 23,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_setup_docs",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_collect_project_data",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_generate_file",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_download_file",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 33,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_generate_docs",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 41,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 8
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.docs",
+            "name": "collect_items",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.docs",
+            "name": "collect_project_data",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.docs",
+            "name": "setup_docs",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.docs",
+            "name": "generate_docs",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_git.py",
+      "module": "test_git",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestGit",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_init_repo",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 8,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_commit_changes",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 14,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 7
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.git",
+            "name": "init_repo",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.git",
+            "name": "commit_changes",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_licenser.py",
+      "module": "test_licenser",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestLicenser",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_get_files",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_rglob",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 10,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_license_text_py",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 21,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_license_text_html",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 25,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_add_header_add",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_get_files",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 30,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_add_header_remove",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_get_files",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 43,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 8
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.licenser",
+            "name": "get_files",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.licenser",
+            "name": "license_text",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.licenser",
+            "name": "add_header",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_main.py",
+      "module": "test_main",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestMain",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_main",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_stdout",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 9,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 7
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "io",
+            "name": "StringIO",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "main",
+            "name": "main",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_manager.py",
+      "module": "test_manager",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestManager",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_add_task",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_logging_info",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_input",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_save_json_file",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_load_json_file",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 15,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_list_tasks",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_load_json_file",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 38,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_main_task",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_run_command",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 50,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 8
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.manager",
+            "name": "add_task",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.manager",
+            "name": "list_tasks",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.manager",
+            "name": "main",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_move_files.py",
+      "module": "test_move_files",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestMoveFiles",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_create_patterns_sample",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_json_dump",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_file_open",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 23,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_clean_folder",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_organize_files_body",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 36,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_clean_folder_default_destination",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_organize_files_body",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 49,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_organize_files",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_move_files_to_directory",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_ensure_directories_exist",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_validate_paths",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_open",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_json_load",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_shutil_move",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_setup_logging",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 64,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_get_unique_filename_no_duplicate",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 157,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_get_unique_filename_with_duplicates",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 165,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_get_unique_filename_no_extension",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 174,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_validate_paths_success",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_mkdir",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_resolve",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_is_dir",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 193,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_validate_paths_source_not_found",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 206,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_validate_paths_source_not_directory",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_is_dir",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 214,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_validate_paths_patterns_not_found",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_is_dir",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 226,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_move_files_to_directory",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_error",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_info",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_shutil_move",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_get_unique_filename",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 241,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_ensure_directories_exist",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_mkdir",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 298,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 19
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "mock_open",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "shutil",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "organize_files",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "create_patterns_sample",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "clean_folder",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "get_unique_filename",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "move_files_to_directory",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "ensure_directories_exist",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.tools.move_files",
+            "name": "validate_paths",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_quality.py",
+      "module": "test_quality",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestQuality",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_lint",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_run_command",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 9,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_run_tests",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_run_command",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 20,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_security",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_run_command",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 31,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 7
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.quality",
+            "name": "lint",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.quality",
+            "name": "run_tests",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.quality",
+            "name": "security",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.quality",
+            "name": "quality_checks",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_select_github_repo.py",
+      "module": "test_select_github_repo",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestSelectGithubRepo",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_select_github_repo",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_print",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_input",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_iterdir",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 13,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 9
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "src.tools.select_github_repo",
+            "name": "select_github_repo",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_setup.py",
+      "module": "test_setup",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestSetup",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_init_project",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_logging_info",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_download_file",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_touch",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_makedirs",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_exists",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch",
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 15,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 9
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "call",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Context",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.setup",
+            "name": "init_project",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\test_utility.py",
+      "module": "test_utility",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "TestUtility",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "test_run_command_success",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 15,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_run_command_failure",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 20,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_download_file_success",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_urlretrieve",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 26,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_download_file_failure",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "mock_urlretrieve",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [
+                  "@patch"
+                ],
+                "returns": null,
+                "lineno": 33,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_load_json_file_exists",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 36,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_load_json_file_not_exists",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 43,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_save_json_file",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 47,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "test_generate_file",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 55,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [
+              "unittest.TestCase"
+            ],
+            "lineno": 14
+          }
+        ],
+        "functions": [],
+        "variables": [],
+        "imports": [
+          {
+            "module": "unittest",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "patch",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "unittest.mock",
+            "name": "MagicMock",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "src.utility",
+            "name": "run_command",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.utility",
+            "name": "download_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.utility",
+            "name": "load_json_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.utility",
+            "name": "save_json_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "src.utility",
+            "name": "generate_file",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\tests\\__init__.py",
+      "module": "__init__",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [],
+        "variables": [],
+        "imports": []
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\ai_docsGen.py",
+      "module": "ai_docsGen",
+      "docstring": null,
+      "api": {
+        "classes": [
+          {
+            "name": "DocumentationGenerator",
+            "docstring": null,
+            "methods": [
+              {
+                "name": "__init__",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "repo_path",
+                    "type": "str",
+                    "default": null
+                  },
+                  {
+                    "name": "template_file",
+                    "type": "str",
+                    "default": null
+                  },
+                  {
+                    "name": "output_dir",
+                    "type": "str",
+                    "default": "'docs'"
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 9,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "generate_with_ollama",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  },
+                  {
+                    "name": "prompt",
+                    "type": "str",
+                    "default": null
+                  },
+                  {
+                    "name": "context",
+                    "type": "str",
+                    "default": "''"
+                  },
+                  {
+                    "name": "model",
+                    "type": "str",
+                    "default": "'granite3.2:8b'"
+                  }
+                ],
+                "decorators": [],
+                "returns": "str",
+                "lineno": 17,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              },
+              {
+                "name": "generate_all_docs",
+                "docstring": null,
+                "args": [
+                  {
+                    "name": "self",
+                    "type": null,
+                    "default": null
+                  }
+                ],
+                "decorators": [],
+                "returns": null,
+                "lineno": 32,
+                "is_async": false,
+                "is_method": true,
+                "is_classmethod": false,
+                "is_staticmethod": false
+              }
+            ],
+            "attributes": [],
+            "decorators": [],
+            "bases": [],
+            "lineno": 8
+          }
+        ],
+        "functions": [
+          {
+            "name": "ai_doc_gen",
+            "docstring": "Invoke Task to Generate Documentation",
+            "args": [
+              {
+                "name": "repo_path",
+                "type": null,
+                "default": "'.'"
+              },
+              {
+                "name": "template_file",
+                "type": null,
+                "default": "'prompt_docgen.json'"
+              },
+              {
+                "name": "output_dir",
+                "type": null,
+                "default": "'docs'"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 45,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "",
+            "name": "load_json_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "",
+            "name": "download_file",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "urllib.request",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\clone_github_repos.py",
+      "module": "clone_github_repos",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "clone_github_repos",
+            "docstring": "Clone all repositories from a specified GitHub user.\n\nArgs:\n    source_user (str): The GitHub username to clone repositories from.",
+            "args": [
+              {
+                "name": "ctx",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "source_user",
+                "type": null,
+                "default": "'charudatta10'"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "invoke",
+            "name": "task",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\generate_system_reports.py",
+      "module": "generate_system_reports",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "run_command_safe",
+            "docstring": "Safely run a command with error handling and logging\n\nArgs:\n    ctx: Invoke context\n    command (str): Command to run\n    output_file (str): Optional output file for command result\n    description (str): Description for logging\n\nReturns:\n    tuple: (success: bool, result: str)",
+            "args": [
+              {
+                "name": "ctx",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "command",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "output_file",
+                "type": null,
+                "default": "None"
+              },
+              {
+                "name": "description",
+                "type": null,
+                "default": "''"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 14,
+            "is_async": false
+          },
+          {
+            "name": "check_tool_availability",
+            "docstring": "Check if a tool is available in the system PATH",
+            "args": [
+              {
+                "name": "tool_name",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 50,
+            "is_async": false
+          },
+          {
+            "name": "copy_file_safe",
+            "docstring": "Safely copy a file with error handling",
+            "args": [
+              {
+                "name": "source",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "description",
+                "type": null,
+                "default": "''"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 65,
+            "is_async": false
+          },
+          {
+            "name": "generate_system_reports",
+            "docstring": "Generate comprehensive system reports and copy configuration files.\n\nArgs:\n    destination_folder (str): Destination folder for reports (default: Config.BACKUP_DIR)\n    include_optional (bool): Include optional/experimental package managers",
+            "args": [
+              {
+                "name": "ctx",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination_folder",
+                "type": null,
+                "default": "None"
+              },
+              {
+                "name": "include_optional",
+                "type": null,
+                "default": "False"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 93,
+            "is_async": false
+          },
+          {
+            "name": "list_system_tools",
+            "docstring": "List available system package managers and tools.",
+            "args": [
+              {
+                "name": "ctx",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 356,
+            "is_async": false
+          },
+          {
+            "name": "quick_backup",
+            "docstring": "Quick backup of essential system configurations.\nOnly backs up core package managers and essential config files.",
+            "args": [
+              {
+                "name": "ctx",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination_folder",
+                "type": null,
+                "default": "None"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 398,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "invoke",
+            "name": "task",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "shutil",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "platform",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "subprocess",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "datetime",
+            "name": "datetime",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "config",
+            "name": "Config",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "utils.logger",
+            "name": "setup_logging",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\move_files.py",
+      "module": "move_files",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "get_unique_filename",
+            "docstring": "Generate a unique filename by appending version numbers if duplicates exist.\n\nArgs:\n    destination_path (Path): The destination directory\n    filename (str): The original filename\n    \nReturns:\n    str: A unique filename",
+            "args": [
+              {
+                "name": "destination_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "filename",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          },
+          {
+            "name": "move_files_to_directory",
+            "docstring": "Move files with duplicate handling and logging",
+            "args": [
+              {
+                "name": "source_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "file_patterns",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "logger",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 42,
+            "is_async": false
+          },
+          {
+            "name": "ensure_directories_exist",
+            "docstring": "Create directories if they don't exist",
+            "args": [
+              {
+                "name": "*dirs",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 78,
+            "is_async": false
+          },
+          {
+            "name": "validate_paths",
+            "docstring": "Validate that all required paths exist and are accessible",
+            "args": [
+              {
+                "name": "source",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "patterns",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 83,
+            "is_async": false
+          },
+          {
+            "name": "organize_files",
+            "docstring": "Organize files from a source directory to categorized directories based on file patterns.\nHandles duplicates by renaming with version numbers and logs all operations.\n\nArgs:\n    source_directory (str): The directory to scan and clean files from.\n    destination_directory (str): The root directory where categorized folders will be created.\n    patterns_file (str): Path to the JSON file containing file patterns.\n    log_directory (str, optional): Directory to store log files. If None, uses destination_directory/logs.",
+            "args": [
+              {
+                "name": "source_directory",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination_directory",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "patterns_file",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "log_directory",
+                "type": null,
+                "default": "None"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 103,
+            "is_async": false
+          },
+          {
+            "name": "create_patterns_sample",
+            "docstring": "Create a sample patterns JSON file.\n\nArgs:\n    output_file (str): Path where to create the sample file",
+            "args": [
+              {
+                "name": "output_file",
+                "type": null,
+                "default": "'file_patterns.json'"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 207,
+            "is_async": false
+          },
+          {
+            "name": "clean_folder",
+            "docstring": "Clean a folder by organizing files into categories.\nSimplified interface for common use case.\n\nArgs:\n    folder (str): Folder to clean (default: current directory)\n    patterns (str): Patterns file (default: file_patterns.json)\n    destination (str): Where to create organized folders (default: same as folder)",
+            "args": [
+              {
+                "name": "folder",
+                "type": null,
+                "default": "'.'"
+              },
+              {
+                "name": "patterns",
+                "type": null,
+                "default": "None"
+              },
+              {
+                "name": "destination",
+                "type": null,
+                "default": "None"
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 234,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "shutil",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "utils.logger",
+            "name": "setup_logging",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\pkm_tools.py",
+      "module": "pkm_tools",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "get_markdown_files",
+            "docstring": null,
+            "args": [
+              {
+                "name": "folder",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 10,
+            "is_async": false
+          },
+          {
+            "name": "generate_tags",
+            "docstring": "Generate tags.md with tag glossary and linked notes.",
+            "args": [
+              {
+                "name": "c",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "folder",
+                "type": null,
+                "default": "'.'"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 15,
+            "is_async": false
+          },
+          {
+            "name": "generate_moc",
+            "docstring": "Generate moc.md with wiki-style links to all notes.",
+            "args": [
+              {
+                "name": "c",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "folder",
+                "type": null,
+                "default": "'.'"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 36,
+            "is_async": false
+          },
+          {
+            "name": "generate_links",
+            "docstring": "Generate links.md with all internal and external links.",
+            "args": [
+              {
+                "name": "c",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "folder",
+                "type": null,
+                "default": "'.'"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 48,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "invoke",
+            "name": "task",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "Collection",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "re",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "collections",
+            "name": "defaultdict",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\select_github_repo.py",
+      "module": "select_github_repo",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "select_github_repo",
+            "docstring": "Select a GitHub repository from the specified base path and change the working directory to the selected repository.\n\nArgs:\n    base_path (str): The base path where the GitHub repositories are located.",
+            "args": [
+              {
+                "name": "ctx",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "base_path",
+                "type": null,
+                "default": "'C:/Users/korde/Home/Github'"
+              }
+            ],
+            "decorators": [
+              "@task"
+            ],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "invoke",
+            "name": "task",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\tools\\__init__.py",
+      "module": "__init__",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [],
+        "variables": [],
+        "imports": []
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\archive.py",
+      "module": "archive",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "create_zip_file",
+            "docstring": "Create a zip file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "files",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          },
+          {
+            "name": "extract_zip_file",
+            "docstring": "Extract a zip file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination_folder",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 13,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "zipfile",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\crypto.py",
+      "module": "crypto",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "get_hash",
+            "docstring": "Get the hash of a string",
+            "args": [
+              {
+                "name": "text",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          },
+          {
+            "name": "encrypt_text",
+            "docstring": "Encrypt text",
+            "args": [
+              {
+                "name": "text",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "key",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 10,
+            "is_async": false
+          },
+          {
+            "name": "decrypt_text",
+            "docstring": "Decrypt text",
+            "args": [
+              {
+                "name": "token",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "key",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 15,
+            "is_async": false
+          },
+          {
+            "name": "generate_key",
+            "docstring": "Generate a key for encryption",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 20,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "hashlib",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "cryptography.fernet",
+            "name": "Fernet",
+            "alias": null,
+            "type": "from"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\data.py",
+      "module": "data",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "get_uuid",
+            "docstring": "Get a UUID",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 5,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "uuid",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\file_system.py",
+      "module": "file_system",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "load_json_file",
+            "docstring": "Load JSON data from file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 8,
+            "is_async": false
+          },
+          {
+            "name": "save_json_file",
+            "docstring": "Save data to JSON file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "data",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 15,
+            "is_async": false
+          },
+          {
+            "name": "generate_file",
+            "docstring": "Generate a file from a template",
+            "args": [
+              {
+                "name": "template_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "config",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "output_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 20,
+            "is_async": false
+          },
+          {
+            "name": "create_folder",
+            "docstring": "Create a folder if it doesn't exist",
+            "args": [
+              {
+                "name": "folder_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 31,
+            "is_async": false
+          },
+          {
+            "name": "move_file",
+            "docstring": "Move a file from source to destination",
+            "args": [
+              {
+                "name": "source_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 37,
+            "is_async": false
+          },
+          {
+            "name": "copy_file",
+            "docstring": "Copy a file from source to destination",
+            "args": [
+              {
+                "name": "source_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 45,
+            "is_async": false
+          },
+          {
+            "name": "delete_file",
+            "docstring": "Delete a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 53,
+            "is_async": false
+          },
+          {
+            "name": "get_file_list",
+            "docstring": "Get a list of files in a folder",
+            "args": [
+              {
+                "name": "folder_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 61,
+            "is_async": false
+          },
+          {
+            "name": "read_file",
+            "docstring": "Read content from a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 65,
+            "is_async": false
+          },
+          {
+            "name": "write_file",
+            "docstring": "Write content to a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "content",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 70,
+            "is_async": false
+          },
+          {
+            "name": "append_to_file",
+            "docstring": "Append content to a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "content",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 75,
+            "is_async": false
+          },
+          {
+            "name": "search_and_replace",
+            "docstring": "Search and replace in a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "search_term",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "replace_term",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 80,
+            "is_async": false
+          },
+          {
+            "name": "get_project_name",
+            "docstring": "Get the project name from the current working directory",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 86,
+            "is_async": false
+          },
+          {
+            "name": "get_file_extension",
+            "docstring": "Get the file extension",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 90,
+            "is_async": false
+          },
+          {
+            "name": "get_file_name",
+            "docstring": "Get the file name without extension",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 94,
+            "is_async": false
+          },
+          {
+            "name": "get_folder_name",
+            "docstring": "Get the folder name",
+            "args": [
+              {
+                "name": "folder_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 98,
+            "is_async": false
+          },
+          {
+            "name": "get_parent_folder",
+            "docstring": "Get the parent folder",
+            "args": [
+              {
+                "name": "path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 102,
+            "is_async": false
+          },
+          {
+            "name": "join_paths",
+            "docstring": "Join multiple paths",
+            "args": [
+              {
+                "name": "*paths",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 106,
+            "is_async": false
+          },
+          {
+            "name": "check_file_exists",
+            "docstring": "Check if a file exists",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 110,
+            "is_async": false
+          },
+          {
+            "name": "check_folder_exists",
+            "docstring": "Check if a folder exists",
+            "args": [
+              {
+                "name": "folder_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 114,
+            "is_async": false
+          },
+          {
+            "name": "get_file_size",
+            "docstring": "Get the size of a file in bytes",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 118,
+            "is_async": false
+          },
+          {
+            "name": "get_file_modified_time",
+            "docstring": "Get the last modified time of a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 122,
+            "is_async": false
+          },
+          {
+            "name": "get_file_created_time",
+            "docstring": "Get the created time of a file",
+            "args": [
+              {
+                "name": "file_path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 126,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "json",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "shutil",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\logger.py",
+      "module": "logger",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "setup_logging",
+            "docstring": "Setup logging for system reports generation",
+            "args": [
+              {
+                "name": "log_dir",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "pathlib",
+            "name": "Path",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "datetime",
+            "name": "datetime",
+            "alias": null,
+            "type": "from"
+          },
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\shell.py",
+      "module": "shell",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "run_command",
+            "docstring": "Run a shell command",
+            "args": [
+              {
+                "name": "command",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 7,
+            "is_async": false
+          },
+          {
+            "name": "get_current_working_directory",
+            "docstring": "Get the current working directory",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 14,
+            "is_async": false
+          },
+          {
+            "name": "change_directory",
+            "docstring": "Change the current working directory",
+            "args": [
+              {
+                "name": "path",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 18,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "subprocess",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\system.py",
+      "module": "system",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "get_environment_variable",
+            "docstring": "Get an environment variable",
+            "args": [
+              {
+                "name": "variable_name",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 8,
+            "is_async": false
+          },
+          {
+            "name": "set_environment_variable",
+            "docstring": "Set an environment variable",
+            "args": [
+              {
+                "name": "variable_name",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "value",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 12,
+            "is_async": false
+          },
+          {
+            "name": "get_user_home_directory",
+            "docstring": "Get the user's home directory",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 16,
+            "is_async": false
+          },
+          {
+            "name": "get_temp_directory",
+            "docstring": "Get the temporary directory",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 20,
+            "is_async": false
+          },
+          {
+            "name": "create_temp_file",
+            "docstring": "Create a temporary file",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 24,
+            "is_async": false
+          },
+          {
+            "name": "create_temp_directory",
+            "docstring": "Create a temporary directory",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 28,
+            "is_async": false
+          },
+          {
+            "name": "get_platform",
+            "docstring": "Get the operating system platform",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 32,
+            "is_async": false
+          },
+          {
+            "name": "get_python_version",
+            "docstring": "Get the Python version",
+            "args": [],
+            "decorators": [],
+            "returns": null,
+            "lineno": 36,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "os",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "tempfile",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "platform",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "sys",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\web.py",
+      "module": "web",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [
+          {
+            "name": "download_file",
+            "docstring": "Download a file from URL to destination",
+            "args": [
+              {
+                "name": "url",
+                "type": null,
+                "default": null
+              },
+              {
+                "name": "destination",
+                "type": null,
+                "default": null
+              }
+            ],
+            "decorators": [],
+            "returns": null,
+            "lineno": 6,
+            "is_async": false
+          }
+        ],
+        "variables": [],
+        "imports": [
+          {
+            "module": "logging",
+            "alias": null,
+            "type": "import"
+          },
+          {
+            "module": "urllib.request",
+            "alias": null,
+            "type": "import"
+          }
+        ]
+      },
+      "language": "python"
+    },
+    {
+      "path": "C:\\Users\\korde\\Home\\Github\\task-runner-SDLC\\src\\utils\\__init__.py",
+      "module": "__init__",
+      "docstring": null,
+      "api": {
+        "classes": [],
+        "functions": [],
+        "variables": [],
+        "imports": []
+      },
+      "language": "python"
+    }
+  ],
+  "summary": {
+    "total_files": 36,
+    "total_classes": 15,
+    "total_functions": 74,
+    "total_lines": 1325,
+    "languages": {
+      "python": 36,
+      "javascript": 0,
+      "typescript": 0
+    }
+  }
+}

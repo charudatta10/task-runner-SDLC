@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview - task-runner-sdlc</title>
+    <title>Contributing - task-runner-sdlc</title>
     <meta name="description" content="API documentation for task-runner-sdlc">
     <style>
         
@@ -511,7 +511,7 @@ body {
                 <div class="nav-section">
 <div class="nav-section-title">Overview</div>
 <ul>
-<li><a href="index.html" class="active">Overview</a></li>
+<li><a href="index.html" class="">Overview</a></li>
 </ul>
 </div>
 <div class="nav-section">
@@ -536,7 +536,7 @@ body {
 <li><a href="archive.html" class="">Archive</a></li>
 <li><a href="clone_github_repos.html" class="">Clone Github Repos</a></li>
 <li><a href="config.html" class="">Config</a></li>
-<li><a href="CONTRIBUTING.html" class="">Contributing</a></li>
+<li><a href="CONTRIBUTING.html" class="active">Contributing</a></li>
 <li><a href="crypto.html" class="">Crypto</a></li>
 <li><a href="data.html" class="">Data</a></li>
 <li><a href="docs.html" class="">Docs</a></li>
@@ -572,84 +572,48 @@ body {
         </nav>
         <main class="content">
             <div class="content-inner">
-                <h1>task-runner-SDLC Documentation</h1>
-<p>Welcome to the comprehensive API documentation for <strong>task-runner-SDLC</strong>.</p>
-<h2>📊 Project Statistics</h2>
-<div class="stats-grid">
-<div class="stat-card"><div class="stat-value">36</div><div class="stat-label">Total Modules</div></div>
-<div class="stat-card"><div class="stat-value">15</div><div class="stat-label">Classes</div></div>
-<div class="stat-card"><div class="stat-value">74</div><div class="stat-label">Functions</div></div>
-<div class="stat-card"><div class="stat-value">2,298</div><div class="stat-label">Lines of Code</div></div>
-</div>
-<h2>💻 Language Distribution</h2>
+                <h1>Contributing Guidelines</h1>
+<p>Thank you for your interest in contributing to this project! We're excited to collaborate with you. To ensure a smooth process, please follow the guidelines below:</p>
+<h2>How to Contribute</h2>
+<ol>
+<li><strong>Report Bugs</strong>: If you discover a bug, please check existing issues first to ensure it hasn't been reported. If not, create a new issue and include detailed steps to reproduce the bug.</li>
+<li><strong>Suggest Features</strong>: We welcome feature suggestions! Please create a detailed issue describing the feature and its benefits.</li>
+<li><strong>Submit Code</strong>: Contributions in the form of code are welcome! To get started:
 <ul>
-<li>🐍 <strong>Python</strong>: 36 files</li>
-</ul>
-<h2>🗂️ Documentation Structure</h2>
-<h3>📁 src/</h3>
-<ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>📄 <a href="./config.html">config</a></li>
-<li>📄 <a href="./docs.html">docs</a></li>
-<li>📄 <a href="./licenser.html">licenser</a></li>
-<li>📄 <a href="./manager.html">manager</a>
-<ul>
-<li><em>Task management module for handling task operations.</em></li>
+<li>Fork the repository and clone it locally.</li>
+<li>Create a new branch for your work (e.g., <code>feature/your-feature-name</code>).</li>
+<li>Commit your changes with clear and descriptive messages.</li>
+<li>Push your branch and submit a pull request.</li>
 </ul>
 </li>
-<li>📄 <a href="./setup.html">setup</a></li>
-</ul>
-<h3>📁 task-runner-SDLC/</h3>
+</ol>
+<h2>Code of Conduct</h2>
+<p>All contributors are expected to adhere to our <a href="CODE_OF_CONDUCT.md">Code of Conduct</a>. Be respectful and constructive in your communication.</p>
+<h2>Code Style</h2>
 <ul>
-<li>📄 <a href="./main.html">main</a></li>
+<li>Follow the existing coding style and conventions of the project.</li>
+<li>Ensure your code is clean and well-documented.</li>
+<li>Test your changes thoroughly before submitting.</li>
 </ul>
-<h3>📁 tests/</h3>
+<h2>Pull Request Process</h2>
+<ol>
+<li>Ensure your branch is up-to-date with the <code>main</code> branch.</li>
+<li>Describe the purpose of your pull request clearly in the description.</li>
+<li>Link related issues (if applicable) and explain how your PR resolves them.</li>
+<li>Ensure all checks pass and include unit tests if applicable.</li>
+</ol>
+<h2>Issues and Labels</h2>
 <ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>🧪 <a href="./test_clone_github_repos.html">test_clone_github_repos</a></li>
-<li>🧪 <a href="./test_config.html">test_config</a></li>
-<li>🧪 <a href="./test_docs.html">test_docs</a></li>
-<li>🧪 <a href="./test_git.html">test_git</a></li>
-<li>🧪 <a href="./test_licenser.html">test_licenser</a></li>
-<li>🧪 <a href="./test_main.html">test_main</a></li>
-<li>🧪 <a href="./test_manager.html">test_manager</a></li>
-<li>🧪 <a href="./test_move_files.html">test_move_files</a></li>
-<li>🧪 <a href="./test_quality.html">test_quality</a></li>
-<li>🧪 <a href="./test_select_github_repo.html">test_select_github_repo</a></li>
-<li>🧪 <a href="./test_setup.html">test_setup</a></li>
-<li>🔧 <a href="./test_utility.html">test_utility</a></li>
+<li>Use relevant labels when creating or updating issues (e.g., <code>bug</code>, <code>enhancement</code>, <code>documentation</code>).</li>
+<li>If you’re unsure how to label an issue, the maintainers will assign appropriate labels.</li>
 </ul>
-<h3>📁 tools/</h3>
+<h2>Tests</h2>
 <ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>📄 <a href="./ai_docsGen.html">ai_docsGen</a></li>
-<li>📄 <a href="./clone_github_repos.html">clone_github_repos</a></li>
-<li>📄 <a href="./generate_system_reports.html">generate_system_reports</a></li>
-<li>📄 <a href="./move_files.html">move_files</a></li>
-<li>📄 <a href="./pkm_tools.html">pkm_tools</a></li>
-<li>📄 <a href="./select_github_repo.html">select_github_repo</a></li>
+<li>Include tests to cover new features or bug fixes.</li>
+<li>Ensure all existing tests pass before submitting your contribution.</li>
 </ul>
-<h3>📁 utils/</h3>
-<ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>📄 <a href="./archive.html">archive</a></li>
-<li>📄 <a href="./crypto.html">crypto</a></li>
-<li>📄 <a href="./data.html">data</a></li>
-<li>📄 <a href="./file_system.html">file_system</a></li>
-<li>📄 <a href="./logger.html">logger</a></li>
-<li>📄 <a href="./shell.html">shell</a></li>
-<li>📄 <a href="./system.html">system</a></li>
-<li>📄 <a href="./web.html">web</a></li>
-</ul>
-<h2>🚀 Quick Start</h2>
-<p>Navigate through the documentation using the sidebar or search for specific modules, functions, or classes.</p>
-<h3>Key Features</h3>
-<ul>
-<li>🔍 <strong>Searchable</strong>: Use the search box to quickly find what you need</li>
-<li>📱 <strong>Responsive</strong>: Works great on desktop and mobile devices</li>
-<li>🌙 <strong>Dark Mode</strong>: Automatically adapts to your system preferences</li>
-<li>📊 <strong>Statistics</strong>: Get insights into your codebase structure</li>
-</ul>
+<h2>License</h2>
+<p>By contributing to this repository, you agree that your contributions will be licensed under the <a href="LICENSE">repository's license</a>.</p>
 
             </div>
         </main>

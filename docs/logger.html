@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview - task-runner-sdlc</title>
+    <title>Logger - task-runner-sdlc</title>
     <meta name="description" content="API documentation for task-runner-sdlc">
     <style>
         
@@ -511,7 +511,7 @@ body {
                 <div class="nav-section">
 <div class="nav-section-title">Overview</div>
 <ul>
-<li><a href="index.html" class="active">Overview</a></li>
+<li><a href="index.html" class="">Overview</a></li>
 </ul>
 </div>
 <div class="nav-section">
@@ -544,7 +544,7 @@ body {
 <li><a href="generate_system_reports.html" class="">Generate System Reports</a></li>
 <li><a href="LICENSE.html" class="">License</a></li>
 <li><a href="licenser.html" class="">Licenser</a></li>
-<li><a href="logger.html" class="">Logger</a></li>
+<li><a href="logger.html" class="active">Logger</a></li>
 <li><a href="main.html" class="">Main</a></li>
 <li><a href="manager.html" class="">Manager</a></li>
 <li><a href="move_files.html" class="">Move Files</a></li>
@@ -572,83 +572,21 @@ body {
         </nav>
         <main class="content">
             <div class="content-inner">
-                <h1>task-runner-SDLC Documentation</h1>
-<p>Welcome to the comprehensive API documentation for <strong>task-runner-SDLC</strong>.</p>
-<h2>📊 Project Statistics</h2>
-<div class="stats-grid">
-<div class="stat-card"><div class="stat-value">36</div><div class="stat-label">Total Modules</div></div>
-<div class="stat-card"><div class="stat-value">15</div><div class="stat-label">Classes</div></div>
-<div class="stat-card"><div class="stat-value">74</div><div class="stat-label">Functions</div></div>
-<div class="stat-card"><div class="stat-value">2,298</div><div class="stat-label">Lines of Code</div></div>
-</div>
-<h2>💻 Language Distribution</h2>
+                <h1>Module: <code>logger</code></h1>
+<p><strong>File:</strong> <code>C:\Users\korde\Home\Github\task-runner-SDLC\src\utils\logger.py</code>
+<strong>Language:</strong> Python</p>
+<h2>Imports</h2>
 <ul>
-<li>🐍 <strong>Python</strong>: 36 files</li>
+<li><code>from pathlib import Path</code></li>
+<li><code>from datetime import datetime</code></li>
+<li><code>import logging</code></li>
 </ul>
-<h2>🗂️ Documentation Structure</h2>
-<h3>📁 src/</h3>
+<h2>Functions</h2>
+<h3><code>setup_logging(log_dir)</code></h3>
+<p>Setup logging for system reports generation</p>
+<h4>Parameters</h4>
 <ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>📄 <a href="./config.html">config</a></li>
-<li>📄 <a href="./docs.html">docs</a></li>
-<li>📄 <a href="./licenser.html">licenser</a></li>
-<li>📄 <a href="./manager.html">manager</a>
-<ul>
-<li><em>Task management module for handling task operations.</em></li>
-</ul>
-</li>
-<li>📄 <a href="./setup.html">setup</a></li>
-</ul>
-<h3>📁 task-runner-SDLC/</h3>
-<ul>
-<li>📄 <a href="./main.html">main</a></li>
-</ul>
-<h3>📁 tests/</h3>
-<ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>🧪 <a href="./test_clone_github_repos.html">test_clone_github_repos</a></li>
-<li>🧪 <a href="./test_config.html">test_config</a></li>
-<li>🧪 <a href="./test_docs.html">test_docs</a></li>
-<li>🧪 <a href="./test_git.html">test_git</a></li>
-<li>🧪 <a href="./test_licenser.html">test_licenser</a></li>
-<li>🧪 <a href="./test_main.html">test_main</a></li>
-<li>🧪 <a href="./test_manager.html">test_manager</a></li>
-<li>🧪 <a href="./test_move_files.html">test_move_files</a></li>
-<li>🧪 <a href="./test_quality.html">test_quality</a></li>
-<li>🧪 <a href="./test_select_github_repo.html">test_select_github_repo</a></li>
-<li>🧪 <a href="./test_setup.html">test_setup</a></li>
-<li>🔧 <a href="./test_utility.html">test_utility</a></li>
-</ul>
-<h3>📁 tools/</h3>
-<ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>📄 <a href="./ai_docsGen.html">ai_docsGen</a></li>
-<li>📄 <a href="./clone_github_repos.html">clone_github_repos</a></li>
-<li>📄 <a href="./generate_system_reports.html">generate_system_reports</a></li>
-<li>📄 <a href="./move_files.html">move_files</a></li>
-<li>📄 <a href="./pkm_tools.html">pkm_tools</a></li>
-<li>📄 <a href="./select_github_repo.html">select_github_repo</a></li>
-</ul>
-<h3>📁 utils/</h3>
-<ul>
-<li>📄 <a href="./__init__.html"><strong>init</strong></a></li>
-<li>📄 <a href="./archive.html">archive</a></li>
-<li>📄 <a href="./crypto.html">crypto</a></li>
-<li>📄 <a href="./data.html">data</a></li>
-<li>📄 <a href="./file_system.html">file_system</a></li>
-<li>📄 <a href="./logger.html">logger</a></li>
-<li>📄 <a href="./shell.html">shell</a></li>
-<li>📄 <a href="./system.html">system</a></li>
-<li>📄 <a href="./web.html">web</a></li>
-</ul>
-<h2>🚀 Quick Start</h2>
-<p>Navigate through the documentation using the sidebar or search for specific modules, functions, or classes.</p>
-<h3>Key Features</h3>
-<ul>
-<li>🔍 <strong>Searchable</strong>: Use the search box to quickly find what you need</li>
-<li>📱 <strong>Responsive</strong>: Works great on desktop and mobile devices</li>
-<li>🌙 <strong>Dark Mode</strong>: Automatically adapts to your system preferences</li>
-<li>📊 <strong>Statistics</strong>: Get insights into your codebase structure</li>
+<li><strong><code>log_dir</code></strong></li>
 </ul>
 
             </div>
