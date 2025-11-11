@@ -31,6 +31,11 @@ clone-repos = { script = "src.tools.clone_github_repos:clone_repos" }
 generate-report = { script = "src.tools.generate_system_reports:generate_report" }
 select-repo = { script = "src.tools.select_github_repo:select_repo" }
 
+[tool.poe.tasks.file_renamer]
+cmd = "python src/tools/ai_file_renamer.py"
+executor = { type = "simple", capture_output = false }
+
+
 [tool.poe.tasks.commit-changes]
 args = ["message"]
 sequence = [
