@@ -1,7 +1,17 @@
 from pathlib import Path
 import json
 import shutil
-from ..utils.logger import setup_logging
+import sys
+import os
+import logging
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+try:
+    from utils.logger import setup_logging
+except ImportError:
+    def setup_logging(*args, **kwargs):
+        return logging.getLogger(__name__)
 
 def get_unique_filename(destination_path, filename):
     """
@@ -126,7 +136,7 @@ def organize_files(
         return
 
     # Setup logging
-    log_dir = Path(log_directory) if log_directory else dest_path / "logs"
+    log_dir = Path(log_directory) if log_directory else dest_path / "Logs"
     logger = setup_logging(log_dir)
     
     logger.info(f"Starting file organization from: {source_path} to: {dest_path}")
@@ -138,7 +148,6 @@ def organize_files(
         # Load file patterns from JSON
         with open(patterns_path, "r", encoding="utf-8") as f:
             file_patterns = json.load(f)
-        
         logger.info(f"Loaded file patterns from: {patterns_path}")
         print(f"📋 Loaded file patterns from: {patterns_path}")
         
@@ -212,14 +221,14 @@ def create_patterns_sample(output_file="file_patterns.json"):
         output_file (str): Path where to create the sample file
     """
     sample_patterns = {
-        "Images": ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp", "*.svg", "*.webp"],
+        "Pictures": ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp", "*.svg", "*.webp"],
         "Documents": ["*.pdf", "*.doc", "*.docx", "*.txt", "*.rtf", "*.odt"],
         "Spreadsheets": ["*.xls", "*.xlsx", "*.csv", "*.ods"],
         "Presentations": ["*.ppt", "*.pptx", "*.odp"],
-        "Archives": ["*.zip", "*.rar", "*.7z", "*.tar", "*.gz", "*.bz2"],
+        "Archives": ["*.zip", "*.rar", "*.7z", "*.tar", "*.gz", "*.bz2",".iso"],
         "Code": ["*.py", "*.js", "*.html", "*.css", "*.cpp", "*.java", "*.php"],
-        "Audio": ["*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg", "*.m4a"],
-        "Video": ["*.mp4", "*.avi", "*.mkv", "*.mov", "*.wmv", "*.flv", "*.webm"],
+        "Music": ["*.mp3", "*.wav", "*.flac", "*.aac", "*.ogg", "*.m4a"],
+        "Videos": ["*.mp4", "*.avi", "*.mkv", "*.mov", "*.wmv", "*.flv", "*.webm"],
         "Executables": ["*.exe", "*.msi", "*.deb", "*.rpm", "*.dmg", "*.pkg"]
     }
     

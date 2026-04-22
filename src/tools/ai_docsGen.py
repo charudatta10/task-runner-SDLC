@@ -1,8 +1,20 @@
 import json
 from pathlib import Path
-from ..config import Config
-from .. import load_json_file, download_file
+import sys
+import os
 import urllib.request
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+try:
+    from config import Config
+    from __init__ import load_json_file, download_file
+except ImportError:
+    Config = type('Config', (), {})()
+    def load_json_file(*args, **kwargs):
+        return {}
+    def download_file(*args, **kwargs):
+        pass
 
 
 class DocumentationGenerator:

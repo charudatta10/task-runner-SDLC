@@ -7,8 +7,18 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 import logging
-from ..config import Config
-from ..utils.logger import setup_logging
+import sys
+import os
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+try:
+    from config import Config
+    from utils.logger import setup_logging
+except ImportError:
+    Config = None
+    def setup_logging(*args, **kwargs):
+        return logging.getLogger(__name__)
 
 
 def run_command_safe(ctx, command, output_file=None, description=""):
