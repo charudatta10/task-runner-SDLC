@@ -1,83 +1,79 @@
 {
-  "Images": [
+  "Pictures": [
+    "*.png",
     "*.jpg",
     "*.jpeg",
-    "*.png",
     "*.gif",
     "*.bmp",
+    "*.tiff",
+    "*.webp",
     "*.svg",
-    "*.webp"
+    "*.ico",
+    "*.eps",
+    "*.raw",
+    "*.drawio",
+    "*.avif"
   ],
   "Documents": [
     "*.pdf",
     "*.doc",
     "*.docx",
-    "*.txt",
-    "*.rtf",
-    "*.odt",
-    "*.md"
-  ],
-  "Spreadsheets": [
     "*.xls",
     "*.xlsx",
-    "*.csv",
-    "*.ods"
-  ],
-  "Presentations": [
     "*.ppt",
     "*.pptx",
-    "*.odp"
+    "*.txt",
+    "*.rtf",
+    "*.csv",
+    "*.xml",
+    "*.json",
+    "*.md",
+    "*.tex",
+    "*.odt",
+    "*.ods",
+    "*.odp",
+    "*.epub",
+    "*.mobi",
+    "*.azw3",
+    "*.fb2"
   ],
-  "Archives": [
-    "*.zip",
-    "*.rar",
-    "*.7z",
-    "*.tar",
-    "*.gz",
-    "*.bz2"
-  ],
+  "Archives": ["*.zip", "*.rar", "*.7z", "*.tar", "*.gz", "*.bz2", "*.xz",".iso",".exe"],
   "Code": [
     "*.py",
-    "*.js",
-    "*.html",
-    "*.css",
+    "*.c",
     "*.cpp",
     "*.java",
-    "*.php"
-  ],
-  "Audio": [
-    "*.mp3",
-    "*.wav",
-    "*.flac",
-    "*.aac",
-    "*.ogg",
-    "*.m4a"
-  ],
-  "Video": [
-    "*.mp4",
-    "*.avi",
-    "*.mkv",
-    "*.mov",
-    "*.wmv",
-    "*.flv",
-    "*.webm"
-  ],
-  "Executables": [
+    "*.js",
+    "*.ts",
+    "*.html",
+    "*.css",
+    "*.scss",
+    "*.sass",
+    "*.less",
     "*.exe",
     "*.msi",
+    "*.app",
+    "*.iso",
+    "*.img",
     "*.deb",
     "*.rpm",
-    "*.dmg",
+    "*.jar",
+    "*.war",
+    "*.ear",
+    "*.dll",
+    "*.so",
     "*.pkg",
-    ".iso"
+    "*.run",
+    "*.sh",
+    "*.bat",
+    "*.cmd",
+    "*.vbs",
+    "*.ps1",
+    "*.psm1",
+    "*.psd1",
+    "*.ps1xml",
+    "*.reg"
   ],
-  "Data": [
-    "*.json",
-    "*.xml",
-    "*.yaml",
-    "*.yml",
-    "*.ini",
-    "*.db",
-    "*.sql"
-  ]
+  "Music": ["*.mp3", "*.wav"],
+  "Videos": ["*.mp4", "*.m4a", "*.mov"]
 }
