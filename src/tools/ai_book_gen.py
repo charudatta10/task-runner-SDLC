@@ -1,30 +1,18 @@
 import os
 import sys
 import json
+import urllib.request
+import urllib.error
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any
 
-try:
-    from langchain_ollama import ChatOllama
-    import langchain.agents 
-    from langchain.tools import tool
-    from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-    from langchain_community.tools import DuckDuckGoSearchRun
-except ImportError:
-    print("Error: Required packages not installed.")
-    print("Install with: pip install langchain langchain-ollama langchain-community duckduckgo-search")
-    sys.exit(1)
-
-
 class BookWriterAgent:
-    def __init__(self, api_key: str, output_dir: str = "./book_output"):
+    def __init__(self, api_key: str = "none", output_dir: str = "./book_output"):
         """Initialize the Book Writer Agent."""
-        self.llm = ChatAnthropic(
-            model="claude-sonnet-4-20250514",
-            api_key=api_key,
-            temperature=0.7
-        )
+        self.model = "granite3.2:8b"
+        self.base_url = "http://localhost:1337/v1"
+        self.api_key = api_key
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
         self.book_state = {
@@ -34,6 +22,28 @@ class BookWriterAgent:
             "chapters": {},
             "metadata": {}
         }
+
+    def call_llm(self, system_prompt: str, user_prompt: str) -> str:
+        """Call the local LLM API."""
+        payload = json.dumps({
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            "temperature": 0.7
+        }).encode('utf-8')
+        
+        try:
+            url = f"{self.base_url}/chat/completions"
+            req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
+            
+            with urllib.request.urlopen(req) as response:
+                result = json.loads(response.read().decode('utf-8'))
+            return result['choices'][0]['message']['content']
+        except Exception as e:
+            print(f"Error calling LLM: {e}")
+            return ""
         
     def save_chapter(self, chapter_num: int, title: str, content: str) -> str:
         """Save a chapter to disk."""
@@ -84,110 +94,14 @@ class BookWriterAgent:
         return progress
     
     def research_topic(self, query: str) -> str:
-        """Research a topic using web search."""
-        try:
-            search = DuckDuckGoSearchRun()
-            results = search.run(query)
-            return f"Research results for '{query}':\n{results}"
-        except Exception as e:
-            return f"Research failed: {str(e)}"
-    
-    def compile_book(self) -> str:
-        """Compile all chapters into a single manuscript."""
-        if not self.book_state["chapters"]:
-            return "No chapters to compile yet."
-        
-        manuscript_path = self.output_dir / "full_manuscript.txt"
-        
-        with open(manuscript_path, 'w', encoding='utf-8') as f:
-            # Title page
-            f.write(f"{self.book_state.get('title', 'Untitled')}\n")
-            f.write("=" * 80 + "\n")
-            f.write(f"Genre: {self.book_state.get('genre', 'Unknown')}\n")
-            f.write(f"Completed: {datetime.now().strftime('%Y-%m-%d')}\n")
-            f.write(f"Total Chapters: {len(self.book_state['chapters'])}\n")
-            total_words = sum(ch.get("word_count", 0) for ch in self.book_state["chapters"].values())
-            f.write(f"Total Words: {total_words:,}\n\n")
-            f.write("=" * 80 + "\n\n\n")
-            
-            # All chapters
-            for chapter_num in sorted(self.book_state["chapters"].keys()):
-                chapter_info = self.book_state["chapters"][chapter_num]
-                chapter_path = Path(chapter_info["filepath"])
-                
-                if chapter_path.exists():
-                    with open(chapter_path, 'r', encoding='utf-8') as ch_file:
-                        f.write(ch_file.read())
-                        f.write("\n\n\n")
-        
-        return f"Full manuscript compiled to {manuscript_path}"
-    
-    def create_agent(self) -> AgentExecutor:
-        """Create the LangChain agent with tools."""
-        
-        tools = [
-            Tool(
-                name="save_chapter",
-                func=lambda x: self.save_chapter(
-                    int(x.split("|")[0]),
-                    x.split("|")[1],
-                    x.split("|", 2)[2]
-                ),
-                description="Save a chapter. Input format: 'chapter_number|chapter_title|chapter_content'. Example: '1|The Beginning|Once upon a time...'"
-            ),
-            Tool(
-                name="save_outline",
-                func=self.save_outline,
-                description="Save the book outline. Input should be the full outline text."
-            ),
-            Tool(
-                name="get_progress",
-                func=lambda x: self.get_book_progress(),
-                description="Get current progress on the book including chapters completed and word count."
-            ),
-            Tool(
-                name="research",
-                func=self.research_topic,
-                description="Research a topic or gather information for writing. Input should be a search query."
-            ),
-            Tool(
-                name="compile_book",
-                func=lambda x: self.compile_book(),
-                description="Compile all chapters into a single manuscript file."
-            )
-        ]
-        
-        prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are an expert book writing assistant. You help authors plan, research, and write books chapter by chapter.
+        """Research a topic (simplified version)."""
+        return f"Research results for '{query}': (Research tool simplified due to dependency removal)"
 
-Your capabilities:
-- Create detailed book outlines with chapter breakdowns
-- Research topics to ensure accuracy and depth
-- Write engaging chapters with proper pacing and structure
-- Track progress and manage the writing workflow
-- Compile chapters into a complete manuscript
-
-When writing:
-- Develop compelling characters and plots
-- Use vivid descriptions and engaging dialogue
-- Maintain consistent tone and style
-- Aim for 2000-3000 words per chapter (adjust based on genre)
-- Follow standard manuscript formatting
-
-Always save your work using the provided tools."""),
-            ("human", "{input}"),
-            MessagesPlaceholder(variable_name="agent_scratchpad"),
-        ])
-        
-        agent = create_tool_calling_agent(self.llm, tools, prompt)
-        return AgentExecutor(agent=agent, tools=tools, verbose=True)
-    
     def write_book(self, book_description: str):
         """Main method to coordinate book writing."""
-        agent = self.create_agent()
         
         print("\n" + "="*80)
-        print("AI BOOK WRITER AGENT")
+        print("AI BOOK WRITER")
         print("="*80 + "\n")
         
         # Parse book description to set state
@@ -204,6 +118,8 @@ Always save your work using the provided tools."""),
         print(f"Genre: {self.book_state.get('genre', 'To be determined')}")
         print(f"Output directory: {self.output_dir}\n")
         
+        system_prompt = "You are an expert book writing assistant. You help authors plan, research, and write books chapter by chapter."
+
         # Step 1: Create outline
         print("\n📋 STEP 1: Creating book outline...")
         outline_prompt = f"""Based on this book description, create a detailed outline:
@@ -214,31 +130,20 @@ Create an outline with:
 1. Book title and genre
 2. 8-12 chapter breakdown with titles and brief descriptions
 3. Main characters and their arcs
-4. Key plot points and themes
-
-Save the outline using the save_outline tool."""
+4. Key plot points and themes"""
         
-        try:
-            agent.invoke({"input": outline_prompt})
-        except Exception as e:
-            print(f"Error creating outline: {e}")
-            return
-        
-        # Step 2: Research if needed
-        print("\n🔍 STEP 2: Conducting research (if needed)...")
-        research_prompt = f"""Review the book concept: {book_description}
-
-If this book requires research (historical facts, technical details, etc.), use the research tool to gather information. Otherwise, proceed to writing."""
-        
-        try:
-            agent.invoke({"input": research_prompt})
-        except Exception as e:
-            print(f"Research phase note: {e}")
+        outline_content = self.call_llm(system_prompt, outline_prompt)
+        if outline_content:
+            print(self.save_outline(outline_content))
         
         # Step 3: Write chapters
         print("\n✍️  STEP 3: Writing chapters...")
         
-        num_chapters = int(input("\nHow many chapters would you like to write? (1-12): ").strip() or "3")
+        num_chapters_input = input("\nHow many chapters would you like to write? (1-12): ").strip() or "3"
+        try:
+            num_chapters = int(num_chapters_input)
+        except ValueError:
+            num_chapters = 3
         num_chapters = max(1, min(12, num_chapters))
         
         for i in range(1, num_chapters + 1):
@@ -246,44 +151,40 @@ If this book requires research (historical facts, technical details, etc.), use 
             chapter_prompt = f"""Write Chapter {i} of the book.
 
 Book context: {book_description}
+Outline: {outline_content[:1000] if outline_content else 'No outline'}...
 
 Requirements:
-- Write 2000-3000 words
+- Write a substantial chapter
 - Include engaging narrative and dialogue
 - Advance the plot meaningfully
 - Maintain consistent tone and style
 - End with a hook for the next chapter
 
-Save the chapter using: save_chapter tool with format: {i}|Chapter Title|chapter content"""
+Respond with the chapter title on the first line, then the chapter content."""
             
-            try:
-                agent.invoke({"input": chapter_prompt})
+            chapter_response = self.call_llm(system_prompt, chapter_prompt)
+            if chapter_response:
+                lines = chapter_response.strip().split('\n')
+                chapter_title = lines[0].strip()
+                chapter_content = '\n'.join(lines[1:]).strip()
+                print(self.save_chapter(i, chapter_title, chapter_content))
                 print(f"✅ Chapter {i} completed!")
-            except Exception as e:
-                print(f"Error writing chapter {i}: {e}")
         
         # Step 4: Compile manuscript
         print("\n📚 STEP 4: Compiling final manuscript...")
-        try:
-            result = agent.invoke({"input": "Compile all chapters into the final manuscript using the compile_book tool."})
-            print("\n✅ Book writing complete!")
-            print(f"📁 All files saved to: {self.output_dir}")
-        except Exception as e:
-            print(f"Error compiling manuscript: {e}")
+        print(self.compile_book())
+        print("\n✅ Book writing complete!")
+        print(f"📁 All files saved to: {self.output_dir}")
 
 
 def main():
     """Main entry point."""
     print("=" * 80)
-    print("AI BOOK WRITER - LangChain Agent")
+    print("AI BOOK WRITER")
     print("=" * 80)
     
-    # Get API key
-    api_key = os.getenv('ANTHROPIC_API_KEY')
-    if not api_key:
-        print("\n❌ Error: ANTHROPIC_API_KEY environment variable not set")
-        print("Set it with: export ANTHROPIC_API_KEY='your-api-key'")
-        sys.exit(1)
+    # Get API key (not strictly required for local LLM but kept for structure)
+    api_key = os.getenv('OPENAI_API_KEY') or "local-key"
     
     # Get book details
     print("\nLet's create a book! Please provide the following information:\n")

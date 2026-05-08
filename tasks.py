@@ -21,6 +21,10 @@ import tools.select_github_repo
 import tools.move_files
 import tools.ai_file_renamer
 import tools.ai_docsGen
+import tools.auto_organize
+import tools.dedupe
+import tools.summarize_folder
+import tools.tag_index
 
 
 @task
@@ -86,6 +90,79 @@ def create_patterns(c, output_file="file_patterns.json"):
     tools.move_files.create_patterns_sample(output_file=output_file)
 
 
+@task
+def auto_organize(
+    c,
+    source=".",
+    dest=None,
+    rules=None,
+    dry_run=False,
+    copy=False,
+    no_stamp=False,
+    no_peek=False,
+    recursive=False,
+):
+    """Auto-organize files into <Institute>/<Topic>/<YYYY-MM>/ folders.
+
+    Labels: NIT_Goa, NFSUG, NFSUD (configurable in src/tools/label_rules.json).
+    """
+    summary = tools.auto_organize.auto_organize(
+        source=source,
+        dest=dest,
+        rules_file=rules,
+        dry_run=dry_run,
+        copy=copy,
+        stamp=not no_stamp,
+        peek=not no_peek,
+        recursive=recursive,
+    )
+    print(summary)
+
+
+@task
+def dedupe(c, root=".", delete=False, keep="first", report=None):
+    """Find (and optionally delete) duplicate files in ROOT."""
+    tools.dedupe.dedupe(root=root, delete=delete, keep=keep, report_path=report)
+
+
+@task
+def summarize(c, root=".", rules=None, json_out=False):
+    """Print per-category counts and sizes for ROOT."""
+    s = tools.summarize_folder.summarize(root, rules_file=rules)
+    if json_out:
+        import json as _json
+        print(_json.dumps(s, indent=2))
+    else:
+        print(f"Root  : {s['root']}")
+        print(f"Total : {s['total']['count']} files  ({s['total']['human']})")
+        for label, rows in (("By kind", s["by_kind"]),
+                            ("By institute", s["by_institute"]),
+                            ("By topic", s["by_topic"])):
+            if not rows:
+                continue
+            print(f"\n{label}")
+            for k, v in sorted(rows.items(), key=lambda kv: -kv[1]["bytes"]):
+                print(f"  {k:<20} {v['count']:>5}  {v['bytes']} B")
+
+
+@task
+def tag_index(c, root=".", rules=None, out=None, query=None,
+              institute=None, topic=None, since=None):
+    """Build/query a labeled JSON index of files in ROOT."""
+    idx = tools.tag_index.build_index(root, rules_file=rules)
+    idx = tools.tag_index.filter_index(
+        idx, query=query, institute=institute, topic=topic, since=since
+    )
+    import json as _json
+    blob = _json.dumps(idx, indent=2)
+    if out:
+        from pathlib import Path as _P
+        _P(out).write_text(blob)
+        print(f"Wrote {len(idx)} entries to {out}")
+    else:
+        print(blob)
+
+
 generate_tags = tools.pkm_tools.generate_tags
 generate_moc = tools.pkm_tools.generate_moc
 generate_links = tools.pkm_tools.generate_links
@@ -106,6 +183,10 @@ ns = Collection(
     security_check,
     move_files,
     create_patterns,
+    auto_organize,
+    dedupe,
+    summarize,
+    tag_index,
     generate_tags,
     generate_moc,
     generate_links,

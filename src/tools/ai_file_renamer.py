@@ -2,14 +2,16 @@ import os
 import sys
 import base64
 import json
+import urllib.request
+import urllib.error
 from pathlib import Path
 from typing import Optional
-from ollama import chat
 
 class AIFileRenamer:
     def __init__(self):
-        """Initialize the AI File Renamer with Anthropic API key."""
-        self.model= "gemma3:4b"
+        """Initialize the AI File Renamer with Jan/llama.cpp local API."""
+        self.model= "granite3.2:8b"
+        self.base_url = "http://localhost:1337/v1"
         
     def read_file_content(self, file_path: Path) -> tuple[Optional[str], Optional[str]]:
         """
@@ -102,14 +104,20 @@ class AIFileRenamer:
                 return None
 
 
-            response = chat(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}]
-            )           
-
+            # Call Local LLM API
+            payload = json.dumps({
+                "model": self.model,
+                "messages": [{"role": "user", "content": prompt}]
+            }).encode('utf-8')
+            
+            url = f"{self.base_url}/chat/completions"
+            req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'})
+            
+            with urllib.request.urlopen(req) as response:
+                data = json.loads(response.read().decode('utf-8'))
             
             # Extract suggested filename
-            suggested_name = response.message.content
+            suggested_name = data['choices'][0]['message']['content'].strip()
             
             # Clean the filename
             suggested_name = suggested_name.replace(' ', '-')

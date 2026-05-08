@@ -1,0 +1,37 @@
+{
+  "_comment": "Keyword rules for auto_organize. Matching is case-insensitive against filename + (when available) extracted text. First institute that hits wins; topics are multi-label. Edit freely.",
+  "institutes": {
+    "NIT_Goa": [
+      "nit goa", "nit-goa", "nitgoa", "nitg", "national institute of technology goa", "n.i.t. goa"
+    ],
+    "NFSUG": [
+      "nfsug", "nfsu goa", "nfsu-goa", "nfsu_g", "nfsu g", "national forensic sciences university goa", "nfsu goa campus"
+    ],
+    "NFSUD": [
+      "nfsud", "nfsu delhi", "nfsu-delhi", "nfsu_d", "nfsu d", "national forensic sciences university delhi", "nfsu delhi campus"
+    ],
+    "_unsorted": []
+  },
+  "topics": {
+    "Research": ["research", "paper", "manuscript", "thesis", "dissertation", "ieee", "springer", "elsevier", "journal", "conference", "publication", "preprint", "arxiv"],
+    "Teaching": ["lecture", "slides", "syllabus", "course", "lesson", "tutorial", "lab manual", "assignment", "handout", "notes"],
+    "Exams": ["exam", "midsem", "endsem", "quiz", "test", "question paper", "qp", "answer key", "marks", "result", "grading", "rubric"],
+    "Admin": ["circular", "notice", "memo", "minutes", "mom", "agenda", "attendance", "leave", "office order", "letter", "approval"],
+    "Projects": ["project", "btp", "mtp", "capstone", "internship", "report", "proposal"],
+    "Forensics": ["forensic", "cyber", "crime", "evidence", "case", "investigation", "digital forensic", "network forensic", "malware"],
+    "Finance": ["invoice", "bill", "receipt", "budget", "expense", "claim", "ta da", "reimbursement", "salary", "payslip"],
+    "HR": ["resume", "cv", "appointment", "joining", "relieving", "promotion", "appraisal", "service book"],
+    "Personal": ["personal", "family", "photo", "trip", "travel", "vacation"]
+  },
+  "extensions": {
+    "Documents": [".pdf", ".doc", ".docx", ".odt", ".rtf", ".txt", ".md"],
+    "Spreadsheets": [".xls", ".xlsx", ".csv", ".ods", ".tsv"],
+    "Presentations": [".ppt", ".pptx", ".odp", ".key"],
+    "Images": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".webp", ".svg", ".heic"],
+    "Videos": [".mp4", ".mov", ".mkv", ".avi", ".wmv", ".webm"],
+    "Audio": [".mp3", ".wav", ".m4a", ".flac", ".ogg"],
+    "Archives": [".zip", ".rar", ".7z", ".tar", ".gz", ".bz2"],
+    "Code": [".py", ".js", ".ts", ".java", ".c", ".cpp", ".h", ".rs", ".go", ".rb", ".sh", ".html", ".css"],
+    "Other": []
+  }
+}

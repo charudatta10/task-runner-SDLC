@@ -51,7 +51,7 @@ Invoke Task to Generate Documentation
 
 - **`self`**
 
-### `generate_with_ollama(self, prompt: str, context: str = '', model: str = 'granite3.2:8b') -> str`
+### `generate_with_local_llm(self, prompt: str, context: str = '', model: str = 'granite3.2:8b') -> str`
 
 *No description available*
 

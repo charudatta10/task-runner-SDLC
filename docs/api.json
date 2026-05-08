@@ -2878,7 +2878,7 @@
                 "is_staticmethod": false
               },
               {
-                "name": "generate_with_ollama",
+                "name": "generate_with_local_llm",
                 "docstring": null,
                 "args": [
                   {
