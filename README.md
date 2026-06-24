@@ -1,5 +1,8 @@
 # task-runner-SDLC
 
+> [!CAUTION]
+> This repository is no longer maintained, as I have migrated these scripts to PowerShell modules.
+
 <!-- Badges: Project Status GitHub -->
 ![license](https://flat.badgen.net/static/license/EULA/blue)
 ![release](https://flat.badgen.net/github/release/charudatta10/task-runner-SDLC)
