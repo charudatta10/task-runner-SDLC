@@ -1,64 +1,25 @@
 [project]
 name = "task-runner-sdlc"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Lean file organization CLI: organize, dedupe, index, summarize"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
-    "poethepoet>=0.20.0",
-    "pytest>=8.2.2",
-    "pytest-cov>=5.0.0",
-    "cryptography>=42.0.0",
+    "click>=8.1",
 ]
 
-[tool.poe.tasks]
-# PKM tasks
-generate_tags = { script = "src.tools.pkm_tools:generate_tags" }
-generate_moc = { script = "src.tools.pkm_tools:generate_moc" }
-generate_links = { script = "src.tools.pkm_tools:generate_links" }
+[project.optional-dependencies]
+pdf = ["pypdf>=4.0"]
 
-# Git tasks
-init-repo = "git init"
+[project.scripts]
+task-runner = "task_runner.cli:main"
 
-# Documentation tasks
-generate-tags = { script = "src.tools.pkm_tools:generate_tags" }
-generate-moc = { script = "src.tools.pkm_tools:generate_moc" }
-generate-links = { script = "src.tools.pkm_tools:generate_links" }
-ai-doc-gen = { script = "ai_docsGen:ai_doc_gen" }
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-# File tasks 
-clone-repos = { script = "src.tools.clone_github_repos:clone_repos" }
-generate-report = { script = "src.tools.generate_system_reports:generate_report" }
-select-repo = { script = "src.tools.select_github_repo:select_repo" }
+[tool.hatch.build.targets.wheel]
+packages = ["src/task_runner"]
 
-[tool.poe.tasks.file_renamer]
-cmd = "python src/tools/ai_file_renamer.py"
-executor = { type = "simple", capture_output = false }
-
-
-[tool.poe.tasks.commit-changes]
-args = ["message"]
-sequence = [
-  { cmd = "git pull origin main" },
-  { cmd = "git add ." },
-  { cmd = "git commit -m \"${message}\"" },
-  { cmd = "git push -u origin main" }
-]
-
-[tool.poe.tasks.lint]
-args = ["target"]
-sequence = [
-  { cmd = "ruff check ${target}" },
-  { cmd = "ruff format ${target}" }
-]
-
-[tool.poe.tasks.run-tests]
-cmd = "pytest --cov=src --cov-report=term-missing"
-
-[tool.poe.tasks.security]
-cmd = "bandit -r ."
-
-[tool.poe.tasks.move-files]
-script = "src.tools.move_files:clean_folder"
-args = ["folder", "patterns", "destination"]
-
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,45 +1,69 @@
-# task-runner-SDLC
+# task-runner
 
-> [!CAUTION]
-> This repository is no longer maintained, as I have migrated these scripts to PowerShell modules.
+Lean personal CLI toolbox. One command, zero bloat.
 
-<!-- Badges: Project Status GitHub -->
-![license](https://flat.badgen.net/static/license/EULA/blue)
-![release](https://flat.badgen.net/github/release/charudatta10/task-runner-SDLC)
-![commits](https://flat.badgen.net/github/commits/charudatta10/task-runner-SDLC)
-![last-commit](https://flat.badgen.net/github/last-commit/charudatta10/task-runner-SDLC)
+## Install
 
-[![sponsor](https://flat.badgen.net//static/sponsor/%E2%9D%A4?)](https://github.com/sponsors/charudatta10)
-[![contact](https://flat.badgen.net//static/contact/%E2%98%8E)](https://charudatta10.github.io/LinkNet/)
-[![work](https://flat.badgen.net//static/portfolio/%F0%9F%96%BF)](https://charudatta10.github.io/myblog/)
-![project](https://flat.badgen.net///static/project/task-runner-SDLC)
+```bash
+uv tool install .           # global: task-runner on PATH
+# or editable dev mode
+uv pip install -e .
+```
 
-<!-- Badges: Tools used -->
-`Python`
+## Commands
 
-## Documentation
+```
+task-runner organize <source> [--dest DIR] [--rules FILE] [--dry-run] [--copy] [--recursive]
+task-runner dups <root> [--delete] [--keep first|shortest|newest] [--report PATH]
+task-runner index <root> [--out PATH] [--query TEXT] [--institute NAME] [--topic NAME]
+task-runner summarize <root> [--json]
+task-runner links create <path> <target> [--type auto|symlink|hard|junction]
+task-runner links broken <root> [--remove]
+task-runner rmdirs <root> [--recurse]
+task-runner analyze <root> [--type functions|variables|orphaned|all] [--json]
+task-runner packages [--export PATH]
+task-runner scaffold <path> --type generic|python|powershell
+task-runner notes [--path DIR] [--topic NAME]
+task-runner tasks [--path DIR]
+```
 
- Task Runner SDLC is a streamlined project management tool designed to automate and optimize software development lifecycle tasks. It simplifies task scheduling, tracking, and execution, ensuring efficient workflows and collaboration. Ideal for developers and teams, it enhances productivity and project management.  
+### organize
 
-## Features
+Move files into `<dest>/<Institute>/<Topic>/<YYYY-MM>/` hierarchy driven by
+keyword rules in `src/task_runner/data/label_rules.json`.
 
-- Initialize
-- Deploy
-- License
-- Readme
-- Manger
-- Maintain
+### dups
 
-## Getting Started
+Two-stage duplicate detection: size match → BLAKE2b digest. `--delete` removes
+non-kept copies. `--keep newest` preserves the most recent file.
 
-Run `poe` cmd in command prompt.
+### index / summarize
 
-## Contributing
+`index` builds a JSON list of every file with its classify labels (institute,
+topics, kind, date). `summarize` prints a per-category stats table.
 
-Contributions are welcome! Please open an issue or submit a pull request for any bugs or feature requests. [Report a bug or Request a feature](https://github.com/charudatta10/{title}/issues)
+### links / rmdirs
 
-## COPYRIGHT NOTICE
+Links: create symlink/hard/junction (`--type auto` picks the best kind) and
+find/fix broken ones with `--remove`. rmdirs: prune empty directories bottom-up.
 
-Copyright © 2025 Charudatta Korde · Licensed under CC BY-NC-SA 4.0 · [![CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/) · [View License](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode)
+### analyze
 
-<!-- Acknowledgment, References, Misc -->
+AST-based static analysis on Python files: unused functions, unused variables,
+and orphaned scripts. `--json` for machine-readable output.
+
+### packages
+
+Reports installed packages across winget, scoop, choco, pip, uv, npm, bun,
+cargo, gem, and dotnet. `--export` writes JSON.
+
+### scaffold / notes / tasks
+
+`scaffold <dir> --type python` creates src/tests/docs/pyproject.toml etc.
+`notes` and `tasks` set up dated template structures for project management.
+
+## Config
+
+`label_rules.json` drives `organize`/`index`/`summarize`. Keywords are matched
+case-insensitively after normalizing separators (`-`, `_`, `.`, spaces).
+Override with `--rules path/to/other_rules.json`.
