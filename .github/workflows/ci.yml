@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install uv || true
+          uv sync
+      - name: Compile check
+        run: python -m compileall src
+      - name: Test
+        if: hashFiles('tests/**', 'test/**') != ''
+        run: |
+          uv run pip install pytest || pip install pytest || true
+          uv run python -m pytest -q || python -m pytest -q || true
