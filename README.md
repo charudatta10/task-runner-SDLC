@@ -1,3 +1,8 @@
+> [!WARNING]
+> **This repository is archived**  
+> This project is no longer maintained or updated. The code is kept here for historical purposes and reference. No further issues or pull requests will be considered.  
+>  Follow https://github.com/chaito10/fileops for maintained code.
+
 # task-runner
 
 Lean personal CLI toolbox. One command, zero bloat.
